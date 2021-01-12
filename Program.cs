@@ -14,7 +14,7 @@ namespace TYYongAutoPatcher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frm_MainUI());
+            Application.Run(new MainUI());
         }
     }
 }

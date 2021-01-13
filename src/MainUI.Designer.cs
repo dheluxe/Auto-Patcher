@@ -35,9 +35,9 @@ namespace TYYongAutoPatcher
             this.lbl_goToWeb = new System.Windows.Forms.Label();
             this.lbl_copyright = new System.Windows.Forms.Label();
             this.btn_exit = new System.Windows.Forms.Button();
+            this.lbx_messages = new System.Windows.Forms.ListBox();
             this.web_left = new System.Windows.Forms.WebBrowser();
             this.web_right = new System.Windows.Forms.WebBrowser();
-            this.lbx_messages = new System.Windows.Forms.ListBox();
             this.btn_shop = new System.Windows.Forms.Button();
             this.btn_event = new System.Windows.Forms.Button();
             this.lbl_downloadProgress = new System.Windows.Forms.Label();
@@ -128,6 +128,21 @@ namespace TYYongAutoPatcher
             this.btn_exit.MouseLeave += new System.EventHandler(this.btn_exit_MouseLeave);
             this.btn_exit.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_exit_MouseUp);
             // 
+            // lbx_messages
+            // 
+            this.lbx_messages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lbx_messages.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbx_messages.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.lbx_messages.Font = new System.Drawing.Font("PMingLiU", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbx_messages.ForeColor = System.Drawing.Color.White;
+            this.lbx_messages.FormattingEnabled = true;
+            this.lbx_messages.ItemHeight = 20;
+            this.lbx_messages.Location = new System.Drawing.Point(13, 431);
+            this.lbx_messages.Name = "lbx_messages";
+            this.lbx_messages.Size = new System.Drawing.Size(543, 60);
+            this.lbx_messages.TabIndex = 4;
+            this.lbx_messages.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbx_messages_DrawItem);
+            // 
             // web_left
             // 
             this.web_left.Location = new System.Drawing.Point(12, 47);
@@ -146,21 +161,6 @@ namespace TYYongAutoPatcher
             this.web_right.Size = new System.Drawing.Size(320, 228);
             this.web_right.TabIndex = 3;
             this.web_right.Visible = false;
-            // 
-            // lbx_messages
-            // 
-            this.lbx_messages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lbx_messages.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbx_messages.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.lbx_messages.Font = new System.Drawing.Font("PMingLiU", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbx_messages.ForeColor = System.Drawing.Color.White;
-            this.lbx_messages.FormattingEnabled = true;
-            this.lbx_messages.ItemHeight = 20;
-            this.lbx_messages.Location = new System.Drawing.Point(13, 431);
-            this.lbx_messages.Name = "lbx_messages";
-            this.lbx_messages.Size = new System.Drawing.Size(543, 60);
-            this.lbx_messages.TabIndex = 4;
-            this.lbx_messages.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbx_messages_DrawItem);
             // 
             // btn_shop
             // 

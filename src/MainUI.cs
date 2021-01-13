@@ -20,6 +20,9 @@ namespace TYYongAutoPatcher
         Completed,
         Retrying,
         Normal,
+        Loading,
+        GameReady,
+        Initializing,
     }
     public partial class MainUI : Form
     {
@@ -49,7 +52,7 @@ namespace TYYongAutoPatcher
 
         private void btn_exit_Click(object sender, EventArgs e)
         {
-            if (app.IsBusy)
+            if (app.IsBusy())
             {
                 DialogResult dResult = MessageBox.Show("正在更新中，是否結束?", "泰月勇Online 登錄器", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 if (dResult.Equals(DialogResult.OK))
@@ -68,19 +71,19 @@ namespace TYYongAutoPatcher
 
         private void btn_register_Click(object sender, EventArgs e)
         {
-            Process.Start(app.url.REGISTER);
+            Process.Start(app.Setting.ServerConnection.Register);
         }
         private void btn_event_Click(object sender, EventArgs e)
         {
-            Process.Start(app.url.EVENT);
+            Process.Start(app.Setting.ServerConnection.Event);
         }
         private void btn_shop_Click(object sender, EventArgs e)
         {
-            Process.Start(app.url.SHOP);
+            Process.Start(app.Setting.ServerConnection.Shop);
         }
         private void lbl_goToWeb_Click(object sender, EventArgs e)
         {
-            Process.Start(app.url.OFFICIAL_WEB);
+            Process.Start(app.Setting.ServerConnection.OfficialWeb);
         }
         #endregion
         #region Buttons UI control
@@ -106,10 +109,9 @@ namespace TYYongAutoPatcher
 
         private void btn_launch_MouseEnter(object sender, EventArgs e)
         {
-            if (btn_launch.Enabled)
+            if (!btn_launch.Enabled)
             {
                 btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start4;
-
             }
             else
             {
@@ -119,7 +121,7 @@ namespace TYYongAutoPatcher
 
         private void btn_launch_MouseLeave(object sender, EventArgs e)
         {
-            if (btn_launch.Enabled)
+            if (!btn_launch.Enabled)
             {
                 btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start4;
 
@@ -132,7 +134,7 @@ namespace TYYongAutoPatcher
 
         private void btn_launch_MouseDown(object sender, MouseEventArgs e)
         {
-            if (btn_launch.Enabled)
+            if (!btn_launch.Enabled)
             {
                 btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start4;
             }
@@ -145,7 +147,7 @@ namespace TYYongAutoPatcher
 
         private void btn_launch_MouseUp(object sender, MouseEventArgs e)
         {
-            if (btn_launch.Enabled)
+            if (!btn_launch.Enabled)
             {
                 btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start4;
             }
@@ -242,20 +244,34 @@ namespace TYYongAutoPatcher
 
         public void SetLeftAndRightWeb()
         {
-            web_left.Url = new Uri(app.url.LEFT_WEB);
-            web_right.Url = new Uri(app.url.RIGHT_WEB);
+            web_left.Url = new Uri(app.Setting.ServerConnection.LeftWeb);
+            web_right.Url = new Uri(app.Setting.ServerConnection.RightWeb);
             web_left.Visible = true;
             web_right.Visible = true;
+        }
+
+        public bool GetCbxStartWhenReady()
+        {
+            return cbx_startWhenReady.Checked;
+        }
+
+        public void ReadyToStartGame()
+        {
+            btn_launch.Enabled = true;
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start3;
         }
 
 
         //Add message to listbox
         public void AddMsg(string msg, StateCode state = StateCode.Normal)
         {
+            sMsgList.Add(state);
             lbx_messages.Items.Add(msg);
             lbx_messages.SelectedIndex = lbx_messages.Items.Count - 1;
-            sMsgList.Add(state);
+            //int visibleItems = lbx_messages.ClientSize.Height / lbx_messages.ItemHeight;
+            //lbx_messages.TopIndex = Math.Max(lbx_messages.Items.Count - visibleItems + 1, 0);
         }
+
 
         private void lbx_messages_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -297,7 +313,7 @@ namespace TYYongAutoPatcher
             e.Graphics.DrawString(lbx_messages.Items[e.Index].ToString(),
                 e.Font, myBrush, e.Bounds.X + 2, e.Bounds.Y + 6);
             // If the ListBox has focus, draw a focus rectangle around the selected item.
-            e.DrawFocusRectangle();
+            //e.DrawFocusRectangle();
         }
     }
 

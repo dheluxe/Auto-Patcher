@@ -29,6 +29,7 @@ namespace TYYongAutoPatcher
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainUI));
             this.btn_launch = new System.Windows.Forms.Button();
             this.pnl_dragger = new System.Windows.Forms.Panel();
@@ -42,10 +43,11 @@ namespace TYYongAutoPatcher
             this.btn_event = new System.Windows.Forms.Button();
             this.lbl_downloadProgress = new System.Windows.Forms.Label();
             this.lbl_totalDownloadProgress = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
+            this.pgb_download = new System.Windows.Forms.ProgressBar();
+            this.pgb_total = new System.Windows.Forms.ProgressBar();
             this.cbx_startWhenReady = new System.Windows.Forms.CheckBox();
             this.btn_register = new System.Windows.Forms.Button();
+            this.timer_wait = new System.Windows.Forms.Timer(this.components);
             this.pnl_dragger.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -220,19 +222,19 @@ namespace TYYongAutoPatcher
             this.lbl_totalDownloadProgress.TabIndex = 8;
             this.lbl_totalDownloadProgress.Text = "整體進度";
             // 
-            // progressBar1
+            // pgb_download
             // 
-            this.progressBar1.Location = new System.Drawing.Point(68, 369);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(487, 16);
-            this.progressBar1.TabIndex = 9;
+            this.pgb_download.Location = new System.Drawing.Point(68, 369);
+            this.pgb_download.Name = "pgb_download";
+            this.pgb_download.Size = new System.Drawing.Size(487, 16);
+            this.pgb_download.TabIndex = 9;
             // 
-            // progressBar2
+            // pgb_total
             // 
-            this.progressBar2.Location = new System.Drawing.Point(68, 398);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(487, 16);
-            this.progressBar2.TabIndex = 10;
+            this.pgb_total.Location = new System.Drawing.Point(68, 398);
+            this.pgb_total.Name = "pgb_total";
+            this.pgb_total.Size = new System.Drawing.Size(487, 16);
+            this.pgb_total.TabIndex = 10;
             // 
             // cbx_startWhenReady
             // 
@@ -266,6 +268,11 @@ namespace TYYongAutoPatcher
             this.btn_register.MouseLeave += new System.EventHandler(this.btn_register_MouseLeave);
             this.btn_register.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_register_MouseUp);
             // 
+            // timer_wait
+            // 
+            this.timer_wait.Interval = 1000;
+            this.timer_wait.Tick += new System.EventHandler(this.timer_wait_Tick);
+            // 
             // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -276,8 +283,8 @@ namespace TYYongAutoPatcher
             this.ClientSize = new System.Drawing.Size(740, 525);
             this.Controls.Add(this.btn_register);
             this.Controls.Add(this.cbx_startWhenReady);
-            this.Controls.Add(this.progressBar2);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.pgb_total);
+            this.Controls.Add(this.pgb_download);
             this.Controls.Add(this.lbl_totalDownloadProgress);
             this.Controls.Add(this.lbl_downloadProgress);
             this.Controls.Add(this.btn_event);
@@ -310,12 +317,13 @@ namespace TYYongAutoPatcher
         private System.Windows.Forms.Button btn_event;
         private System.Windows.Forms.Label lbl_downloadProgress;
         private System.Windows.Forms.Label lbl_totalDownloadProgress;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.ProgressBar progressBar2;
+        private System.Windows.Forms.ProgressBar pgb_download;
+        private System.Windows.Forms.ProgressBar pgb_total;
         private System.Windows.Forms.CheckBox cbx_startWhenReady;
         private System.Windows.Forms.Button btn_register;
         private System.Windows.Forms.Label lbl_copyright;
         private System.Windows.Forms.Label lbl_goToWeb;
+        private System.Windows.Forms.Timer timer_wait;
     }
 }
 

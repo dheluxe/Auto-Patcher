@@ -24,7 +24,8 @@ namespace TYYongAutoPatcher.src
 
     public class Patch
     {
-        public string Version { get; set; }
+        public int Verison { get; set; }
+        public string FileName { get; set; }
     }
 
 
@@ -40,7 +41,6 @@ namespace TYYongAutoPatcher.src
     public class LocalSetting
     {
         public Launcher Launcher { get; set; } = new Launcher();
-        public string test = "456";
     }
 
     public class Setting
@@ -48,7 +48,7 @@ namespace TYYongAutoPatcher.src
 
         public ServerConnection ServerConnection { get; set; } = new ServerConnection();
         public Game Game { get; set; } = new Game();
-        public Patch Patch { get; set; } = new Patch();
+        public List<Patch> PatchList { get; set; } = new List<Patch>();
         public LocalSetting LocalSetting { get; set; } = new LocalSetting();
     }
 

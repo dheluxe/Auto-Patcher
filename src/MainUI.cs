@@ -259,10 +259,14 @@ namespace TYYongAutoPatcher
         {
             btn_launch.Enabled = true;
             btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start3;
+            pgb_download.Value = 100;
+            pgb_total.Value = 100;
+            AddMsg("已成功連線並傳送遊戲資料.", StateCode.Success);
+            AddMsg("已完成進入遊戲的各種設定.", StateCode.Success);
         }
 
 
-        //Add message to listbox
+        //Add message to the listbox
         public void AddMsg(string msg, StateCode state = StateCode.Normal)
         {
             sMsgList.Add(state);
@@ -272,6 +276,19 @@ namespace TYYongAutoPatcher
             //lbx_messages.TopIndex = Math.Max(lbx_messages.Items.Count - visibleItems + 1, 0);
         }
 
+        //Update last message in the listbox
+        public void UpdateMsg(string msg, StateCode state = StateCode.Normal)
+        {
+            sMsgList.RemoveAt(sMsgList.Count - 1);
+            sMsgList.Add(state);
+            lbx_messages.Items.RemoveAt(lbx_messages.Items.Count - 1);
+            AddMsg(msg, state);
+        }
+
+        public void UpdateDownloadProgress(int value)
+        {
+            pgb_download.Value = value;
+        }
 
         private void lbx_messages_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -314,6 +331,20 @@ namespace TYYongAutoPatcher
                 e.Font, myBrush, e.Bounds.X + 2, e.Bounds.Y + 6);
             // If the ListBox has focus, draw a focus rectangle around the selected item.
             //e.DrawFocusRectangle();
+        }
+
+        public void Wait(int ms)
+        {
+            timer_wait.Enabled = true;
+            timer_wait.Interval = ms;
+            timer_wait.Start();
+        }
+
+        private void timer_wait_Tick(object sender, EventArgs e)
+        {
+            app.Patch();
+            timer_wait.Stop();
+            timer_wait.Enabled = false;
         }
     }
 

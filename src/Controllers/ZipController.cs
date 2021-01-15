@@ -13,6 +13,7 @@ namespace TYYongAutoPatcher.src.Controllers
     class ZipController
     {
         private MainController app;
+        private int NoOfUnzipped { get; set; } = 0;
         public ZipController(MainController app)
         {
             this.app = app;
@@ -27,10 +28,9 @@ namespace TYYongAutoPatcher.src.Controllers
                     zip.ExtractProgress += app.ui.ExtractProgress(patch);
                     app.State = StateCode.Extracting;
                     patch.NoOfZippedFiles = zip.Count;
-                    int idx = 0;
+                    NoOfUnzipped++;
                     foreach (var entry in zip)
                     {
-                        idx++;
                         //app.ui.Add($"正在解壓: {entry.FileName}");
                         if (app.cts.IsCancellationRequested) app.cts.Token.ThrowIfCancellationRequested();
                         try
@@ -43,11 +43,12 @@ namespace TYYongAutoPatcher.src.Controllers
                         {
                             app.UpdateState(StateCode.ErrorExtractingFail);
                             app.ui.AddMsg($"解壓失敗: {entry.FileName}", StateCode.ErrorExtractingFail);
+                            NoOfUnzipped--;
                         }
                     }
                     app.ui.AddMsg($"己安裝更新包 {patch.FileName}", StateCode.Success);
                     await app.DeleteTempFile(patch.FileName);
-                    if(idx == zip.Count) app.ui.UpdateProgress();
+                    if(NoOfUnzipped == zip.Count) app.ui.UpdateProgress();
                     app.UpdateLocalPatchVersion(patch);
 
                 }

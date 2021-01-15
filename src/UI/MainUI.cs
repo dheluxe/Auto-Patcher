@@ -1,4 +1,5 @@
 ﻿using Ionic.Zip;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,16 +55,21 @@ namespace TYYongAutoPatcher.src.UI
         }
         private void btn_shop_Click(object sender, EventArgs e)
         {
+            Process.Start(app.Setting.Server.Shop);
         }
         private void btn_register_Click(object sender, EventArgs e)
         {
+            Process.Start(app.Setting.Server.Register);
+
         }
         private void btn_event_Click(object sender, EventArgs e)
         {
+            Process.Start(app.Setting.Server.Event);
+
         }
         private void btn_launch_Click(object sender, EventArgs e)
         {
-
+            app.Launch();
         }
 
         #endregion
@@ -275,6 +281,24 @@ namespace TYYongAutoPatcher.src.UI
             }));
         }
 
+        public void DownloadStrinCompletedgAysncHandler(Object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null) 
+            {
+                var configJson = e.Result;
+                var result = JsonConvert.DeserializeObject<SettingModel>(configJson);
+                app.Setting.Server = result.Server;
+                app.Setting.Game = result.Game;
+                app.Setting.PatchList = result.PatchList.FindAll(x => x.Version > app.Setting.LocalConfig.Launcher.PatchVersion);
+                app.Setting.PatchList.Sort();
+                foreach(PatchModel p in app.Setting.PatchList)
+                {
+                    Console.WriteLine(p.Version);
+                }
+            }
+
+        }
+
         public EventHandler<ExtractProgressEventArgs> ExtractProgress(PatchModel patch)
         {
             return new EventHandler<ExtractProgressEventArgs>((sender, e) =>
@@ -288,8 +312,8 @@ namespace TYYongAutoPatcher.src.UI
                         lbl_state.ForeColor = Color.IndianRed;
                         lbl_state.Text = $"正在解壓 {name} {app.SizeToString(e.BytesTransferred)} / {app.SizeToString(e.TotalBytesToTransfer)}";
 
-                        pgb_progress.Value = (int) percentage;
-                        lbl_value_progress.Text =$"{percentage}%";
+                        pgb_progress.Value = (int)percentage;
+                        lbl_value_progress.Text = $"{percentage}%";
 
                         var total = app.GetTotalPercentage();
                         lbl_value_totalProgress.Text = $"{total.ToString(".#")}%";
@@ -340,18 +364,21 @@ namespace TYYongAutoPatcher.src.UI
             {
                 Invoke(new MethodInvoker(delegate ()
                 {
-                    if (e.Cancelled)
+                    if (e.Error == null)
                     {
-                        
-                    }
-                    else
-                    {
-                        //lbl_state.Text = $"己下載 {fileName} - {fileSzie}MB)";
-                        AddMsg($"己下載更新包 {patch.FileName} - 共 {app.SizeToString(patch.Size)}", StateCode.Success);
-                        AddMsg($"正在解壓更新包 {patch.FileName}...", StateCode.Extracting);
-                        var total = app.GetTotalPercentage();
-                        lbl_value_totalProgress.Text = $"{total.ToString(".#")}%";
-                        pgb_total.Value = (int)total;
+                        if (e.Cancelled)
+                        {
+
+                        }
+                        else
+                        {
+                            //lbl_state.Text = $"己下載 {fileName} - {fileSzie}MB)";
+                            AddMsg($"己下載更新包 {patch.FileName} - 共 {app.SizeToString(patch.Size)}", StateCode.Success);
+                            AddMsg($"正在解壓更新包 {patch.FileName}...", StateCode.Extracting);
+                            var total = app.GetTotalPercentage();
+                            lbl_value_totalProgress.Text = $"{total.ToString(".#")}%";
+                            pgb_total.Value = (int)total;
+                        }
                     }
 
                 }));
@@ -374,6 +401,7 @@ namespace TYYongAutoPatcher.src.UI
 
             switch (sMsgList[e.Index])
             {
+                case StateCode.Error:
                 case StateCode.ErrorConnectingFail:
                 case StateCode.ErrorWritingFail:
                 case StateCode.ErrorExtractingFail:
@@ -414,7 +442,7 @@ namespace TYYongAutoPatcher.src.UI
         {
             timer_wait.Stop();
             timer_wait.Enabled = false;
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
             try
             {
                 await app.Run();
@@ -426,9 +454,9 @@ namespace TYYongAutoPatcher.src.UI
             }
             finally
             {
-                watch.Stop();
-                var elaspedMs = Math.Round(watch.ElapsedMilliseconds / 1000.0, 1);
-                AddMsg($"耗時: {elaspedMs}杪");
+                //watch.Stop();
+                //var elaspedMs = Math.Round(watch.ElapsedMilliseconds / 1000.0, 1);
+                //AddMsg($"耗時: {elaspedMs}杪");
             }
 
         }
@@ -439,28 +467,26 @@ namespace TYYongAutoPatcher.src.UI
             timer_wait.Start();
         }
 
-        private void StopApp()
-        {
-
-        }
-
         public void UpdateLblState(string msg)
         {
 
             switch (app.State)
             {
                 case StateCode.Error:
+                case StateCode.ErrorExtractingFail:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                     lbl_state.Text = "發生未知的錯誤";
+                    app.Cancel();
                     break;
                 case StateCode.ErrorConnectingFail:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                     lbl_state.Text = "無法連接到伺服器";
+                    app.Cancel();
                     break;
                 case StateCode.ErrorWritingFail:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                     lbl_state.Text = "無法寫入本地檔案";
-                    StopApp();
+                    app.Cancel();
                     break;
                 case StateCode.GameReady:
                     lbl_state.ForeColor = Color.FromArgb(177, 241, 167);
@@ -494,9 +520,14 @@ namespace TYYongAutoPatcher.src.UI
 
         }
 
-        public void UpdateProgress() 
+        public void UpdateProgress()
         {
             app.UpdateState(StateCode.GameReady);
+        }
+
+        public void ShowErrorMsg(string msg, string title = "泰月勇Online")
+        {
+            MessageBox.Show(msg, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 

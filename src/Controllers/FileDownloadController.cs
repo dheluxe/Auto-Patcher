@@ -36,15 +36,25 @@ namespace TYYongAutoPatcher.src.Controllers
             catch (Exception e)
             {
                 app.UpdateState(StateCode.ErrorConnectingFail);
-                app.ui.AddMsg($"無法取得更新包 {patch.FileName}");
+                app.ui.AddMsg($"無法取得更新包 {patch.FileName}", StateCode.ErrorConnectingFail);
             }
         }
 
         public async Task<string> DownloadStringAysnc(string url)
         {
-            WebClient client = new WebClient();
+            var client = new WebClient();
             var result = await client.DownloadStringTaskAsync(url);
             return result;
         }
+
+        public async Task DownloadConfigAysnc(string url)
+        {
+            var client = new WebClient();
+            client.DownloadStringCompleted += app.ui.DownloadStrinCompletedgAysncHandler;
+            await client.DownloadStringTaskAsync(url);
+
+        }
+
+
     }
 }

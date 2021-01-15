@@ -13,7 +13,8 @@ namespace TYYongAutoPatcher.src.Controllers
     class ZipController
     {
         private MainController app;
-        private int NoOfUnzipped { get; set; } = 0;
+        private int noOfUnzipped;
+        public int NoOfUnzipped { get { return noOfUnzipped; } }
         public ZipController(MainController app)
         {
             this.app = app;
@@ -26,29 +27,31 @@ namespace TYYongAutoPatcher.src.Controllers
                 using (var zip = ZipFile.Read(fileName))
                 {
                     zip.ExtractProgress += app.ui.ExtractProgress(patch);
-                    app.State = StateCode.Extracting;
+                    app.UpdateState(StateCode.Extracting);
                     patch.NoOfZippedFiles = zip.Count;
-                    NoOfUnzipped++;
+                    noOfUnzipped++;
                     foreach (var entry in zip)
                     {
-                        //app.ui.Add($"正在解壓: {entry.FileName}");
+                        //app.ui.Add($"正在安裝: {entry.FileName}");
                         if (app.cts.IsCancellationRequested) app.cts.Token.ThrowIfCancellationRequested();
                         try
                         {
                             patch.NoOfUnZippedFiles++;
                             await Task.Run(() => entry.Extract(targetDir, ExtractExistingFileAction.OverwriteSilently));
+                            patch.SizeOfUnZippedFiles += entry.UncompressedSize;
 
                         }
                         catch (Exception ex)
                         {
                             app.UpdateState(StateCode.ErrorExtractingFail);
-                            app.ui.AddMsg($"解壓失敗: {entry.FileName}", StateCode.ErrorExtractingFail);
-                            NoOfUnzipped--;
+                            app.ui.AddMsg($"安裝失敗: {entry.FileName}", StateCode.ErrorExtractingFail);
+                            noOfUnzipped--;
                         }
                     }
                     app.ui.AddMsg($"己安裝更新包 {patch.FileName}", StateCode.Success);
+                    patch.IsUnzipSucceed = true;
                     await app.DeleteTempFile(patch.FileName);
-                    if(NoOfUnzipped == zip.Count) app.ui.UpdateProgress();
+                    if(NoOfUnzipped == app.Setting.PatchList.Count) app.ui.UpdateProgress();
                     app.UpdateLocalPatchVersion(patch);
 
                 }

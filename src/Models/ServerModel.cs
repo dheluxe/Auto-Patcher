@@ -10,7 +10,6 @@ namespace TYYongAutoPatcher.src.Models
         public string Shop { get; set; }
         public string Event { get; set; }
         public string Register { get; set; }
-        public string PatcherList { get; set; }
         public string PatchDataDir { get; set; }
     }
 }

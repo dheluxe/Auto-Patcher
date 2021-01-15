@@ -29,7 +29,7 @@ namespace TYYongAutoPatcher.src.Controllers
                 client = new WebClient();
                 client.DownloadProgressChanged += app.ui.DownloadPatchProgressChangedHandler(patch);
                 client.DownloadFileCompleted += app.ui.AsyncCompletedEventHandler(patch);
-                app.ui.AddMsg($"正在下載 {patch.FileName}...");
+                app.ui.AddMsg($"正在下載 {patch.FileName}...", StateCode.Downloading);
                 await client.DownloadFileTaskAsync(url, savePath);
                 client.Dispose();
             }

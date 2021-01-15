@@ -51,6 +51,7 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger = new System.Windows.Forms.Panel();
             this.lbl_value_totalProgress = new System.Windows.Forms.Label();
             this.lbl_value_progress = new System.Windows.Forms.Label();
+            this.lbl_report = new System.Windows.Forms.Label();
             this.pnl_dragger.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,7 +88,7 @@ namespace TYYongAutoPatcher.src.UI
             this.lbx_messages.ForeColor = System.Drawing.Color.White;
             this.lbx_messages.FormattingEnabled = true;
             this.lbx_messages.ItemHeight = 20;
-            this.lbx_messages.Location = new System.Drawing.Point(12, 450);
+            this.lbx_messages.Location = new System.Drawing.Point(12, 448);
             this.lbx_messages.Name = "lbx_messages";
             this.lbx_messages.Size = new System.Drawing.Size(544, 60);
             this.lbx_messages.TabIndex = 4;
@@ -101,7 +102,7 @@ namespace TYYongAutoPatcher.src.UI
             this.btn_launch.Enabled = false;
             this.btn_launch.FlatAppearance.BorderSize = 0;
             this.btn_launch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_launch.Location = new System.Drawing.Point(575, 450);
+            this.btn_launch.Location = new System.Drawing.Point(575, 448);
             this.btn_launch.Name = "btn_launch";
             this.btn_launch.Size = new System.Drawing.Size(150, 60);
             this.btn_launch.TabIndex = 0;
@@ -154,18 +155,18 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.lbl_copyright.BackColor = System.Drawing.Color.Transparent;
             this.lbl_copyright.ForeColor = System.Drawing.SystemColors.Menu;
-            this.lbl_copyright.Location = new System.Drawing.Point(11, 513);
+            this.lbl_copyright.Location = new System.Drawing.Point(405, 529);
             this.lbl_copyright.Name = "lbl_copyright";
-            this.lbl_copyright.Size = new System.Drawing.Size(273, 43);
+            this.lbl_copyright.Size = new System.Drawing.Size(320, 25);
             this.lbl_copyright.TabIndex = 13;
             this.lbl_copyright.Text = "copy";
-            this.lbl_copyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_copyright.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // pgb_total
             // 
             this.pgb_total.Location = new System.Drawing.Point(69, 420);
             this.pgb_total.Name = "pgb_total";
-            this.pgb_total.Size = new System.Drawing.Size(444, 16);
+            this.pgb_total.Size = new System.Drawing.Size(445, 16);
             this.pgb_total.TabIndex = 10;
             // 
             // lbl_title_progress
@@ -191,10 +192,12 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_goToWeb.Text = "前往官網";
             this.lbl_goToWeb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbl_goToWeb.Click += new System.EventHandler(this.lbl_goToWeb_Click);
+            this.lbl_goToWeb.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbl_goToWeb_MouseDown);
+            this.lbl_goToWeb.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lbl_goToWeb_MouseUp);
             // 
             // btn_register
             // 
-            this.btn_register.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_register.BackgroundImage")));
+            this.btn_register.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.reg1;
             this.btn_register.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_register.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_register.FlatAppearance.BorderSize = 0;
@@ -212,7 +215,7 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // btn_shop
             // 
-            this.btn_shop.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.itemshop3;
+            this.btn_shop.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.itemshop1;
             this.btn_shop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_shop.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_shop.FlatAppearance.BorderSize = 0;
@@ -230,21 +233,23 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // cbx_startWhenReady
             // 
-            this.cbx_startWhenReady.AutoSize = true;
             this.cbx_startWhenReady.BackColor = System.Drawing.Color.Transparent;
             this.cbx_startWhenReady.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbx_startWhenReady.Font = new System.Drawing.Font("PMingLiU", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cbx_startWhenReady.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cbx_startWhenReady.ForeColor = System.Drawing.Color.Silver;
-            this.cbx_startWhenReady.Location = new System.Drawing.Point(575, 392);
+            this.cbx_startWhenReady.Location = new System.Drawing.Point(575, 393);
             this.cbx_startWhenReady.Name = "cbx_startWhenReady";
-            this.cbx_startWhenReady.Size = new System.Drawing.Size(143, 17);
+            this.cbx_startWhenReady.Size = new System.Drawing.Size(153, 17);
             this.cbx_startWhenReady.TabIndex = 11;
-            this.cbx_startWhenReady.Text = "準備好遊戲就馬上始";
+            this.cbx_startWhenReady.Text = "準備好遊戲就馬上開始";
+            this.cbx_startWhenReady.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbx_startWhenReady.UseVisualStyleBackColor = false;
+            this.cbx_startWhenReady.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cbx_startWhenReady_MouseDown);
+            this.cbx_startWhenReady.MouseUp += new System.Windows.Forms.MouseEventHandler(this.cbx_startWhenReady_MouseUp);
             // 
             // btn_event
             // 
-            this.btn_event.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.event3;
+            this.btn_event.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.event2;
             this.btn_event.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_event.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_event.FlatAppearance.BorderSize = 0;
@@ -263,19 +268,20 @@ namespace TYYongAutoPatcher.src.UI
             // lbl_state
             // 
             this.lbl_state.ForeColor = System.Drawing.Color.Transparent;
-            this.lbl_state.Location = new System.Drawing.Point(284, 513);
+            this.lbl_state.Location = new System.Drawing.Point(12, 529);
             this.lbl_state.Name = "lbl_state";
-            this.lbl_state.Size = new System.Drawing.Size(441, 41);
+            this.lbl_state.Size = new System.Drawing.Size(378, 25);
             this.lbl_state.TabIndex = 16;
-            this.lbl_state.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // pnl_dragger
             // 
             this.pnl_dragger.BackColor = System.Drawing.Color.Transparent;
+            this.pnl_dragger.Controls.Add(this.lbl_copyright);
             this.pnl_dragger.Controls.Add(this.pgb_progress);
             this.pnl_dragger.Controls.Add(this.pgb_total);
             this.pnl_dragger.Controls.Add(this.lbl_value_totalProgress);
             this.pnl_dragger.Controls.Add(this.lbl_value_progress);
+            this.pnl_dragger.Controls.Add(this.lbl_report);
             this.pnl_dragger.Controls.Add(this.lbl_state);
             this.pnl_dragger.Controls.Add(this.btn_event);
             this.pnl_dragger.Controls.Add(this.cbx_startWhenReady);
@@ -283,7 +289,6 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.Controls.Add(this.btn_register);
             this.pnl_dragger.Controls.Add(this.lbl_goToWeb);
             this.pnl_dragger.Controls.Add(this.lbl_title_progress);
-            this.pnl_dragger.Controls.Add(this.lbl_copyright);
             this.pnl_dragger.Controls.Add(this.lbl_title_totalProgress);
             this.pnl_dragger.Controls.Add(this.btn_exit);
             this.pnl_dragger.Controls.Add(this.btn_launch);
@@ -300,11 +305,11 @@ namespace TYYongAutoPatcher.src.UI
             // lbl_value_totalProgress
             // 
             this.lbl_value_totalProgress.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_totalProgress.Location = new System.Drawing.Point(513, 421);
+            this.lbl_value_totalProgress.Location = new System.Drawing.Point(511, 421);
             this.lbl_value_totalProgress.Name = "lbl_value_totalProgress";
-            this.lbl_value_totalProgress.Size = new System.Drawing.Size(42, 17);
+            this.lbl_value_totalProgress.Size = new System.Drawing.Size(45, 17);
             this.lbl_value_totalProgress.TabIndex = 17;
-            this.lbl_value_totalProgress.Text = "0%";
+            this.lbl_value_totalProgress.Text = "0.0%";
             this.lbl_value_totalProgress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbl_value_progress
@@ -314,8 +319,17 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_value_progress.Name = "lbl_value_progress";
             this.lbl_value_progress.Size = new System.Drawing.Size(45, 17);
             this.lbl_value_progress.TabIndex = 17;
-            this.lbl_value_progress.Text = "0%";
+            this.lbl_value_progress.Text = "0.0%";
             this.lbl_value_progress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lbl_report
+            // 
+            this.lbl_report.ForeColor = System.Drawing.Color.Transparent;
+            this.lbl_report.Location = new System.Drawing.Point(12, 512);
+            this.lbl_report.Name = "lbl_report";
+            this.lbl_report.Size = new System.Drawing.Size(713, 16);
+            this.lbl_report.TabIndex = 16;
+            this.lbl_report.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainUI
             // 
@@ -336,7 +350,6 @@ namespace TYYongAutoPatcher.src.UI
             this.Text = "泰月勇Online 登錄器";
             this.Load += new System.EventHandler(this.MainUI_Load);
             this.pnl_dragger.ResumeLayout(false);
-            this.pnl_dragger.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -362,6 +375,7 @@ namespace TYYongAutoPatcher.src.UI
         private System.Windows.Forms.Panel pnl_dragger;
         private System.Windows.Forms.Label lbl_value_totalProgress;
         private System.Windows.Forms.Label lbl_value_progress;
+        private System.Windows.Forms.Label lbl_report;
     }
 }
 

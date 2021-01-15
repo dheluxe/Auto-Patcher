@@ -33,6 +33,7 @@ namespace TYYongAutoPatcher.src.Controllers
         ReadyToInstall,
         Retrying,
         Success,
+        UpdatedSuccess,
     }
 
     class MainController
@@ -72,8 +73,8 @@ namespace TYYongAutoPatcher.src.Controllers
 
         public async Task Run()
         {
-
-            State = StateCode.Initializing;
+            await DeleteAllTemp();
+            UpdateState(StateCode.Initializing);
             ReadLocalSetting();
             await DownloadAndConfigSetting();
             if (State == StateCode.ErrorConnectingFail)
@@ -112,6 +113,7 @@ namespace TYYongAutoPatcher.src.Controllers
                     case StateCode.ErrorExtractingFail:
                     case StateCode.ErrorWritingFail:
                     case StateCode.GameReady:
+                    case StateCode.UpdatedSuccess:
                         return;
                     default:
                         UpdateState(StateCode.GameReady);
@@ -163,8 +165,8 @@ namespace TYYongAutoPatcher.src.Controllers
             catch (Exception ex)
             {
                 // If the file can't be wrotten , stop the program.
-                UpdateState(State = StateCode.ErrorWritingFail);
-                ui.AddMsg(ex.Message);
+                UpdateState(StateCode.ErrorWritingFail);
+                //ui.AddMsg(ex.Message);
             }
         }
 
@@ -172,7 +174,7 @@ namespace TYYongAutoPatcher.src.Controllers
         {
             var noOfRetry = 0;
             var maxNoOfRetry = 5;
-            while (++noOfRetry <= maxNoOfRetry)
+            while (++noOfRetry <= maxNoOfRetry && State == StateCode.ErrorConnectingFail)
             {
                 UpdateState(StateCode.Retrying);
                 ui.AddMsg($"嘗試連接到伺服器中... {noOfRetry} / {maxNoOfRetry} ", StateCode.Retrying);
@@ -233,23 +235,21 @@ namespace TYYongAutoPatcher.src.Controllers
                 order++;
                 size /= 1024;
             }
-            return String.Format("{0:0.##} {1}", size, sizes[order]);
+            return String.Format($"{size.ToString("N2")} {sizes[order]}");
         }
 
         public async void CloseLauncher()
         {
             await DeleteAllTemp();
             ui.Close();
-
         }
 
-
-
-        public void Launch()
+        public async void Launch()
         {
             var gameExe = $"{pwd}\\{Setting.Game.Exe}";
             if (File.Exists(gameExe))
             {
+                await DeleteAllTemp();
                 Process process = new Process();
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -262,8 +262,7 @@ namespace TYYongAutoPatcher.src.Controllers
             {
                 ui.ShowErrorMsg($"缺失遊戲文件，請嘗試重新安裝泰月勇Online!", $"找不到{Setting.Game.Exe}");
             }
-            CloseLauncher();
-
+            ui.Close();
         }
 
         public bool IsBusy()
@@ -281,12 +280,11 @@ namespace TYYongAutoPatcher.src.Controllers
         public async Task DeleteTempFile(string fileName)
         {
             var file = $"{tempDir}{fileName}";
-            Console.WriteLine(file);
             try
             {
                 if (File.Exists(file)) await Task.Run(() => File.Delete(file));
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 //ui.AddMsg($"無法刪除 {fileName}", StateCode.Error);
             }
@@ -299,7 +297,7 @@ namespace TYYongAutoPatcher.src.Controllers
                 if (Directory.Exists(tempDir)) await Task.Run(() => Directory.Delete(tempDir, true));
 
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 //ui.AddMsg($"無法刪除 {tempDir}", StateCode.Error);
             }
@@ -309,6 +307,7 @@ namespace TYYongAutoPatcher.src.Controllers
         {
             cts.Cancel();
             await DeleteAllTemp();
+            UpdateState(StateCode.Cancelled);
         }
 
         public void UpdateLocalPatchVersion(PatchModel patch)
@@ -326,5 +325,64 @@ namespace TYYongAutoPatcher.src.Controllers
                 ui.AddMsg(ex.Message);
             }
         }
+
+        public bool IsUri(string uri)
+        {
+            Uri uriResult;
+            return Uri.TryCreate(uri, UriKind.Absolute, out uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+        }
+
+
+        public int GetNoOfDownloadedPatches()
+        {
+            var result = 0;
+            foreach (var patch in Setting.PatchList) 
+            {
+                if (patch.DownloadedPercentage >= 100) result++;
+            }
+            return result;
+        }
+
+        public string GetSizeOfDownloadedPatches()
+        {
+            var result = 0.0;
+            foreach (var patch in Setting.PatchList)
+            {
+                result += patch.DownloadedSize;
+            }
+            return SizeToString(result);
+        }
+
+        public int GetNoOfUnzipped()
+        {
+            var result = 0;
+            foreach (var patch in Setting.PatchList)
+            {
+                if (patch.IsUnzipSucceed) result++;
+            }
+            return result;
+        }
+
+        public string GetSizeOfUnzipped() 
+        {
+            var result = 0.0;
+            foreach (var patch in Setting.PatchList)
+            {
+                result += patch.SizeOfUnZippedFiles;
+            }
+            return SizeToString(result);
+        }
+
+        public string MSToString(double ms)
+        {
+            TimeSpan t = TimeSpan.FromMilliseconds(ms);
+            var result = "";
+            if (t.Hours > 0) result += $"{t.Hours}小時 ";
+            if (t.Minutes > 0) result +=$"{t.Minutes}分鐘 ";
+            if (t.Seconds > 0) result +=$"{t.Seconds}秒 ";
+            return result;
+        }
+
     }
 }

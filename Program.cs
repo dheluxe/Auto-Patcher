@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using TYYongAutoPatcher.src.UI;
 
 namespace TYYongAutoPatcher
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TYYongAutoPatcher.src.Models;
 using TYYongAutoPatcher.src.UI;
@@ -13,6 +14,7 @@ namespace TYYongAutoPatcher.src.Controllers
     {
 
         private MainController app;
+        public WebClient client;
 
         public FileDownloadController(MainController app)
         {
@@ -24,16 +26,17 @@ namespace TYYongAutoPatcher.src.Controllers
             app.UpdateState(StateCode.Downloading);
             try
             {
-                WebClient client = new WebClient();
+                client = new WebClient();
                 client.DownloadProgressChanged += app.ui.DownloadPatchProgressChangedHandler(patch);
                 client.DownloadFileCompleted += app.ui.AsyncCompletedEventHandler(patch);
                 app.ui.AddMsg($"正在下載 {patch.FileName}...");
                 await client.DownloadFileTaskAsync(url, savePath);
+                client.Dispose();
             }
             catch (Exception e)
             {
                 app.UpdateState(StateCode.ErrorConnectingFail);
-                app.ui.AddMsg($"無法取得文件 {url}");
+                app.ui.AddMsg($"無法取得更新包 {patch.FileName}");
             }
         }
 

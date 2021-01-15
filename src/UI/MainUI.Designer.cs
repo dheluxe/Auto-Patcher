@@ -37,11 +37,11 @@ namespace TYYongAutoPatcher.src.UI
             this.lbx_messages = new System.Windows.Forms.ListBox();
             this.btn_launch = new System.Windows.Forms.Button();
             this.btn_exit = new System.Windows.Forms.Button();
-            this.pgb_download = new System.Windows.Forms.ProgressBar();
-            this.lbl_title_total = new System.Windows.Forms.Label();
+            this.pgb_progress = new System.Windows.Forms.ProgressBar();
+            this.lbl_title_totalProgress = new System.Windows.Forms.Label();
             this.lbl_copyright = new System.Windows.Forms.Label();
             this.pgb_total = new System.Windows.Forms.ProgressBar();
-            this.lbl_title_download = new System.Windows.Forms.Label();
+            this.lbl_title_progress = new System.Windows.Forms.Label();
             this.lbl_goToWeb = new System.Windows.Forms.Label();
             this.btn_register = new System.Windows.Forms.Button();
             this.btn_shop = new System.Windows.Forms.Button();
@@ -49,8 +49,8 @@ namespace TYYongAutoPatcher.src.UI
             this.btn_event = new System.Windows.Forms.Button();
             this.lbl_state = new System.Windows.Forms.Label();
             this.pnl_dragger = new System.Windows.Forms.Panel();
-            this.lbl_value_download = new System.Windows.Forms.Label();
-            this.lbl_value_total = new System.Windows.Forms.Label();
+            this.lbl_value_totalProgress = new System.Windows.Forms.Label();
+            this.lbl_value_progress = new System.Windows.Forms.Label();
             this.pnl_dragger.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -132,23 +132,23 @@ namespace TYYongAutoPatcher.src.UI
             this.btn_exit.MouseLeave += new System.EventHandler(this.btn_exit_MouseLeave);
             this.btn_exit.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_exit_MouseUp);
             // 
-            // pgb_download
+            // pgb_progress
             // 
-            this.pgb_download.Location = new System.Drawing.Point(69, 392);
-            this.pgb_download.Name = "pgb_download";
-            this.pgb_download.Size = new System.Drawing.Size(445, 16);
-            this.pgb_download.TabIndex = 9;
+            this.pgb_progress.Location = new System.Drawing.Point(69, 392);
+            this.pgb_progress.Name = "pgb_progress";
+            this.pgb_progress.Size = new System.Drawing.Size(445, 16);
+            this.pgb_progress.TabIndex = 9;
             // 
-            // lbl_title_total
+            // lbl_title_totalProgress
             // 
-            this.lbl_title_total.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_title_total.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_total.Location = new System.Drawing.Point(10, 419);
-            this.lbl_title_total.Name = "lbl_title_total";
-            this.lbl_title_total.Size = new System.Drawing.Size(53, 16);
-            this.lbl_title_total.TabIndex = 8;
-            this.lbl_title_total.Text = "整體進度";
-            this.lbl_title_total.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_title_totalProgress.BackColor = System.Drawing.Color.Transparent;
+            this.lbl_title_totalProgress.ForeColor = System.Drawing.Color.White;
+            this.lbl_title_totalProgress.Location = new System.Drawing.Point(10, 419);
+            this.lbl_title_totalProgress.Name = "lbl_title_totalProgress";
+            this.lbl_title_totalProgress.Size = new System.Drawing.Size(53, 16);
+            this.lbl_title_totalProgress.TabIndex = 8;
+            this.lbl_title_totalProgress.Text = "整體進度";
+            this.lbl_title_totalProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lbl_copyright
             // 
@@ -168,16 +168,16 @@ namespace TYYongAutoPatcher.src.UI
             this.pgb_total.Size = new System.Drawing.Size(444, 16);
             this.pgb_total.TabIndex = 10;
             // 
-            // lbl_title_download
+            // lbl_title_progress
             // 
-            this.lbl_title_download.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_title_download.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_download.Location = new System.Drawing.Point(12, 392);
-            this.lbl_title_download.Name = "lbl_title_download";
-            this.lbl_title_download.Size = new System.Drawing.Size(51, 16);
-            this.lbl_title_download.TabIndex = 7;
-            this.lbl_title_download.Text = "下載";
-            this.lbl_title_download.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_title_progress.BackColor = System.Drawing.Color.Transparent;
+            this.lbl_title_progress.ForeColor = System.Drawing.Color.White;
+            this.lbl_title_progress.Location = new System.Drawing.Point(12, 392);
+            this.lbl_title_progress.Name = "lbl_title_progress";
+            this.lbl_title_progress.Size = new System.Drawing.Size(51, 16);
+            this.lbl_title_progress.TabIndex = 7;
+            this.lbl_title_progress.Text = "進度";
+            this.lbl_title_progress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lbl_goToWeb
             // 
@@ -272,19 +272,19 @@ namespace TYYongAutoPatcher.src.UI
             // pnl_dragger
             // 
             this.pnl_dragger.BackColor = System.Drawing.Color.Transparent;
-            this.pnl_dragger.Controls.Add(this.pgb_download);
+            this.pnl_dragger.Controls.Add(this.pgb_progress);
             this.pnl_dragger.Controls.Add(this.pgb_total);
-            this.pnl_dragger.Controls.Add(this.lbl_value_total);
-            this.pnl_dragger.Controls.Add(this.lbl_value_download);
+            this.pnl_dragger.Controls.Add(this.lbl_value_totalProgress);
+            this.pnl_dragger.Controls.Add(this.lbl_value_progress);
             this.pnl_dragger.Controls.Add(this.lbl_state);
             this.pnl_dragger.Controls.Add(this.btn_event);
             this.pnl_dragger.Controls.Add(this.cbx_startWhenReady);
             this.pnl_dragger.Controls.Add(this.btn_shop);
             this.pnl_dragger.Controls.Add(this.btn_register);
             this.pnl_dragger.Controls.Add(this.lbl_goToWeb);
-            this.pnl_dragger.Controls.Add(this.lbl_title_download);
+            this.pnl_dragger.Controls.Add(this.lbl_title_progress);
             this.pnl_dragger.Controls.Add(this.lbl_copyright);
-            this.pnl_dragger.Controls.Add(this.lbl_title_total);
+            this.pnl_dragger.Controls.Add(this.lbl_title_totalProgress);
             this.pnl_dragger.Controls.Add(this.btn_exit);
             this.pnl_dragger.Controls.Add(this.btn_launch);
             this.pnl_dragger.Controls.Add(this.lbx_messages);
@@ -297,25 +297,25 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
             this.pnl_dragger.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
-            // lbl_value_download
+            // lbl_value_totalProgress
             // 
-            this.lbl_value_download.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_download.Location = new System.Drawing.Point(511, 391);
-            this.lbl_value_download.Name = "lbl_value_download";
-            this.lbl_value_download.Size = new System.Drawing.Size(45, 17);
-            this.lbl_value_download.TabIndex = 17;
-            this.lbl_value_download.Text = "0%";
-            this.lbl_value_download.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbl_value_totalProgress.ForeColor = System.Drawing.Color.White;
+            this.lbl_value_totalProgress.Location = new System.Drawing.Point(513, 421);
+            this.lbl_value_totalProgress.Name = "lbl_value_totalProgress";
+            this.lbl_value_totalProgress.Size = new System.Drawing.Size(42, 17);
+            this.lbl_value_totalProgress.TabIndex = 17;
+            this.lbl_value_totalProgress.Text = "0%";
+            this.lbl_value_totalProgress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lbl_value_total
+            // lbl_value_progress
             // 
-            this.lbl_value_total.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_total.Location = new System.Drawing.Point(513, 421);
-            this.lbl_value_total.Name = "lbl_value_total";
-            this.lbl_value_total.Size = new System.Drawing.Size(42, 17);
-            this.lbl_value_total.TabIndex = 17;
-            this.lbl_value_total.Text = "0%";
-            this.lbl_value_total.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbl_value_progress.ForeColor = System.Drawing.Color.White;
+            this.lbl_value_progress.Location = new System.Drawing.Point(511, 391);
+            this.lbl_value_progress.Name = "lbl_value_progress";
+            this.lbl_value_progress.Size = new System.Drawing.Size(45, 17);
+            this.lbl_value_progress.TabIndex = 17;
+            this.lbl_value_progress.Text = "0%";
+            this.lbl_value_progress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainUI
             // 
@@ -348,11 +348,11 @@ namespace TYYongAutoPatcher.src.UI
         private System.Windows.Forms.ListBox lbx_messages;
         private System.Windows.Forms.Button btn_launch;
         private System.Windows.Forms.Button btn_exit;
-        private System.Windows.Forms.ProgressBar pgb_download;
-        private System.Windows.Forms.Label lbl_title_total;
+        private System.Windows.Forms.ProgressBar pgb_progress;
+        private System.Windows.Forms.Label lbl_title_totalProgress;
         private System.Windows.Forms.Label lbl_copyright;
         private System.Windows.Forms.ProgressBar pgb_total;
-        private System.Windows.Forms.Label lbl_title_download;
+        private System.Windows.Forms.Label lbl_title_progress;
         private System.Windows.Forms.Label lbl_goToWeb;
         private System.Windows.Forms.Button btn_register;
         private System.Windows.Forms.Button btn_shop;
@@ -360,8 +360,8 @@ namespace TYYongAutoPatcher.src.UI
         private System.Windows.Forms.Button btn_event;
         private System.Windows.Forms.Label lbl_state;
         private System.Windows.Forms.Panel pnl_dragger;
-        private System.Windows.Forms.Label lbl_value_total;
-        private System.Windows.Forms.Label lbl_value_download;
+        private System.Windows.Forms.Label lbl_value_totalProgress;
+        private System.Windows.Forms.Label lbl_value_progress;
     }
 }
 

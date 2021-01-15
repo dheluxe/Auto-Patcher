@@ -31,17 +31,20 @@ namespace TYYongAutoPatcher.src.Controllers
         ReadyToInstall,
         Retrying,
         Success,
+        Cancelled,
     }
 
     class MainController
     {
         public SettingModel Setting;
         public MainUI ui;
-        public FileDownloadController downloader;
-        public ZipController zip;
+        private FileDownloadController downloader;
+        private ZipController zip;
+        public CancellationTokenSource cts;
+
         public StateCode State { get; set; }
 
-        public string settingFile = "config.json";
+        public string settingFile = "./data/config.json";
         private readonly string tempDir = $"{Directory.GetCurrentDirectory()}\\data\\temp\\";
 
         public MainController(MainUI ui)
@@ -50,6 +53,9 @@ namespace TYYongAutoPatcher.src.Controllers
             Setting = new SettingModel();
             downloader = new FileDownloadController(this);
             zip = new ZipController(this);
+            cts = new CancellationTokenSource();
+
+
         }
 
         public void UpdateState(StateCode s, string msg = "")
@@ -58,8 +64,9 @@ namespace TYYongAutoPatcher.src.Controllers
             ui.UpdateLblState(msg);
         }
 
-        public async Task init()
+        public async Task Run()
         {
+
             State = StateCode.Initializing;
             ReadLocalSetting();
             await DownloadAndConfigSetting();
@@ -86,8 +93,21 @@ namespace TYYongAutoPatcher.src.Controllers
                         }
                     }
                 }
+                if (cts.IsCancellationRequested) cts.Token.ThrowIfCancellationRequested();
+                switch (State)
+                {
+                    case StateCode.Error:
+                    case StateCode.Extracting:
+                    case StateCode.ErrorConnectingFail:
+                    case StateCode.ErrorExtractingFail:
+                    case StateCode.ErrorWritingFail:
+                    case StateCode.GameReady:
+                        return;
+                    default:
+                        UpdateState(StateCode.GameReady);
+                        break;
+                }
             }
-            UpdateState(StateCode.GameReady);
         }
 
         private async Task ReadyTempFolder()
@@ -108,20 +128,14 @@ namespace TYYongAutoPatcher.src.Controllers
 
         private void ReadLocalSetting()
         {
-            try
-            {
-                // Load the local setting file
-                using (StreamReader reader = new StreamReader(settingFile))
+            if (Directory.Exists(settingFile)) using (StreamReader reader = new StreamReader(settingFile))
                 {
                     // Read the setting json from local.
                     string json = reader.ReadToEnd();
                     Setting.LocalConfig = JsonConvert.DeserializeObject<LocalConfigModel>(json);
                 }
-            }
-            catch (Exception e)
-            {
-                WriteLocalSetting();
-            }
+            else WriteLocalSetting();
+
         }
 
         private void WriteLocalSetting()
@@ -131,7 +145,8 @@ namespace TYYongAutoPatcher.src.Controllers
                 // ui.AddMsg(e.Message);
                 // Run below when file not found.
                 // write the defualt setting json to local.
-                File.WriteAllText(settingFile, JsonConvert.SerializeObject(Setting.LocalConfig));
+                if (!Directory.Exists(settingFile))
+                    File.WriteAllText(settingFile, JsonConvert.SerializeObject(Setting.LocalConfig));
             }
             catch (Exception ex)
             {
@@ -189,7 +204,7 @@ namespace TYYongAutoPatcher.src.Controllers
             }
 
             total = total / Setting.PatchList.Count;
-            Console.WriteLine(total);
+            //Console.WriteLine(total);
 
             return total;
         }
@@ -207,15 +222,62 @@ namespace TYYongAutoPatcher.src.Controllers
             return String.Format("{0:0.##} {1}", size, sizes[order]);
         }
 
-        public void CloseLauncher()
+        public async void CloseLauncher()
         {
-            //DeleteTemp();
+            await DeleteAllTemp();
             ui.Close();
+
         }
+
+
 
         public void Launch()
         {
 
+        }
+
+        public bool IsBusy()
+        {
+            switch (State)
+            {
+                case StateCode.Downloading:
+                case StateCode.Extracting:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public async Task DeleteTempFile(string fileName)
+        {
+            var file = $"{tempDir}{fileName}";
+            if (Directory.Exists(file)) await Task.Run(() => Directory.Delete(file));
+        }
+
+        public async Task DeleteAllTemp()
+        {
+            if (Directory.Exists(tempDir)) await Task.Run(() => Directory.Delete(tempDir, true));
+        }
+
+        public async void Cancel()
+        {
+            cts.Cancel();
+            await DeleteAllTemp();
+        }
+
+        public void UpdateLocalPatchVersion(PatchModel patch)
+        {
+            //try
+            //{
+            //    Setting.LocalConfig.Launcher.PatchVersion = patch.Verison;
+            //    File.WriteAllText(settingFile, JsonConvert.SerializeObject(Setting.LocalConfig));
+            //}
+            //catch (Exception ex)
+            //{
+            //    // If the file can't be wrotten , stop the program.
+            //    UpdateState(State = StateCode.ErrorWritingFail);
+            //    ui.AddMsg(ex.Message);
+            //}
         }
     }
 }

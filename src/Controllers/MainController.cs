@@ -33,7 +33,7 @@ namespace TYYongAutoPatcher.src.Controllers
         ReadyToInstall,
         Retrying,
         Success,
-        UpdatedSuccess,
+        UpdatingCompleted,
     }
 
     class MainController
@@ -73,8 +73,8 @@ namespace TYYongAutoPatcher.src.Controllers
 
         public async Task Run()
         {
-            await DeleteAllTemp();
             UpdateState(StateCode.Initializing);
+            await DeleteTempFolderAndFiles();
             ReadLocalSetting();
             await DownloadAndConfigSetting();
             if (State == StateCode.ErrorConnectingFail)
@@ -113,7 +113,7 @@ namespace TYYongAutoPatcher.src.Controllers
                     case StateCode.ErrorExtractingFail:
                     case StateCode.ErrorWritingFail:
                     case StateCode.GameReady:
-                    case StateCode.UpdatedSuccess:
+                    case StateCode.UpdatingCompleted:
                         return;
                     default:
                         UpdateState(StateCode.GameReady);
@@ -124,17 +124,18 @@ namespace TYYongAutoPatcher.src.Controllers
 
         private async Task ReadyTempFolder()
         {
-            if (Directory.Exists(tempDir)) await Task.Run(() => Directory.Delete(tempDir, true));
-            // ui.AddMsg("準備文件中...");
             try
             {
+                if (Directory.Exists(tempDir)) await Task.Run(() => Directory.Delete(tempDir, true));
+                // ui.AddMsg("準備文件中...");
                 await Task.Run(() => Directory.CreateDirectory(tempDir));
                 State = StateCode.ReadyToInstall;
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"*************MainController.ReadyTempFolder(): {ex.Message}");
                 UpdateState(StateCode.Error);
-                ui.AddMsg(ex.Message, StateCode.Error);
+                //ui.AddMsg(ex.Message, StateCode.Error);
             }
         }
 
@@ -164,6 +165,7 @@ namespace TYYongAutoPatcher.src.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"*************MainController.WriteLocalSetting(): {ex.Message}");
                 // If the file can't be wrotten , stop the program.
                 UpdateState(StateCode.ErrorWritingFail);
                 //ui.AddMsg(ex.Message);
@@ -201,8 +203,9 @@ namespace TYYongAutoPatcher.src.Controllers
                 ui.SetLeftAndRightWeb();
                 UpdateState(StateCode.Configured);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Console.WriteLine($"*************MainController.DownloadAndConfigSetting(): {ex.Message}");
                 State = StateCode.ErrorConnectingFail;
             }
 
@@ -215,13 +218,11 @@ namespace TYYongAutoPatcher.src.Controllers
             foreach (var patch in Setting.PatchList)
             {
                 var patchExtracted = patch.NoOfZippedFiles == 0 ? 0 : 100.0 * patch.NoOfUnZippedFiles / patch.NoOfZippedFiles;
-                var p = (1.0 * patch.DownloadedPercentage + patchExtracted) / 2;
+                var p = (1.0 * patch.DownloadedPercentage + patchExtracted) / 2; // Two tasks percentages will be 200, so dividing by 2
                 total += p;
             }
 
-            total = total / Setting.PatchList.Count;
-            //Console.WriteLine(total);
-
+            total = total / Setting.PatchList.Count; // finished patches percentages divided by total patches.
             return total;
         }
 
@@ -235,12 +236,12 @@ namespace TYYongAutoPatcher.src.Controllers
                 order++;
                 size /= 1024;
             }
-            return String.Format($"{size.ToString("N2")} {sizes[order]}");
+            return $"{size.ToString("N2")} {sizes[order]}";
         }
 
         public async void CloseLauncher()
         {
-            await DeleteAllTemp();
+            await DeleteTempFolderAndFiles();
             ui.Close();
         }
 
@@ -249,7 +250,7 @@ namespace TYYongAutoPatcher.src.Controllers
             var gameExe = $"{pwd}\\{Setting.Game.Exe}";
             if (File.Exists(gameExe))
             {
-                await DeleteAllTemp();
+                await DeleteTempFolderAndFiles();
                 Process process = new Process();
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -260,7 +261,7 @@ namespace TYYongAutoPatcher.src.Controllers
             }
             else
             {
-                ui.ShowErrorMsg($"缺失遊戲文件，請嘗試重新安裝泰月勇Online!", $"找不到{Setting.Game.Exe}");
+                ui.ShowErrorMsg($"缺失遊戲文件，請嘗試重新安裝泰月勇Online!", $"找不到檔案 {Setting.Game.Exe}");
             }
             ui.Close();
         }
@@ -286,11 +287,12 @@ namespace TYYongAutoPatcher.src.Controllers
             }
             catch (IOException ex)
             {
+                Console.WriteLine($"*************MainController.DeleteTempFile(string fileName): {ex.Message}");
                 //ui.AddMsg($"無法刪除 {fileName}", StateCode.Error);
             }
         }
 
-        public async Task DeleteAllTemp()
+        public async Task DeleteTempFolderAndFiles()
         {
             try
             {
@@ -299,6 +301,7 @@ namespace TYYongAutoPatcher.src.Controllers
             }
             catch (IOException ex)
             {
+                Console.WriteLine($"*************MainController.DeleteTempFolderAndFiles(): {ex.Message}");
                 //ui.AddMsg($"無法刪除 {tempDir}", StateCode.Error);
             }
         }
@@ -306,7 +309,7 @@ namespace TYYongAutoPatcher.src.Controllers
         public async void Cancel()
         {
             cts.Cancel();
-            await DeleteAllTemp();
+            await DeleteTempFolderAndFiles();
             UpdateState(StateCode.Cancelled);
         }
 
@@ -320,6 +323,7 @@ namespace TYYongAutoPatcher.src.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"*************MainController.UpdateLocalPatchVersion(): {ex.Message}");
                 // If the file can't be wrotten , stop the program.
                 UpdateState(State = StateCode.ErrorWritingFail);
                 ui.AddMsg(ex.Message);
@@ -337,7 +341,7 @@ namespace TYYongAutoPatcher.src.Controllers
         public int GetNoOfDownloadedPatches()
         {
             var result = 0;
-            foreach (var patch in Setting.PatchList) 
+            foreach (var patch in Setting.PatchList)
             {
                 if (patch.DownloadedPercentage >= 100) result++;
             }
@@ -364,7 +368,7 @@ namespace TYYongAutoPatcher.src.Controllers
             return result;
         }
 
-        public string GetSizeOfUnzipped() 
+        public string GetSizeOfUnzipped()
         {
             var result = 0.0;
             foreach (var patch in Setting.PatchList)
@@ -378,9 +382,17 @@ namespace TYYongAutoPatcher.src.Controllers
         {
             TimeSpan t = TimeSpan.FromMilliseconds(ms);
             var result = "";
-            if (t.Hours > 0) result += $"{t.Hours}小時 ";
-            if (t.Minutes > 0) result +=$"{t.Minutes}分鐘 ";
-            if (t.Seconds > 0) result +=$"{t.Seconds}秒 ";
+
+            if (t.Hours == 0 && t.Minutes == 0 && t.Seconds == 0) 
+            {
+                result = $"{(ms/1000).ToString("N2")}秒 ";
+            }
+            else
+            {
+                if (t.Hours > 0) result += $"{t.Hours}小時 ";
+                if (t.Minutes > 0) result += $"{t.Minutes}分鐘 ";
+                if (t.Seconds > 0) result += $"{t.Seconds}秒 ";
+            }
             return result;
         }
 

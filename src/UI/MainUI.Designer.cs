@@ -67,10 +67,10 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // web_right
             // 
-            this.web_right.Location = new System.Drawing.Point(405, 47);
+            this.web_right.Location = new System.Drawing.Point(407, 47);
             this.web_right.MinimumSize = new System.Drawing.Size(20, 20);
             this.web_right.Name = "web_right";
-            this.web_right.Size = new System.Drawing.Size(320, 241);
+            this.web_right.Size = new System.Drawing.Size(318, 241);
             this.web_right.TabIndex = 3;
             this.web_right.Visible = false;
             // 
@@ -88,9 +88,9 @@ namespace TYYongAutoPatcher.src.UI
             this.lbx_messages.ForeColor = System.Drawing.Color.White;
             this.lbx_messages.FormattingEnabled = true;
             this.lbx_messages.ItemHeight = 20;
-            this.lbx_messages.Location = new System.Drawing.Point(12, 448);
+            this.lbx_messages.Location = new System.Drawing.Point(10, 448);
             this.lbx_messages.Name = "lbx_messages";
-            this.lbx_messages.Size = new System.Drawing.Size(544, 60);
+            this.lbx_messages.Size = new System.Drawing.Size(546, 60);
             this.lbx_messages.TabIndex = 4;
             this.lbx_messages.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbx_messages_DrawItem);
             // 
@@ -173,9 +173,9 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.lbl_title_progress.BackColor = System.Drawing.Color.Transparent;
             this.lbl_title_progress.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_progress.Location = new System.Drawing.Point(12, 392);
+            this.lbl_title_progress.Location = new System.Drawing.Point(10, 392);
             this.lbl_title_progress.Name = "lbl_title_progress";
-            this.lbl_title_progress.Size = new System.Drawing.Size(51, 16);
+            this.lbl_title_progress.Size = new System.Drawing.Size(53, 16);
             this.lbl_title_progress.TabIndex = 7;
             this.lbl_title_progress.Text = "進度";
             this.lbl_title_progress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -220,7 +220,7 @@ namespace TYYongAutoPatcher.src.UI
             this.btn_shop.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_shop.FlatAppearance.BorderSize = 0;
             this.btn_shop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_shop.Location = new System.Drawing.Point(405, 308);
+            this.btn_shop.Location = new System.Drawing.Point(406, 308);
             this.btn_shop.Name = "btn_shop";
             this.btn_shop.Size = new System.Drawing.Size(150, 60);
             this.btn_shop.TabIndex = 5;
@@ -276,13 +276,10 @@ namespace TYYongAutoPatcher.src.UI
             // pnl_dragger
             // 
             this.pnl_dragger.BackColor = System.Drawing.Color.Transparent;
-            this.pnl_dragger.Controls.Add(this.lbl_copyright);
             this.pnl_dragger.Controls.Add(this.pgb_progress);
             this.pnl_dragger.Controls.Add(this.pgb_total);
             this.pnl_dragger.Controls.Add(this.lbl_value_totalProgress);
             this.pnl_dragger.Controls.Add(this.lbl_value_progress);
-            this.pnl_dragger.Controls.Add(this.lbl_report);
-            this.pnl_dragger.Controls.Add(this.lbl_state);
             this.pnl_dragger.Controls.Add(this.btn_event);
             this.pnl_dragger.Controls.Add(this.cbx_startWhenReady);
             this.pnl_dragger.Controls.Add(this.btn_shop);
@@ -293,6 +290,9 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.Controls.Add(this.btn_exit);
             this.pnl_dragger.Controls.Add(this.btn_launch);
             this.pnl_dragger.Controls.Add(this.lbx_messages);
+            this.pnl_dragger.Controls.Add(this.lbl_copyright);
+            this.pnl_dragger.Controls.Add(this.lbl_state);
+            this.pnl_dragger.Controls.Add(this.lbl_report);
             this.pnl_dragger.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_dragger.Location = new System.Drawing.Point(0, 0);
             this.pnl_dragger.Name = "pnl_dragger";

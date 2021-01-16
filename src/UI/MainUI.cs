@@ -52,6 +52,7 @@ namespace TYYongAutoPatcher.src.UI
             }
             catch (OperationCanceledException ex)
             {
+                Console.WriteLine($"*************MainUI.timer_wait_Tick(object sender, EventArgs e): {ex.Message}");
                 //lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                 //lbl_state.Text = "✘更新失敗";
             }
@@ -69,12 +70,6 @@ namespace TYYongAutoPatcher.src.UI
             }
 
         }
-
-        #region click handler
-        // Open browser click...
-        private void lbl_goToWeb_Click(object sender, EventArgs e)
-        {
-        }
         private void btn_exit_Click(object sender, EventArgs e)
         {
             if (app.IsBusy())
@@ -89,6 +84,28 @@ namespace TYYongAutoPatcher.src.UI
             {
                 app.CloseLauncher();
             }
+        }
+
+        // Allow start the game.
+        public async void ReadyToStartGame()
+        {
+            await app.DeleteTempFolderAndFiles();
+            btn_launch.Enabled = true;
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start1;
+            pgb_progress.Value = 100;
+            pgb_total.Value = 100;
+            lbl_value_progress.Text = "100.0%";
+            lbl_value_totalProgress.Text = "100.0%";
+            AddMsg("已成功連線並傳送遊戲資料.", StateCode.Success);
+            AddMsg("已完成進入遊戲的各種設定.", StateCode.Success);
+            if (cbx_startWhenReady.Checked) app.Launch();
+        }
+
+        #region click handler
+        // Open browser click...
+        private void lbl_goToWeb_Click(object sender, EventArgs e)
+        {
+            if (app.IsUri(app.Setting.Server.OfficialWeb)) Process.Start(app.Setting.Server.OfficialWeb);
         }
         private void btn_shop_Click(object sender, EventArgs e)
         {
@@ -244,21 +261,6 @@ namespace TYYongAutoPatcher.src.UI
             web_left.Visible = true;
             web_right.Visible = true;
         }
-        // Allow start the game.
-        public async void ReadyToStartGame()
-        {
-            await app.DeleteAllTemp();
-            btn_launch.Enabled = true;
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start3;
-            pgb_progress.Value = 100;
-            pgb_total.Value = 100;
-            lbl_value_progress.Text = "100.0%";
-            lbl_value_totalProgress.Text = "100.0%";
-            AddMsg("已成功連線並傳送遊戲資料.", StateCode.Success);
-            AddMsg("已完成進入遊戲的各種設定.", StateCode.Success);
-            if (cbx_startWhenReady.Checked) app.Launch();
-        }
- 
         #region Update last message in the listbox
         //public void UpdateMsg(string msg, StateCode state = StateCode.Normal)
         //{
@@ -477,7 +479,7 @@ namespace TYYongAutoPatcher.src.UI
                     app.Cancel();
                     break;
                 case StateCode.GameReady:
-                case StateCode.UpdatedSuccess:
+                case StateCode.UpdatingCompleted:
                     lbl_state.ForeColor = Color.FromArgb(177, 241, 167);
                     btn_launch.Enabled = true;
                     lbl_state.Text = "✔準備就緒";
@@ -508,15 +510,15 @@ namespace TYYongAutoPatcher.src.UI
                     break;
 
             }
-            if (app.State == StateCode.UpdatedSuccess)
+            if (app.State == StateCode.UpdatingCompleted)
                 lbl_state.Text = "✔更新完畢";
 
             if (msg.Length > 0) lbl_state.Text = msg;
         }
 
-        public void UpdateProgress()
+        public void CompeteUpdating()
         {
-            app.UpdateState(StateCode.UpdatedSuccess);
+            app.UpdateState(StateCode.UpdatingCompleted);
         }
 
         public void ShowErrorMsg(string msg, string title = "泰月勇Online")

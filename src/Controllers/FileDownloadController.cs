@@ -33,8 +33,9 @@ namespace TYYongAutoPatcher.src.Controllers
                 await client.DownloadFileTaskAsync(url, savePath);
                 client.Dispose();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Console.WriteLine($"*************FileDownloadController.DownloadFilesAysnc(Uri url, string savePath, PatchModel patch): {ex.Message}");
                 app.UpdateState(StateCode.ErrorConnectingFail);
                 app.ui.AddMsg($"無法取得更新包 {patch.FileName}", StateCode.ErrorConnectingFail);
             }

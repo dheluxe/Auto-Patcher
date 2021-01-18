@@ -138,9 +138,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Controllers\CryptionController.cs" />
     <Compile Include="src\Controllers\FileDownloadController.cs" />
     <Compile Include="src\Controllers\MainController.cs" />
     <Compile Include="src\Controllers\ZipController.cs" />
+    <Compile Include="src\Exceptions\InvalidTokenException.cs" />
     <Compile Include="src\Models\PatchReportModel.cs" />
     <Compile Include="src\UI\MainUI.cs">
       <SubType>Form</SubType>

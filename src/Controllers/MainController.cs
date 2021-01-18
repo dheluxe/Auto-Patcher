@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TYYongAutoPatcher.src.Exceptions;
 using TYYongAutoPatcher.src.Models;
 using TYYongAutoPatcher.src.UI;
 
@@ -43,6 +44,7 @@ namespace TYYongAutoPatcher.src.Controllers
         public SettingModel Setting;
         public MainUI ui;
         public CancellationTokenSource cts;
+        public CryptionController cryption;
 
         private FileDownloadController downloader;
         private ZipController zip;
@@ -62,6 +64,7 @@ namespace TYYongAutoPatcher.src.Controllers
             settingDir = $"{pwd}\\data\\";
             settingFile = "setting.json";
             tempDir = $"{pwd}\\data\\temp\\";
+            cryption = new CryptionController();
 
         }
 
@@ -73,9 +76,10 @@ namespace TYYongAutoPatcher.src.Controllers
 
         public async Task Run()
         {
+            ReadLocalSetting();
+            CheckVersionIsVaild();
             UpdateState(StateCode.Initializing);
             await DeleteTempFolderAndFiles();
-            ReadLocalSetting();
             await DownloadAndConfigSetting();
             if (State == StateCode.ErrorConnectingFail)
             {
@@ -120,6 +124,19 @@ namespace TYYongAutoPatcher.src.Controllers
             }
         }
 
+        private void CheckVersionIsVaild()
+        {
+            try
+            {
+                var deVer = double.Parse(cryption.Decrypt(Setting.LocalConfig.Launcher.Token));
+                if (deVer != Setting.LocalConfig.Launcher.PatchVersion) throw new InvalidTokenException();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidTokenException();
+            }
+        }
+
         private async Task ReadyTempFolder()
         {
             try
@@ -159,6 +176,7 @@ namespace TYYongAutoPatcher.src.Controllers
                 // write the defualt setting json to local.
                 var file = $"{settingDir}{settingFile}";
                 Directory.CreateDirectory(settingDir);
+                Setting.LocalConfig.Launcher.Token = cryption.Encrypt(Setting.LocalConfig.Launcher.PatchVersion.ToString());
                 File.WriteAllText(file, JsonConvert.SerializeObject(Setting.LocalConfig));
             }
             catch (Exception ex)
@@ -318,6 +336,7 @@ namespace TYYongAutoPatcher.src.Controllers
             try
             {
                 Setting.LocalConfig.Launcher.PatchVersion = patch.Version;
+                Setting.LocalConfig.Launcher.Token = cryption.Encrypt(patch.Version.ToString());
                 var file = $"{settingDir}{settingFile}";
                 File.WriteAllText(file, JsonConvert.SerializeObject(Setting.LocalConfig));
                 ui.UpdateVersion();
@@ -359,18 +378,24 @@ namespace TYYongAutoPatcher.src.Controllers
 
             var pDownloaded = report.SizeOfDownloadedPatches / report.SizeOfDownloadPatches;
             pDownloaded = pDownloaded >= 1 ? report.NoOfDownloadedPatches : pDownloaded + report.NoOfDownloadedPatches;
-            report.TotalPercentageOfDownloaded = 100 * (pDownloaded) / (Setting.PatchList.Count );
-            report.TotalPercentageOfDownloadedToString = $"{report.TotalPercentageOfDownloaded.ToString("n2")}%";
+            report.TotalPercentageOfDownloaded = 100 * (pDownloaded) / (Setting.PatchList.Count);
 
-            var pExtracted = report.SizeOfExtractedZippedFiles  / report.SizeOfDownloadedPatches ;
+            if (report.TotalPercentageOfDownloaded > 0) report.TotalPercentageOfDownloadedToString = $"{report.TotalPercentageOfDownloaded.ToString("n2")}%";
+            else report.TotalPercentageOfDownloadedToString = $"0.00%";
+
+            var pExtracted = report.SizeOfExtractedZippedFiles / report.SizeOfDownloadedPatches;
             pExtracted = pExtracted >= 1 ? report.NoOfUnzipped : pExtracted + report.NoOfUnzipped;
             report.TotalPercentageOfExtracted = 100 * pExtracted / Setting.PatchList.Count;
-            report.TotalPercentageOfExtractedToString = $"{report.TotalPercentageOfExtracted.ToString("n2")}%";
+
+            if (report.TotalPercentageOfExtracted > 0) report.TotalPercentageOfExtractedToString = $"{report.TotalPercentageOfExtracted.ToString("n2")}%";
+            else report.TotalPercentageOfExtractedToString = $"0.00%";
 
             report.SizeOfExtractedZippedFilesToString = SizeToString(report.SizeOfExtractedZippedFiles);
             report.SizeOfExtractedUnzippedFilesToString = SizeToString(report.SizeOfExtractedUnzippedFiles);
             report.SizeOfDownloadedPatchesToString = SizeToString(report.SizeOfDownloadedPatches);
+
             return report;
+
         }
 
         public string WillAddZero(int time)
@@ -389,9 +414,9 @@ namespace TYYongAutoPatcher.src.Controllers
             }
             else
             {
-               result += $"{WillAddZero(t.Hours)} : ";
-               result += $"{WillAddZero(t.Minutes)} : ";
-               result += $"{WillAddZero(t.Seconds)}";
+                result += $"{WillAddZero(t.Hours)} : ";
+                result += $"{WillAddZero(t.Minutes)} : ";
+                result += $"{WillAddZero(t.Seconds)}";
             }
             return result;
         }

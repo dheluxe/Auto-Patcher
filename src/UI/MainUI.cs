@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using TYYongAutoPatcher.src.Controllers;
+using TYYongAutoPatcher.src.Exceptions;
 using TYYongAutoPatcher.src.Models;
 
 namespace TYYongAutoPatcher.src.UI
@@ -59,6 +60,11 @@ namespace TYYongAutoPatcher.src.UI
                 AddMsg("已消取更新", StateCode.Error);
                 //lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                 //lbl_state.Text = "✘更新失敗";
+            }
+            catch (InvalidTokenException ex) 
+            {
+                ShowErrorMsg("檢查到文件遭到修改，請嘗試重新安裝遊戲！", "");
+                this.Close();
             }
             finally
             {

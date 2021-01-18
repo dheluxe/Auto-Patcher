@@ -49,14 +49,14 @@ namespace TYYongAutoPatcher.src.UI
             this.btn_event = new System.Windows.Forms.Button();
             this.lbl_state = new System.Windows.Forms.Label();
             this.pnl_dragger = new System.Windows.Forms.Panel();
+            this.lbl_value_latestVer = new System.Windows.Forms.Label();
+            this.lbl_title_latestVer = new System.Windows.Forms.Label();
+            this.lbl_value_currentVer = new System.Windows.Forms.Label();
+            this.lbl_title_currentVer = new System.Windows.Forms.Label();
             this.lbl_value_progress = new System.Windows.Forms.Label();
             this.lbl_value_totalProgress = new System.Windows.Forms.Label();
             this.lbl_report = new System.Windows.Forms.Label();
             this.timer_delay = new System.Windows.Forms.Timer(this.components);
-            this.lbl_title_currentVer = new System.Windows.Forms.Label();
-            this.lbl_title_latestVer = new System.Windows.Forms.Label();
-            this.lbl_value_latestVer = new System.Windows.Forms.Label();
-            this.lbl_value_currentVer = new System.Windows.Forms.Label();
             this.pnl_dragger.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -142,7 +142,7 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.pgb_progress.Location = new System.Drawing.Point(69, 387);
             this.pgb_progress.Name = "pgb_progress";
-            this.pgb_progress.Size = new System.Drawing.Size(445, 16);
+            this.pgb_progress.Size = new System.Drawing.Size(440, 16);
             this.pgb_progress.TabIndex = 9;
             // 
             // lbl_title_totalProgress
@@ -171,7 +171,7 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.pgb_total.Location = new System.Drawing.Point(69, 419);
             this.pgb_total.Name = "pgb_total";
-            this.pgb_total.Size = new System.Drawing.Size(445, 16);
+            this.pgb_total.Size = new System.Drawing.Size(440, 16);
             this.pgb_total.TabIndex = 10;
             // 
             // lbl_title_progress
@@ -311,12 +311,50 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
             this.pnl_dragger.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
+            // lbl_value_latestVer
+            // 
+            this.lbl_value_latestVer.AutoSize = true;
+            this.lbl_value_latestVer.ForeColor = System.Drawing.Color.White;
+            this.lbl_value_latestVer.Location = new System.Drawing.Point(667, 7);
+            this.lbl_value_latestVer.Name = "lbl_value_latestVer";
+            this.lbl_value_latestVer.Size = new System.Drawing.Size(0, 12);
+            this.lbl_value_latestVer.TabIndex = 18;
+            // 
+            // lbl_title_latestVer
+            // 
+            this.lbl_title_latestVer.AutoSize = true;
+            this.lbl_title_latestVer.ForeColor = System.Drawing.Color.White;
+            this.lbl_title_latestVer.Location = new System.Drawing.Point(613, 7);
+            this.lbl_title_latestVer.Name = "lbl_title_latestVer";
+            this.lbl_title_latestVer.Size = new System.Drawing.Size(53, 12);
+            this.lbl_title_latestVer.TabIndex = 18;
+            this.lbl_title_latestVer.Text = "最新版本";
+            // 
+            // lbl_value_currentVer
+            // 
+            this.lbl_value_currentVer.AutoSize = true;
+            this.lbl_value_currentVer.ForeColor = System.Drawing.Color.White;
+            this.lbl_value_currentVer.Location = new System.Drawing.Point(585, 7);
+            this.lbl_value_currentVer.Name = "lbl_value_currentVer";
+            this.lbl_value_currentVer.Size = new System.Drawing.Size(0, 12);
+            this.lbl_value_currentVer.TabIndex = 18;
+            // 
+            // lbl_title_currentVer
+            // 
+            this.lbl_title_currentVer.AutoSize = true;
+            this.lbl_title_currentVer.ForeColor = System.Drawing.Color.White;
+            this.lbl_title_currentVer.Location = new System.Drawing.Point(532, 7);
+            this.lbl_title_currentVer.Name = "lbl_title_currentVer";
+            this.lbl_title_currentVer.Size = new System.Drawing.Size(53, 12);
+            this.lbl_title_currentVer.TabIndex = 18;
+            this.lbl_title_currentVer.Text = "目前版本";
+            // 
             // lbl_value_progress
             // 
             this.lbl_value_progress.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_progress.Location = new System.Drawing.Point(511, 385);
+            this.lbl_value_progress.Location = new System.Drawing.Point(515, 385);
             this.lbl_value_progress.Name = "lbl_value_progress";
-            this.lbl_value_progress.Size = new System.Drawing.Size(45, 17);
+            this.lbl_value_progress.Size = new System.Drawing.Size(41, 17);
             this.lbl_value_progress.TabIndex = 17;
             this.lbl_value_progress.Text = "0.0%";
             this.lbl_value_progress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -324,9 +362,9 @@ namespace TYYongAutoPatcher.src.UI
             // lbl_value_totalProgress
             // 
             this.lbl_value_totalProgress.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_totalProgress.Location = new System.Drawing.Point(511, 417);
+            this.lbl_value_totalProgress.Location = new System.Drawing.Point(515, 419);
             this.lbl_value_totalProgress.Name = "lbl_value_totalProgress";
-            this.lbl_value_totalProgress.Size = new System.Drawing.Size(45, 17);
+            this.lbl_value_totalProgress.Size = new System.Drawing.Size(41, 17);
             this.lbl_value_totalProgress.TabIndex = 17;
             this.lbl_value_totalProgress.Text = "0.0%";
             this.lbl_value_totalProgress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -344,44 +382,6 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.timer_delay.Interval = 300;
             this.timer_delay.Tick += new System.EventHandler(this.timer_delay_Tick);
-            // 
-            // lbl_title_currentVer
-            // 
-            this.lbl_title_currentVer.AutoSize = true;
-            this.lbl_title_currentVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_currentVer.Location = new System.Drawing.Point(532, 7);
-            this.lbl_title_currentVer.Name = "lbl_title_currentVer";
-            this.lbl_title_currentVer.Size = new System.Drawing.Size(53, 12);
-            this.lbl_title_currentVer.TabIndex = 18;
-            this.lbl_title_currentVer.Text = "目前版本";
-            // 
-            // lbl_title_latestVer
-            // 
-            this.lbl_title_latestVer.AutoSize = true;
-            this.lbl_title_latestVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_latestVer.Location = new System.Drawing.Point(613, 7);
-            this.lbl_title_latestVer.Name = "lbl_title_latestVer";
-            this.lbl_title_latestVer.Size = new System.Drawing.Size(53, 12);
-            this.lbl_title_latestVer.TabIndex = 18;
-            this.lbl_title_latestVer.Text = "最新版本";
-            // 
-            // lbl_value_latestVer
-            // 
-            this.lbl_value_latestVer.AutoSize = true;
-            this.lbl_value_latestVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_latestVer.Location = new System.Drawing.Point(667, 7);
-            this.lbl_value_latestVer.Name = "lbl_value_latestVer";
-            this.lbl_value_latestVer.Size = new System.Drawing.Size(0, 12);
-            this.lbl_value_latestVer.TabIndex = 18;
-            // 
-            // lbl_value_currentVer
-            // 
-            this.lbl_value_currentVer.AutoSize = true;
-            this.lbl_value_currentVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_currentVer.Location = new System.Drawing.Point(585, 7);
-            this.lbl_value_currentVer.Name = "lbl_value_currentVer";
-            this.lbl_value_currentVer.Size = new System.Drawing.Size(0, 12);
-            this.lbl_value_currentVer.TabIndex = 18;
             // 
             // MainUI
             // 

@@ -9,5 +9,7 @@ namespace TYYongAutoPatcher.src.Models
 
         // local patch version
         public double PatchVersion { get; set; } = 1.0;
+
+        public string Token { get; set; }
     }
 }

@@ -22,15 +22,18 @@ namespace TYYongAutoPatcher.src.UI
         private Point offset;
         private List<StateCode> sMsgList = new List<StateCode>();
         private MainController app;
+        private Stopwatch watch;
+        private Stopwatch downloadTimer;
+        private FileVersionInfo fileVersionInfo;
 
 
         public MainUI()
         {
             InitializeComponent();
-            var fileVersionInfo = FileVersionInfo.GetVersionInfo(Path.GetFileName(System.Windows.Forms.Application.ExecutablePath));
+            fileVersionInfo = FileVersionInfo.GetVersionInfo(Path.GetFileName(System.Windows.Forms.Application.ExecutablePath));
             lbl_copyright.Text = fileVersionInfo.LegalCopyright;
             app = new MainController(this);
-
+            downloadTimer = Stopwatch.StartNew();
         }
 
 
@@ -45,7 +48,7 @@ namespace TYYongAutoPatcher.src.UI
         {
             timer_wait.Stop();
             timer_wait.Enabled = false;
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+            watch = Stopwatch.StartNew();
             try
             {
                 await app.Run();
@@ -53,23 +56,33 @@ namespace TYYongAutoPatcher.src.UI
             catch (OperationCanceledException ex)
             {
                 Console.WriteLine($"*************MainUI.timer_wait_Tick(object sender, EventArgs e): {ex.Message}");
+                AddMsg("已消取更新", StateCode.Error);
                 //lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                 //lbl_state.Text = "✘更新失敗";
             }
             finally
             {
                 watch.Stop();
-                if (app.Setting.PatchList.Count > 0)
-                {
-                    lbl_report.ForeColor = lbl_state.ForeColor;
-                    lbl_report.Text = $"耗時: {app.MSToString(watch.ElapsedMilliseconds)} |  " +
-                                      $"已下載更新包: {app.GetNoOfDownloadedPatches()}個 - 共 {app.GetSizeOfDownloadedPatches()}  |  " +
-                                      $"已安裝更新包: {app.GetNoOfUnzipped()}個 - 共 {app.GetSizeOfUnzipped()}";
-                }
-
+                ShowReport();
             }
 
         }
+
+        public void ShowReport(bool isFinished = false)
+        {
+            if (app.Setting.PatchList.Count > 0)
+            {
+                var report = app.GetReport();
+                var installedPercentage = isFinished ? "100.00%" : report.TotalPercentageOfExtractedToString;
+                var downloadedPercentage = isFinished ? "100.00%" : report.TotalPercentageOfDownloadedToString;
+                lbl_report.ForeColor = lbl_state.ForeColor;
+                lbl_report.Text = $"更新耗時: {app.MSToString(watch.ElapsedMilliseconds)}  |  " +
+                                  $"下載速度: {report.DownloadSpeedPerSecondToString}  |  " +
+                                  $"已下載: {report.NoOfDownloadedPatches}個 - 共 {report.SizeOfDownloadedPatchesToString} ({downloadedPercentage})  |  " +
+                                  $"已安裝: {report.NoOfUnzipped}個 - 共 {report.SizeOfExtractedUnzippedFilesToString} ({installedPercentage})";
+            }
+        }
+
         private void btn_exit_Click(object sender, EventArgs e)
         {
             if (app.IsBusy())
@@ -261,6 +274,31 @@ namespace TYYongAutoPatcher.src.UI
             web_left.Visible = true;
             web_right.Visible = true;
         }
+
+        public void UpdateVersion()
+        {
+            var size = app.Setting.PatchList.Count;
+            var cur = app.Setting.LocalConfig.Launcher.PatchVersion;
+            if (size > 0 && app.Setting.PatchList[size - 1].Version != cur)
+            {
+                lbl_value_currentVer.Text = $"{cur}";
+                lbl_value_latestVer.Text = $"{app.Setting.PatchList[size - 1].Version}";
+                lbl_title_latestVer.ForeColor = Color.OrangeRed;
+                lbl_value_latestVer.ForeColor = Color.OrangeRed;
+            }
+            else
+            {
+                lbl_value_currentVer.Text = $"{cur}";
+                lbl_value_latestVer.Text = $"{cur}";
+                lbl_title_latestVer.ForeColor = Color.LightGreen;
+                lbl_value_latestVer.ForeColor = Color.LightGreen;
+            }
+        }
+
+        public void SetLatestVer()
+        {
+
+        }
         #region Update last message in the listbox
         //public void UpdateMsg(string msg, StateCode state = StateCode.Normal)
         //{
@@ -285,6 +323,7 @@ namespace TYYongAutoPatcher.src.UI
                 app.Setting.Game = result.Game;
                 app.Setting.PatchList = result.PatchList.FindAll(x => x.Version > app.Setting.LocalConfig.Launcher.PatchVersion);
                 app.Setting.PatchList.Sort();
+                ShowReport();
             }
 
         }
@@ -306,7 +345,7 @@ namespace TYYongAutoPatcher.src.UI
                         var total = app.GetTotalPercentage();
                         lbl_value_totalProgress.Text = $"{total.ToString("N1")}%";
                         pgb_total.Value = (int)total;
-
+                        ShowReport();
                     }));
                 }
                 else if (e.EventType == ZipProgressEventType.Extracting_BeforeExtractEntry)
@@ -329,6 +368,9 @@ namespace TYYongAutoPatcher.src.UI
                 Invoke(new MethodInvoker(delegate ()
                 {
                     patch.DownloadedSize = e.BytesReceived;
+                    var elapsedSecond = downloadTimer.ElapsedMilliseconds / 1000.0;
+                    patch.DownloadSpeedPerSecond = patch.DownloadedSize / elapsedSecond;
+                    patch.TotalDownloadTime = elapsedSecond;
                     patch.Size = e.TotalBytesToReceive;
                     patch.DownloadedPercentage = 100.0 * patch.DownloadedSize / patch.Size;
                     pgb_progress.Value = (int)patch.DownloadedPercentage;
@@ -338,6 +380,7 @@ namespace TYYongAutoPatcher.src.UI
                     var total = app.GetTotalPercentage();
                     lbl_value_totalProgress.Text = $"{total.ToString("N1")}%";
                     pgb_total.Value = (int)total;
+                    ShowReport();
                 }));
             });
         }
@@ -347,6 +390,7 @@ namespace TYYongAutoPatcher.src.UI
             {
                 Invoke(new MethodInvoker(delegate ()
                 {
+                    downloadTimer.Stop();
                     if (e.Error == null)
                     {
                         if (e.Cancelled)
@@ -355,12 +399,12 @@ namespace TYYongAutoPatcher.src.UI
                         }
                         else
                         {
-                            //lbl_state.Text = $"己下載 {fileName} - {fileSzie}MB)";
-                            AddMsg($"己下載更新包 {patch.FileName} - 共 {app.SizeToString(patch.Size)}", StateCode.Success);
+                            AddMsg($"已下載更新包 {patch.FileName} - 共 {app.SizeToString(patch.Size)}", StateCode.Downloaded);
                             AddMsg($"正在安裝更新包 {patch.FileName}...", StateCode.Extracting);
                             var total = app.GetTotalPercentage();
                             lbl_value_totalProgress.Text = $"{total.ToString("N1")}%";
                             pgb_total.Value = (int)total;
+                            ShowReport();
                         }
                     }
 
@@ -396,6 +440,8 @@ namespace TYYongAutoPatcher.src.UI
                     myBrush = new SolidBrush(Color.FromArgb(248, 63, 94));
                     break;
                 case StateCode.Success:
+                case StateCode.Extracted:
+                case StateCode.Downloaded:
                     myBrush = new SolidBrush(Color.FromArgb(177, 241, 167));
                     break;
                 case StateCode.Downloading:
@@ -431,6 +477,8 @@ namespace TYYongAutoPatcher.src.UI
                 switch (state)
                 {
                     case StateCode.Success:
+                    case StateCode.Extracted:
+                    case StateCode.Downloaded:
                         m = $"✔{msg}";
                         break;
                     case StateCode.Downloading:
@@ -487,7 +535,7 @@ namespace TYYongAutoPatcher.src.UI
                     break;
                 case StateCode.Downloading:
                     lbl_state.ForeColor = Color.FromArgb(130, 192, 231);
-                    lbl_state.Text = "下載中更新包...";
+                    lbl_state.Text = "下載中...";
                     break;
                 case StateCode.Extracting:
                     lbl_state.ForeColor = Color.FromArgb(255, 138, 0);
@@ -519,12 +567,23 @@ namespace TYYongAutoPatcher.src.UI
         public void CompeteUpdating()
         {
             app.UpdateState(StateCode.UpdatingCompleted);
+            timer_delay.Enabled = true;
+            timer_delay.Start();
         }
 
-        public void ShowErrorMsg(string msg, string title = "泰月勇Online")
+        public void ShowErrorMsg(string msg, string title = "")
         {
-            MessageBox.Show(msg, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            var t = title.Length > 0 ? title : fileVersionInfo.ProductName;
+            MessageBox.Show(msg, t, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void timer_delay_Tick(object sender, EventArgs e)
+        {
+            timer_delay.Enabled = false;
+            ShowReport(true);
+        }
+
+        public Stopwatch GetDownloadTimer() { return downloadTimer; }
     }
 
 }

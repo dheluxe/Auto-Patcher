@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using TYYongAutoPatcher.src.Models;
 using TYYongAutoPatcher.src.UI;
 
+
 namespace TYYongAutoPatcher.src.Controllers
 {
     public enum StateCode
@@ -38,14 +39,13 @@ namespace TYYongAutoPatcher.src.Controllers
 
     class MainController
     {
+        public StateCode State { get; set; }
         public SettingModel Setting;
         public MainUI ui;
-        private FileDownloadController downloader;
-        private ZipController zip;
         public CancellationTokenSource cts;
 
-        public StateCode State { get; set; }
-
+        private FileDownloadController downloader;
+        private ZipController zip;
         private string settingFile;
         private string settingDir;
         private readonly string pwd;
@@ -81,7 +81,6 @@ namespace TYYongAutoPatcher.src.Controllers
             {
                 await RetryConnecting();
             }
-
             if (State == StateCode.Configured)
             {
                 if (Setting.PatchList.Count > 0)
@@ -99,7 +98,6 @@ namespace TYYongAutoPatcher.src.Controllers
                             if (State != StateCode.ErrorConnectingFail)
                             {
                                 await zip.Unzip(fileName, targetDir, patch);
-
                             }
                         }
                     }
@@ -201,6 +199,7 @@ namespace TYYongAutoPatcher.src.Controllers
                 //Setting.PatchList = result.PatchList.FindAll(x => x.Version > Setting.LocalConfig.Launcher.PatchVersion);
                 //Setting.PatchList.Sort();
                 ui.SetLeftAndRightWeb();
+                ui.UpdateVersion();
                 UpdateState(StateCode.Configured);
             }
             catch (Exception ex)
@@ -236,7 +235,8 @@ namespace TYYongAutoPatcher.src.Controllers
                 order++;
                 size /= 1024;
             }
-            return $"{size.ToString("N2")} {sizes[order]}";
+            var format = order == 0 ? "{0:n0}" : "{0:n2}";
+            return $"{string.Format(format, size)} {sizes[order]}";
         }
 
         public async void CloseLauncher()
@@ -320,6 +320,7 @@ namespace TYYongAutoPatcher.src.Controllers
                 Setting.LocalConfig.Launcher.PatchVersion = patch.Version;
                 var file = $"{settingDir}{settingFile}";
                 File.WriteAllText(file, JsonConvert.SerializeObject(Setting.LocalConfig));
+                ui.UpdateVersion();
             }
             catch (Exception ex)
             {
@@ -338,60 +339,59 @@ namespace TYYongAutoPatcher.src.Controllers
         }
 
 
-        public int GetNoOfDownloadedPatches()
+        public PatchReportModel GetReport()
         {
-            var result = 0;
+            var report = new PatchReportModel();
             foreach (var patch in Setting.PatchList)
             {
-                if (patch.DownloadedPercentage >= 100) result++;
+                report.SizeOfExtractedZippedFiles += patch.SizeOfZippedFiles;
+                report.SizeOfExtractedUnzippedFiles += patch.SizeOfUnzippedFiles;
+                report.SizeOfDownloadedPatches += patch.DownloadedSize;
+                report.SizeOfDownloadPatches += patch.Size;
+                report.DownloadSpeedPerSecond = patch.DownloadSpeedPerSecond > 0 ? patch.DownloadSpeedPerSecond : report.DownloadSpeedPerSecond;
+                if (patch.DownloadedPercentage >= 100) report.NoOfDownloadedPatches++;
+                if (patch.IsUnzipSucceed) report.NoOfUnzipped++;
             }
-            return result;
+            //report.AvegragedownloadSpeedPerSecond = report.SizeOfDownloadPatches / report.TotalDownloadTime;
+            //report.AvegragedownloadSpeedPerSecondToString = $"{SizeToString(report.AvegragedownloadSpeedPerSecond)} / 秒";
+
+            report.DownloadSpeedPerSecondToString = $"{SizeToString(report.DownloadSpeedPerSecond)} / 秒";
+
+            var pDownloaded = report.SizeOfDownloadedPatches / report.SizeOfDownloadPatches;
+            pDownloaded = pDownloaded >= 1 ? report.NoOfDownloadedPatches : pDownloaded + report.NoOfDownloadedPatches;
+            report.TotalPercentageOfDownloaded = 100 * (pDownloaded) / (Setting.PatchList.Count );
+            report.TotalPercentageOfDownloadedToString = $"{report.TotalPercentageOfDownloaded.ToString("n2")}%";
+
+            var pExtracted = report.SizeOfExtractedZippedFiles  / report.SizeOfDownloadedPatches ;
+            pExtracted = pExtracted >= 1 ? report.NoOfUnzipped : pExtracted + report.NoOfUnzipped;
+            report.TotalPercentageOfExtracted = 100 * pExtracted / Setting.PatchList.Count;
+            report.TotalPercentageOfExtractedToString = $"{report.TotalPercentageOfExtracted.ToString("n2")}%";
+
+            report.SizeOfExtractedZippedFilesToString = SizeToString(report.SizeOfExtractedZippedFiles);
+            report.SizeOfExtractedUnzippedFilesToString = SizeToString(report.SizeOfExtractedUnzippedFiles);
+            report.SizeOfDownloadedPatchesToString = SizeToString(report.SizeOfDownloadedPatches);
+            return report;
         }
 
-        public string GetSizeOfDownloadedPatches()
+        public string WillAddZero(int time)
         {
-            var result = 0.0;
-            foreach (var patch in Setting.PatchList)
-            {
-                result += patch.DownloadedSize;
-            }
-            return SizeToString(result);
-        }
-
-        public int GetNoOfUnzipped()
-        {
-            var result = 0;
-            foreach (var patch in Setting.PatchList)
-            {
-                if (patch.IsUnzipSucceed) result++;
-            }
-            return result;
-        }
-
-        public string GetSizeOfUnzipped()
-        {
-            var result = 0.0;
-            foreach (var patch in Setting.PatchList)
-            {
-                result += patch.SizeOfUnZippedFiles;
-            }
-            return SizeToString(result);
+            return time < 10 ? $"0{time}" : $"{time}";
         }
 
         public string MSToString(double ms)
         {
-            TimeSpan t = TimeSpan.FromMilliseconds(ms);
+            var t = TimeSpan.FromMilliseconds(ms);
             var result = "";
 
-            if (t.Hours == 0 && t.Minutes == 0 && t.Seconds == 0) 
+            if (t.Hours == 0 && t.Minutes == 0 && t.Seconds == 0)
             {
-                result = $"{(ms/1000).ToString("N2")}秒 ";
+                result = $"{(ms / 1000).ToString("N2")}秒 ";
             }
             else
             {
-                if (t.Hours > 0) result += $"{t.Hours}小時 ";
-                if (t.Minutes > 0) result += $"{t.Minutes}分鐘 ";
-                if (t.Seconds > 0) result += $"{t.Seconds}秒 ";
+               result += $"{WillAddZero(t.Hours)} : ";
+               result += $"{WillAddZero(t.Minutes)} : ";
+               result += $"{WillAddZero(t.Seconds)}";
             }
             return result;
         }

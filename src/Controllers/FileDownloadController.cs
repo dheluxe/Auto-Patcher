@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -30,6 +31,9 @@ namespace TYYongAutoPatcher.src.Controllers
                 client.DownloadProgressChanged += app.ui.DownloadPatchProgressChangedHandler(patch);
                 client.DownloadFileCompleted += app.ui.AsyncCompletedEventHandler(patch);
                 app.ui.AddMsg($"正在下載 {patch.FileName}...", StateCode.Downloading);
+                Stopwatch timer = app.ui.GetDownloadTimer();
+                timer.Restart();
+                timer.Start();
                 await client.DownloadFileTaskAsync(url, savePath);
                 client.Dispose();
             }

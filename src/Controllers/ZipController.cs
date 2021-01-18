@@ -37,7 +37,8 @@ namespace TYYongAutoPatcher.src.Controllers
                         {
                             patch.NoOfUnZippedFiles++;
                             await Task.Run(() => entry.Extract(targetDir, ExtractExistingFileAction.OverwriteSilently));
-                            patch.SizeOfUnZippedFiles += entry.UncompressedSize;
+                            patch.SizeOfUnzippedFiles += entry.UncompressedSize;
+                            patch.SizeOfZippedFiles += entry.CompressedSize;
 
                         }
                         catch (Exception ex)
@@ -48,7 +49,7 @@ namespace TYYongAutoPatcher.src.Controllers
                             app.ui.AddMsg($"安裝失敗: {entry.FileName}", StateCode.ErrorExtractingFail);
                         }
                     }
-                    app.ui.AddMsg($"己安裝更新包 {patch.FileName}", StateCode.Success);
+                    app.ui.AddMsg($"已安裝更新包 {patch.FileName} - 共 {app.SizeToString(patch.Size)}", StateCode.Extracted);
                     patch.IsUnzipSucceed = true;
                     await app.DeleteTempFile(patch.FileName);
                     if(++noOfUnzipped == app.Setting.PatchList.Count) app.ui.CompeteUpdating();

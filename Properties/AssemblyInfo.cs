@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("泰月勇Online")]
 [assembly: AssemblyProduct("Launcher")]
-[assembly: AssemblyCopyright("Copyright © 2021 泰月勇Online. All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2021 泰月勇Online.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

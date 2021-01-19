@@ -110,7 +110,7 @@ namespace TYYongAutoPatcher.src.UI
         {
             await app.DeleteTempFolderAndFiles();
             btn_launch.Enabled = true;
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start1;
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_2;
             pgb_progress.Value = 100;
             pgb_total.Value = 100;
             lbl_value_progress.Text = "100.0%";
@@ -164,91 +164,92 @@ namespace TYYongAutoPatcher.src.UI
         //
         private void btn_exit_MouseDown(object sender, MouseEventArgs e)
         {
-            btn_exit.BackgroundImage = TYYongAutoPatcher.Properties.Resources.exit1;
+            btn_exit.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_exit_1;
         }
         private void btn_exit_MouseEnter(object sender, EventArgs e)
         {
-            btn_exit.BackgroundImage = TYYongAutoPatcher.Properties.Resources.exit2;
+            btn_exit.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_exit_2;
         }
         private void btn_exit_MouseLeave(object sender, EventArgs e)
         {
-            btn_exit.BackgroundImage = TYYongAutoPatcher.Properties.Resources.exit3;
+            btn_exit.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_exit_3;
         }
         private void btn_exit_MouseUp(object sender, MouseEventArgs e)
         {
-            btn_exit.BackgroundImage = TYYongAutoPatcher.Properties.Resources.exit2;
-        }
-        //
-        private void btn_launch_MouseLeave(object sender, EventArgs e)
-        {
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start1;
-        }
-        private void btn_launch_MouseEnter(object sender, EventArgs e)
-        {
-
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start2;
-        }
-        private void btn_launch_MouseUp(object sender, MouseEventArgs e)
-        {
-
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start2;
+            btn_exit.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_exit_3;
         }
         private void btn_launch_MouseDown(object sender, MouseEventArgs e)
         {
 
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.start3;
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_1;
         }
         //
+        private void btn_launch_MouseLeave(object sender, EventArgs e)
+        {
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_2;
+        }
+        private void btn_launch_MouseUp(object sender, MouseEventArgs e)
+        {
+
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_3;
+        }
+        private void btn_launch_MouseEnter(object sender, EventArgs e)
+        {
+
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_3;
+        }
+        //
+        private void btn_register_MouseDown(object sender, MouseEventArgs e)
+        {
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_1;
+        }
         private void btn_register_MouseLeave(object sender, EventArgs e)
         {
-            btn_register.BackgroundImage = TYYongAutoPatcher.Properties.Resources.reg1;
-        }
-        private void btn_register_MouseEnter(object sender, EventArgs e)
-        {
-            btn_register.BackgroundImage = TYYongAutoPatcher.Properties.Resources.reg2;
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_2;
         }
         private void btn_register_MouseUp(object sender, MouseEventArgs e)
         {
-            btn_register.BackgroundImage = TYYongAutoPatcher.Properties.Resources.reg2;
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_3;
         }
-        private void btn_register_MouseDown(object sender, MouseEventArgs e)
+        private void btn_register_MouseEnter(object sender, EventArgs e)
         {
-            btn_register.BackgroundImage = TYYongAutoPatcher.Properties.Resources.reg3;
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_3;
         }
         //
+        private void btn_shop_MouseDown(object sender, MouseEventArgs e)
+        {
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_1;
+        }
         private void btn_shop_MouseLeave(object sender, EventArgs e)
         {
-            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.itemshop1;
-        }
-        private void btn_shop_MouseEnter(object sender, EventArgs e)
-        {
-            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.itemshop2;
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_2;
         }
         private void btn_shop_MouseUp(object sender, MouseEventArgs e)
         {
-            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.itemshop2;
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_3;
         }
-        private void btn_shop_MouseDown(object sender, MouseEventArgs e)
+        private void btn_shop_MouseEnter(object sender, EventArgs e)
         {
-            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.itemshop3;
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_3;
         }
         //
+        private void btn_event_MouseDown(object sender, MouseEventArgs e)
+        {
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_1;
+        }
         private void btn_event_MouseLeave(object sender, EventArgs e)
         {
-            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.event1;
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_2;
         }
         private void btn_event_MouseUp(object sender, MouseEventArgs e)
         {
-            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.event2;
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_3;
         }
         private void btn_event_MouseEnter(object sender, EventArgs e)
         {
-            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.event2;
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_3;
         }
-        private void btn_event_MouseDown(object sender, MouseEventArgs e)
-        {
-            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.event3;
-        }
+
         #endregion
         #region Dragger, Normally, you dont need to edit it.
         private void DragMoveHandler(object sender, MouseEventArgs e)
@@ -273,12 +274,18 @@ namespace TYYongAutoPatcher.src.UI
         }
         #endregion
         // Set left and right web
-        public void SetLeftAndRightWeb()
+        public void Reday()
         {
             web_left.Url = new Uri(app.Setting.Server.LeftWeb);
             web_right.Url = new Uri(app.Setting.Server.RightWeb);
             web_left.Visible = true;
             web_right.Visible = true;
+            btn_event.Enabled = true;
+            btn_shop.Enabled = true;
+            btn_reg.Enabled = true;
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_2;
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_2;
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_2;
         }
 
         public void UpdateVersion()

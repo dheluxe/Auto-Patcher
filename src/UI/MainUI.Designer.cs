@@ -43,7 +43,7 @@ namespace TYYongAutoPatcher.src.UI
             this.pgb_total = new System.Windows.Forms.ProgressBar();
             this.lbl_title_progress = new System.Windows.Forms.Label();
             this.lbl_goToWeb = new System.Windows.Forms.Label();
-            this.btn_register = new System.Windows.Forms.Button();
+            this.btn_reg = new System.Windows.Forms.Button();
             this.btn_shop = new System.Windows.Forms.Button();
             this.cbx_startWhenReady = new System.Windows.Forms.CheckBox();
             this.btn_event = new System.Windows.Forms.Button();
@@ -101,7 +101,7 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // btn_launch
             // 
-            this.btn_launch.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.start4;
+            this.btn_launch.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_launch_4;
             this.btn_launch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_launch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_launch.Enabled = false;
@@ -121,7 +121,7 @@ namespace TYYongAutoPatcher.src.UI
             // btn_exit
             // 
             this.btn_exit.BackColor = System.Drawing.Color.Transparent;
-            this.btn_exit.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.exit3;
+            this.btn_exit.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_exit_1;
             this.btn_exit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btn_exit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_exit.FlatAppearance.BorderSize = 0;
@@ -200,29 +200,31 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_goToWeb.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbl_goToWeb_MouseDown);
             this.lbl_goToWeb.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lbl_goToWeb_MouseUp);
             // 
-            // btn_register
+            // btn_reg
             // 
-            this.btn_register.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.reg1;
-            this.btn_register.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_register.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_register.FlatAppearance.BorderSize = 0;
-            this.btn_register.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_register.Location = new System.Drawing.Point(575, 415);
-            this.btn_register.Name = "btn_register";
-            this.btn_register.Size = new System.Drawing.Size(150, 17);
-            this.btn_register.TabIndex = 12;
-            this.btn_register.UseVisualStyleBackColor = true;
-            this.btn_register.Click += new System.EventHandler(this.btn_register_Click);
-            this.btn_register.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_register_MouseDown);
-            this.btn_register.MouseEnter += new System.EventHandler(this.btn_register_MouseEnter);
-            this.btn_register.MouseLeave += new System.EventHandler(this.btn_register_MouseLeave);
-            this.btn_register.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_register_MouseUp);
+            this.btn_reg.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_reg_4;
+            this.btn_reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_reg.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_reg.Enabled = false;
+            this.btn_reg.FlatAppearance.BorderSize = 0;
+            this.btn_reg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_reg.Location = new System.Drawing.Point(575, 415);
+            this.btn_reg.Name = "btn_reg";
+            this.btn_reg.Size = new System.Drawing.Size(150, 17);
+            this.btn_reg.TabIndex = 12;
+            this.btn_reg.UseVisualStyleBackColor = true;
+            this.btn_reg.Click += new System.EventHandler(this.btn_register_Click);
+            this.btn_reg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btn_register_MouseDown);
+            this.btn_reg.MouseEnter += new System.EventHandler(this.btn_register_MouseEnter);
+            this.btn_reg.MouseLeave += new System.EventHandler(this.btn_register_MouseLeave);
+            this.btn_reg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btn_register_MouseUp);
             // 
             // btn_shop
             // 
-            this.btn_shop.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.itemshop1;
+            this.btn_shop.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_shop_4;
             this.btn_shop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_shop.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_shop.Enabled = false;
             this.btn_shop.FlatAppearance.BorderSize = 0;
             this.btn_shop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_shop.Location = new System.Drawing.Point(407, 303);
@@ -254,9 +256,10 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // btn_event
             // 
-            this.btn_event.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.event2;
+            this.btn_event.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_dc_4;
             this.btn_event.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_event.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_event.Enabled = false;
             this.btn_event.FlatAppearance.BorderSize = 0;
             this.btn_event.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_event.Location = new System.Drawing.Point(575, 303);
@@ -294,7 +297,7 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.Controls.Add(this.btn_event);
             this.pnl_dragger.Controls.Add(this.cbx_startWhenReady);
             this.pnl_dragger.Controls.Add(this.btn_shop);
-            this.pnl_dragger.Controls.Add(this.btn_register);
+            this.pnl_dragger.Controls.Add(this.btn_reg);
             this.pnl_dragger.Controls.Add(this.lbl_goToWeb);
             this.pnl_dragger.Controls.Add(this.lbl_title_progress);
             this.pnl_dragger.Controls.Add(this.lbl_title_totalProgress);
@@ -317,8 +320,9 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_value_latestVer.ForeColor = System.Drawing.Color.White;
             this.lbl_value_latestVer.Location = new System.Drawing.Point(667, 7);
             this.lbl_value_latestVer.Name = "lbl_value_latestVer";
-            this.lbl_value_latestVer.Size = new System.Drawing.Size(0, 12);
+            this.lbl_value_latestVer.Size = new System.Drawing.Size(9, 12);
             this.lbl_value_latestVer.TabIndex = 18;
+            this.lbl_value_latestVer.Text = "-";
             // 
             // lbl_title_latestVer
             // 
@@ -336,8 +340,9 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_value_currentVer.ForeColor = System.Drawing.Color.White;
             this.lbl_value_currentVer.Location = new System.Drawing.Point(585, 7);
             this.lbl_value_currentVer.Name = "lbl_value_currentVer";
-            this.lbl_value_currentVer.Size = new System.Drawing.Size(0, 12);
+            this.lbl_value_currentVer.Size = new System.Drawing.Size(9, 12);
             this.lbl_value_currentVer.TabIndex = 18;
+            this.lbl_value_currentVer.Text = "-";
             // 
             // lbl_title_currentVer
             // 
@@ -420,7 +425,7 @@ namespace TYYongAutoPatcher.src.UI
         private System.Windows.Forms.ProgressBar pgb_total;
         private System.Windows.Forms.Label lbl_title_progress;
         private System.Windows.Forms.Label lbl_goToWeb;
-        private System.Windows.Forms.Button btn_register;
+        private System.Windows.Forms.Button btn_reg;
         private System.Windows.Forms.Button btn_shop;
         private System.Windows.Forms.CheckBox cbx_startWhenReady;
         private System.Windows.Forms.Button btn_event;

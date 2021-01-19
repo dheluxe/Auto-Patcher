@@ -186,6 +186,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="basic_app.ico" />
+    <None Include="Resources\btn_shop_4.png" />
+    <None Include="Resources\btn_shop_3.png" />
+    <None Include="Resources\btn_shop_2.png" />
+    <None Include="Resources\btn_shop_1.png" />
+    <None Include="Resources\btn_reg_4.png" />
+    <None Include="Resources\btn_reg_3.png" />
+    <None Include="Resources\btn_reg_2.png" />
+    <None Include="Resources\btn_reg_1.png" />
+    <None Include="Resources\btn_launch_4.png" />
+    <None Include="Resources\btn_launch_3.png" />
+    <None Include="Resources\btn_launch_2.png" />
+    <None Include="Resources\btn_launch_1.png" />
+    <None Include="Resources\btn_exit_3.png" />
+    <None Include="Resources\btn_exit_2.png" />
+    <None Include="Resources\btn_exit_1.png" />
+    <None Include="Resources\btn_dc_4.png" />
+    <None Include="Resources\btn_dc_3.png" />
+    <None Include="Resources\btn_dc_2.png" />
+    <None Include="Resources\btn_dc_1.png" />
     <None Include="res\btn_basc_4.png" />
     <None Include="res\btn_basc_3.png" />
     <None Include="res\btn_basc_2.png" />

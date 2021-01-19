@@ -155,11 +155,11 @@ namespace TYYongAutoPatcher.src.UI
         //
         private void lbl_goToWeb_MouseDown(object sender, MouseEventArgs e)
         {
-            lbl_goToWeb.ForeColor = Color.SaddleBrown;
+            lbl_officialWeb.ForeColor = Color.SaddleBrown;
         }
         private void lbl_goToWeb_MouseUp(object sender, MouseEventArgs e)
         {
-            lbl_goToWeb.ForeColor = Color.Chocolate;
+            lbl_officialWeb.ForeColor = Color.Chocolate;
         }
         //
         private void btn_exit_MouseDown(object sender, MouseEventArgs e)
@@ -274,7 +274,7 @@ namespace TYYongAutoPatcher.src.UI
         }
         #endregion
         // Set left and right web
-        public void Reday()
+        public void Ready()
         {
             web_left.Url = new Uri(app.Setting.Server.LeftWeb);
             web_right.Url = new Uri(app.Setting.Server.RightWeb);
@@ -283,6 +283,8 @@ namespace TYYongAutoPatcher.src.UI
             btn_event.Enabled = true;
             btn_shop.Enabled = true;
             btn_reg.Enabled = true;
+            lbl_officialWeb.Enabled = true;
+            lbl_officialWeb.ForeColor = Color.Chocolate;
             btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_2;
             btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_2;
             btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_2;
@@ -294,15 +296,15 @@ namespace TYYongAutoPatcher.src.UI
             var cur = app.Setting.LocalConfig.Launcher.PatchVersion;
             if (size > 0 && app.Setting.PatchList[size - 1].Version != cur)
             {
-                lbl_value_currentVer.Text = $"{cur}";
-                lbl_value_latestVer.Text = $"{app.Setting.PatchList[size - 1].Version}";
+                lbl_value_currentVer.Text = $"{cur.ToString("N1")}";
+                lbl_value_latestVer.Text = $"{app.Setting.PatchList[size - 1].Version.ToString("N1")}";
                 lbl_title_latestVer.ForeColor = Color.OrangeRed;
                 lbl_value_latestVer.ForeColor = Color.OrangeRed;
             }
             else
             {
-                lbl_value_currentVer.Text = $"{cur}";
-                lbl_value_latestVer.Text = $"{cur}";
+                lbl_value_currentVer.Text = $"{cur.ToString("N1")}";
+                lbl_value_latestVer.Text = $"{cur.ToString("N1")}";
                 lbl_title_latestVer.ForeColor = Color.LightGreen;
                 lbl_value_latestVer.ForeColor = Color.LightGreen;
             }

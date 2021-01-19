@@ -42,7 +42,7 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_copyright = new System.Windows.Forms.Label();
             this.pgb_total = new System.Windows.Forms.ProgressBar();
             this.lbl_title_progress = new System.Windows.Forms.Label();
-            this.lbl_goToWeb = new System.Windows.Forms.Label();
+            this.lbl_officialWeb = new System.Windows.Forms.Label();
             this.btn_reg = new System.Windows.Forms.Button();
             this.btn_shop = new System.Windows.Forms.Button();
             this.cbx_startWhenReady = new System.Windows.Forms.CheckBox();
@@ -185,20 +185,21 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_title_progress.Text = "進度";
             this.lbl_title_progress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lbl_goToWeb
+            // lbl_officialWeb
             // 
-            this.lbl_goToWeb.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbl_goToWeb.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_goToWeb.ForeColor = System.Drawing.Color.Chocolate;
-            this.lbl_goToWeb.Location = new System.Drawing.Point(81, 0);
-            this.lbl_goToWeb.Name = "lbl_goToWeb";
-            this.lbl_goToWeb.Size = new System.Drawing.Size(53, 33);
-            this.lbl_goToWeb.TabIndex = 14;
-            this.lbl_goToWeb.Text = "前往官網";
-            this.lbl_goToWeb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbl_goToWeb.Click += new System.EventHandler(this.lbl_goToWeb_Click);
-            this.lbl_goToWeb.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbl_goToWeb_MouseDown);
-            this.lbl_goToWeb.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lbl_goToWeb_MouseUp);
+            this.lbl_officialWeb.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_officialWeb.Enabled = false;
+            this.lbl_officialWeb.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_officialWeb.ForeColor = System.Drawing.Color.Chocolate;
+            this.lbl_officialWeb.Location = new System.Drawing.Point(81, 0);
+            this.lbl_officialWeb.Name = "lbl_officialWeb";
+            this.lbl_officialWeb.Size = new System.Drawing.Size(53, 33);
+            this.lbl_officialWeb.TabIndex = 14;
+            this.lbl_officialWeb.Text = "前往官網";
+            this.lbl_officialWeb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_officialWeb.Click += new System.EventHandler(this.lbl_goToWeb_Click);
+            this.lbl_officialWeb.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbl_goToWeb_MouseDown);
+            this.lbl_officialWeb.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lbl_goToWeb_MouseUp);
             // 
             // btn_reg
             // 
@@ -298,7 +299,7 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.Controls.Add(this.cbx_startWhenReady);
             this.pnl_dragger.Controls.Add(this.btn_shop);
             this.pnl_dragger.Controls.Add(this.btn_reg);
-            this.pnl_dragger.Controls.Add(this.lbl_goToWeb);
+            this.pnl_dragger.Controls.Add(this.lbl_officialWeb);
             this.pnl_dragger.Controls.Add(this.lbl_title_progress);
             this.pnl_dragger.Controls.Add(this.lbl_title_totalProgress);
             this.pnl_dragger.Controls.Add(this.btn_exit);
@@ -424,7 +425,7 @@ namespace TYYongAutoPatcher.src.UI
         private System.Windows.Forms.Label lbl_copyright;
         private System.Windows.Forms.ProgressBar pgb_total;
         private System.Windows.Forms.Label lbl_title_progress;
-        private System.Windows.Forms.Label lbl_goToWeb;
+        private System.Windows.Forms.Label lbl_officialWeb;
         private System.Windows.Forms.Button btn_reg;
         private System.Windows.Forms.Button btn_shop;
         private System.Windows.Forms.CheckBox cbx_startWhenReady;

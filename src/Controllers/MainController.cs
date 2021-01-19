@@ -216,7 +216,7 @@ namespace TYYongAutoPatcher.src.Controllers
                 //Setting.Game = result.Game;
                 //Setting.PatchList = result.PatchList.FindAll(x => x.Version > Setting.LocalConfig.Launcher.PatchVersion);
                 //Setting.PatchList.Sort();
-                ui.Reday();
+                ui.Ready();
                 ui.UpdateVersion();
                 UpdateState(StateCode.Configured);
             }

@@ -32,10 +32,11 @@ namespace TYYongAutoPatcher.src.Controllers
         Initializing,
         Loading,
         Normal,
-        ReadyToInstall,
+        ReadyToDownload,
         Retrying,
         Success,
         UpdatingCompleted,
+        DeinedToDownload,
     }
 
     class MainController
@@ -92,19 +93,34 @@ namespace TYYongAutoPatcher.src.Controllers
                     string targetDir = $"{pwd}\\";
                     await ReadyTempFolder();
                     // Download patch and unzip
-                    if (State == StateCode.ReadyToInstall)
+                    if (Setting.Server.IsDownloadAllowed)
                     {
-                        foreach (var patch in Setting.PatchList)
+                        if (State == StateCode.ReadyToDownload)
                         {
-                            var url = new Uri($"{Setting.Server.PatchDataDir}{patch.FileName}");
-                            var fileName = $"{tempDir}{patch.FileName}";
-                            await downloader.DownloadFilesAysnc(url, fileName, patch);
-                            if (State != StateCode.ErrorConnectingFail)
+                            foreach (var patch in Setting.PatchList)
                             {
-                                await zip.Unzip(fileName, targetDir, patch);
+                                var urlStr = $"{Setting.Server.URL.PatchDataDir}{patch.FileName}";
+                                if (patch.DownloadLinks != null && patch.DownloadLinks.Length > 0) 
+                                {
+                                    //TODO: Allow try to download different downloads link.
+                                    urlStr = patch.DownloadLinks[0];
+                                }
+                                var url = new Uri(urlStr);
+                                var fileName = $"{tempDir}{patch.FileName}";
+                                await downloader.DownloadFilesAysnc(url, fileName, patch);
+                                if (State != StateCode.ErrorConnectingFail)
+                                {
+                                    await zip.Unzip(fileName, targetDir, patch);
+                                }
                             }
                         }
                     }
+                    else
+                    {
+                        UpdateState(StateCode.DeinedToDownload, "需要手動下載並安裝更新包");
+                        ui.AddMsg("需要手動下載並安裝更新包", StateCode.DeinedToDownload);
+                    }
+
                 }
                 if (cts.IsCancellationRequested) cts.Token.ThrowIfCancellationRequested();
                 switch (State)
@@ -116,6 +132,7 @@ namespace TYYongAutoPatcher.src.Controllers
                     case StateCode.ErrorWritingFail:
                     case StateCode.GameReady:
                     case StateCode.UpdatingCompleted:
+                    case StateCode.DeinedToDownload:
                         return;
                     default:
                         UpdateState(StateCode.GameReady);
@@ -144,7 +161,7 @@ namespace TYYongAutoPatcher.src.Controllers
                 if (Directory.Exists(tempDir)) await Task.Run(() => Directory.Delete(tempDir, true));
                 // ui.AddMsg("準備文件中...");
                 await Task.Run(() => Directory.CreateDirectory(tempDir));
-                State = StateCode.ReadyToInstall;
+                State = StateCode.ReadyToDownload;
             }
             catch (Exception ex)
             {
@@ -324,11 +341,11 @@ namespace TYYongAutoPatcher.src.Controllers
             }
         }
 
-        public async void Cancel()
+        public async void Cancel(string msg = "✘更新失敗")
         {
             cts.Cancel();
             await DeleteTempFolderAndFiles();
-            UpdateState(StateCode.Cancelled);
+            UpdateState(StateCode.Cancelled, msg);
         }
 
         public void UpdateLocalPatchVersion(PatchModel patch)

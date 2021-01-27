@@ -126,6 +126,26 @@
       <HintPath>lib\DotNetZip.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.ExtendedLinguisticServices">
+      <HintPath>lib\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Sensors">
+      <HintPath>lib\Microsoft.WindowsAPICodePack.Sensors.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.ShellExtensions">
+      <HintPath>lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>lib\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
@@ -144,6 +164,7 @@
     <Compile Include="src\Controllers\ZipController.cs" />
     <Compile Include="src\Exceptions\InvalidTokenException.cs" />
     <Compile Include="src\Models\PatchReportModel.cs" />
+    <Compile Include="src\Models\URLModel.cs" />
     <Compile Include="src\UI\MainUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +207,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="basic_app.ico" />
+    <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.dll" />
+    <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll" />
+    <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.Sensors.dll" />
+    <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.Shell.dll" />
+    <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
+    <None Include="res\btn_dc_3.png" />
+    <None Include="res\btn_shop_3.png" />
+    <None Include="res\btn_reg_3.png" />
+    <None Include="res\btn_launch_3.png" />
     <None Include="Resources\btn_shop_4.png" />
     <None Include="Resources\btn_shop_3.png" />
     <None Include="Resources\btn_shop_2.png" />
@@ -205,10 +235,6 @@
     <None Include="Resources\btn_dc_3.png" />
     <None Include="Resources\btn_dc_2.png" />
     <None Include="Resources\btn_dc_1.png" />
-    <None Include="res\btn_basc_4.png" />
-    <None Include="res\btn_basc_3.png" />
-    <None Include="res\btn_basc_2.png" />
-    <None Include="res\btn_basc_1.png" />
     <EmbeddedResource Include="lib\DotNetZip.dll" />
     <EmbeddedResource Include="lib\Newtonsoft.Json.dll" />
     <None Include="res\reg3.png" />

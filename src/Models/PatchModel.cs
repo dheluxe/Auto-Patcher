@@ -14,6 +14,8 @@ namespace TYYongAutoPatcher.src.Models
         public int ExtractedPercentage { get; set; } = 0;
         public double Version { get; set; }
         public string FileName { get; set; }
+        public string[] DownloadLinks { get; set; }
+
         public int NoOfZippedFiles { get; set; } = 0;
         public int NoOfUnZippedFiles { get; set; } = 0;
         public double SizeOfZippedFiles { get; set; } = 0;

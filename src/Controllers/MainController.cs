@@ -100,7 +100,7 @@ namespace TYYongAutoPatcher.src.Controllers
                             foreach (var patch in Setting.PatchList)
                             {
                                 var urlStr = $"{Setting.Server.URL.PatchDataDir}{patch.FileName}";
-                                if (patch.DownloadLinks != null && patch.DownloadLinks.Length > 0) 
+                                if (patch.DownloadLinks != null && patch.DownloadLinks.Length > 0)
                                 {
                                     //TODO: Allow try to download different downloads link.
                                     urlStr = patch.DownloadLinks[0];
@@ -290,7 +290,8 @@ namespace TYYongAutoPatcher.src.Controllers
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 startInfo.FileName = Setting.Game.Exe;
-                startInfo.Arguments = Setting.Game.Arguments;
+                //startInfo.Arguments = Setting.Game.Arguments;
+                startInfo.Arguments = "tyyong" + "_game_" + "start-A4908E588";
                 process.StartInfo = startInfo;
                 process.Start();
             }

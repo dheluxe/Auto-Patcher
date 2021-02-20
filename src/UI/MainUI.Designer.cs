@@ -57,7 +57,12 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_value_totalProgress = new System.Windows.Forms.Label();
             this.lbl_report = new System.Windows.Forms.Label();
             this.timer_delay = new System.Windows.Forms.Timer(this.components);
+            this.lbl_pipe = new System.Windows.Forms.Label();
+            this.lbl_chinese = new System.Windows.Forms.Label();
+            this.lbl_Eng = new System.Windows.Forms.Label();
+            this.pnl_top = new System.Windows.Forms.Panel();
             this.pnl_dragger.SuspendLayout();
+            this.pnl_top.SuspendLayout();
             this.SuspendLayout();
             // 
             // web_left
@@ -306,6 +311,7 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.Controls.Add(this.btn_launch);
             this.pnl_dragger.Controls.Add(this.lbx_messages);
             this.pnl_dragger.Controls.Add(this.lbl_report);
+            this.pnl_dragger.Controls.Add(this.pnl_top);
             this.pnl_dragger.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_dragger.Location = new System.Drawing.Point(0, 0);
             this.pnl_dragger.Name = "pnl_dragger";
@@ -389,6 +395,47 @@ namespace TYYongAutoPatcher.src.UI
             this.timer_delay.Interval = 300;
             this.timer_delay.Tick += new System.EventHandler(this.timer_delay_Tick);
             // 
+            // lbl_pipe
+            // 
+            this.lbl_pipe.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbl_pipe.Location = new System.Drawing.Point(481, -3);
+            this.lbl_pipe.Name = "lbl_pipe";
+            this.lbl_pipe.Size = new System.Drawing.Size(13, 33);
+            this.lbl_pipe.TabIndex = 20;
+            this.lbl_pipe.Text = "|";
+            this.lbl_pipe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_chinese
+            // 
+            this.lbl_chinese.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbl_chinese.Location = new System.Drawing.Point(488, -3);
+            this.lbl_chinese.Name = "lbl_chinese";
+            this.lbl_chinese.Size = new System.Drawing.Size(38, 33);
+            this.lbl_chinese.TabIndex = 19;
+            this.lbl_chinese.Text = "中文";
+            this.lbl_chinese.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_Eng
+            // 
+            this.lbl_Eng.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbl_Eng.Location = new System.Drawing.Point(457, -3);
+            this.lbl_Eng.Name = "lbl_Eng";
+            this.lbl_Eng.Size = new System.Drawing.Size(28, 33);
+            this.lbl_Eng.TabIndex = 19;
+            this.lbl_Eng.Text = "ENG";
+            this.lbl_Eng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnl_top
+            // 
+            this.pnl_top.Controls.Add(this.lbl_chinese);
+            this.pnl_top.Controls.Add(this.lbl_pipe);
+            this.pnl_top.Controls.Add(this.lbl_Eng);
+            this.pnl_top.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnl_top.Location = new System.Drawing.Point(0, 0);
+            this.pnl_top.Name = "pnl_top";
+            this.pnl_top.Size = new System.Drawing.Size(740, 33);
+            this.pnl_top.TabIndex = 21;
+            // 
             // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -409,6 +456,7 @@ namespace TYYongAutoPatcher.src.UI
             this.Load += new System.EventHandler(this.MainUI_Load);
             this.pnl_dragger.ResumeLayout(false);
             this.pnl_dragger.PerformLayout();
+            this.pnl_top.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -440,6 +488,10 @@ namespace TYYongAutoPatcher.src.UI
         private System.Windows.Forms.Label lbl_title_latestVer;
         private System.Windows.Forms.Label lbl_value_currentVer;
         private System.Windows.Forms.Label lbl_title_currentVer;
+        private System.Windows.Forms.Panel pnl_top;
+        private System.Windows.Forms.Label lbl_chinese;
+        private System.Windows.Forms.Label lbl_pipe;
+        private System.Windows.Forms.Label lbl_Eng;
     }
 }
 

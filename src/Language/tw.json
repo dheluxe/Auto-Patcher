@@ -1,0 +1,19 @@
+{
+    "UICompoenet": {
+        "btn_launch": "開始遊戲",
+        "btn_reg": "註冊帳號",
+        "btn_shop": "點數商城",
+        "btn_event": "Discord",
+        "lbl_title_progress": "進度",
+        "lbl_title_totalProgress": "整體進度",
+        "lbl_officialWeb": "前往官網",
+        "lbl_title_currentVer": "目前版本",
+        "lbl_title_latestVer": "最新版本",
+        "cbx_startWhenReady": "準備好遊戲就馬上開始"
+    },
+    "State":
+    {
+        "DeniedToDownload":"需要手動下載並安裝更新包",
+        "Retrying":"嘗試連接到伺服器中..."
+    }
+}

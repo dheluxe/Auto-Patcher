@@ -446,7 +446,7 @@ namespace TYYongAutoPatcher.src.UI
                 case StateCode.ErrorConnectingFail:
                 case StateCode.ErrorWritingFail:
                 case StateCode.ErrorExtractingFail:
-                case StateCode.DeinedToDownload:
+                case StateCode.DeniedToDownload:
                     myBrush = new SolidBrush(Color.FromArgb(248, 63, 94));
                     break;
                 case StateCode.Success:
@@ -520,7 +520,7 @@ namespace TYYongAutoPatcher.src.UI
 
             switch (app.State)
             {
-                case StateCode.DeinedToDownload:
+                case StateCode.DeniedToDownload:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                     break;
                 case StateCode.Error:

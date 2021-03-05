@@ -49,7 +49,12 @@ namespace TYYongAutoPatcher.src.UI
             this.btn_event = new System.Windows.Forms.Button();
             this.lbl_state = new System.Windows.Forms.Label();
             this.pnl_dragger = new System.Windows.Forms.Panel();
+            this.lbl_cn = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbl_pipe = new System.Windows.Forms.Label();
+            this.lbl_tw = new System.Windows.Forms.Label();
             this.lbl_value_latestVer = new System.Windows.Forms.Label();
+            this.lbl_en = new System.Windows.Forms.Label();
             this.lbl_title_latestVer = new System.Windows.Forms.Label();
             this.lbl_value_currentVer = new System.Windows.Forms.Label();
             this.lbl_title_currentVer = new System.Windows.Forms.Label();
@@ -57,12 +62,7 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_value_totalProgress = new System.Windows.Forms.Label();
             this.lbl_report = new System.Windows.Forms.Label();
             this.timer_delay = new System.Windows.Forms.Timer(this.components);
-            this.lbl_pipe = new System.Windows.Forms.Label();
-            this.lbl_chinese = new System.Windows.Forms.Label();
-            this.lbl_Eng = new System.Windows.Forms.Label();
-            this.pnl_top = new System.Windows.Forms.Panel();
             this.pnl_dragger.SuspendLayout();
-            this.pnl_top.SuspendLayout();
             this.SuspendLayout();
             // 
             // web_left
@@ -198,7 +198,7 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_officialWeb.ForeColor = System.Drawing.Color.Chocolate;
             this.lbl_officialWeb.Location = new System.Drawing.Point(81, 0);
             this.lbl_officialWeb.Name = "lbl_officialWeb";
-            this.lbl_officialWeb.Size = new System.Drawing.Size(53, 33);
+            this.lbl_officialWeb.Size = new System.Drawing.Size(53, 25);
             this.lbl_officialWeb.TabIndex = 14;
             this.lbl_officialWeb.Text = "前往官網";
             this.lbl_officialWeb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -290,7 +290,12 @@ namespace TYYongAutoPatcher.src.UI
             // pnl_dragger
             // 
             this.pnl_dragger.BackColor = System.Drawing.Color.Transparent;
+            this.pnl_dragger.Controls.Add(this.lbl_cn);
+            this.pnl_dragger.Controls.Add(this.label2);
+            this.pnl_dragger.Controls.Add(this.lbl_pipe);
+            this.pnl_dragger.Controls.Add(this.lbl_tw);
             this.pnl_dragger.Controls.Add(this.lbl_value_latestVer);
+            this.pnl_dragger.Controls.Add(this.lbl_en);
             this.pnl_dragger.Controls.Add(this.lbl_title_latestVer);
             this.pnl_dragger.Controls.Add(this.lbl_value_currentVer);
             this.pnl_dragger.Controls.Add(this.lbl_title_currentVer);
@@ -311,7 +316,6 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.Controls.Add(this.btn_launch);
             this.pnl_dragger.Controls.Add(this.lbx_messages);
             this.pnl_dragger.Controls.Add(this.lbl_report);
-            this.pnl_dragger.Controls.Add(this.pnl_top);
             this.pnl_dragger.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_dragger.Location = new System.Drawing.Point(0, 0);
             this.pnl_dragger.Name = "pnl_dragger";
@@ -321,45 +325,101 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
             this.pnl_dragger.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
+            // lbl_cn
+            // 
+            this.lbl_cn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_cn.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_cn.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbl_cn.Location = new System.Drawing.Point(490, 0);
+            this.lbl_cn.Name = "lbl_cn";
+            this.lbl_cn.Size = new System.Drawing.Size(15, 25);
+            this.lbl_cn.TabIndex = 21;
+            this.lbl_cn.Text = "简";
+            this.lbl_cn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label2.Location = new System.Drawing.Point(478, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(13, 25);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "|";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_pipe
+            // 
+            this.lbl_pipe.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.lbl_pipe.Location = new System.Drawing.Point(452, 0);
+            this.lbl_pipe.Name = "lbl_pipe";
+            this.lbl_pipe.Size = new System.Drawing.Size(10, 25);
+            this.lbl_pipe.TabIndex = 20;
+            this.lbl_pipe.Text = "|";
+            this.lbl_pipe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_tw
+            // 
+            this.lbl_tw.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_tw.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_tw.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbl_tw.Location = new System.Drawing.Point(463, 0);
+            this.lbl_tw.Name = "lbl_tw";
+            this.lbl_tw.Size = new System.Drawing.Size(16, 25);
+            this.lbl_tw.TabIndex = 19;
+            this.lbl_tw.Text = "繁";
+            this.lbl_tw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // lbl_value_latestVer
             // 
-            this.lbl_value_latestVer.AutoSize = true;
             this.lbl_value_latestVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_latestVer.Location = new System.Drawing.Point(667, 7);
+            this.lbl_value_latestVer.Location = new System.Drawing.Point(649, 0);
             this.lbl_value_latestVer.Name = "lbl_value_latestVer";
-            this.lbl_value_latestVer.Size = new System.Drawing.Size(9, 12);
+            this.lbl_value_latestVer.Size = new System.Drawing.Size(33, 25);
             this.lbl_value_latestVer.TabIndex = 18;
             this.lbl_value_latestVer.Text = "-";
+            this.lbl_value_latestVer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lbl_en
+            // 
+            this.lbl_en.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_en.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_en.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbl_en.Location = new System.Drawing.Point(431, 0);
+            this.lbl_en.Name = "lbl_en";
+            this.lbl_en.Size = new System.Drawing.Size(20, 25);
+            this.lbl_en.TabIndex = 19;
+            this.lbl_en.Text = "EN";
+            this.lbl_en.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbl_title_latestVer
             // 
-            this.lbl_title_latestVer.AutoSize = true;
             this.lbl_title_latestVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_latestVer.Location = new System.Drawing.Point(613, 7);
+            this.lbl_title_latestVer.Location = new System.Drawing.Point(595, 0);
             this.lbl_title_latestVer.Name = "lbl_title_latestVer";
-            this.lbl_title_latestVer.Size = new System.Drawing.Size(53, 12);
+            this.lbl_title_latestVer.Size = new System.Drawing.Size(53, 25);
             this.lbl_title_latestVer.TabIndex = 18;
             this.lbl_title_latestVer.Text = "最新版本";
+            this.lbl_title_latestVer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbl_value_currentVer
             // 
-            this.lbl_value_currentVer.AutoSize = true;
             this.lbl_value_currentVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_currentVer.Location = new System.Drawing.Point(585, 7);
+            this.lbl_value_currentVer.Location = new System.Drawing.Point(568, 0);
             this.lbl_value_currentVer.Name = "lbl_value_currentVer";
-            this.lbl_value_currentVer.Size = new System.Drawing.Size(9, 12);
+            this.lbl_value_currentVer.Size = new System.Drawing.Size(27, 25);
             this.lbl_value_currentVer.TabIndex = 18;
             this.lbl_value_currentVer.Text = "-";
+            this.lbl_value_currentVer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lbl_title_currentVer
             // 
-            this.lbl_title_currentVer.AutoSize = true;
             this.lbl_title_currentVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_currentVer.Location = new System.Drawing.Point(532, 7);
+            this.lbl_title_currentVer.Location = new System.Drawing.Point(515, 0);
             this.lbl_title_currentVer.Name = "lbl_title_currentVer";
-            this.lbl_title_currentVer.Size = new System.Drawing.Size(53, 12);
+            this.lbl_title_currentVer.Size = new System.Drawing.Size(53, 25);
             this.lbl_title_currentVer.TabIndex = 18;
             this.lbl_title_currentVer.Text = "目前版本";
+            this.lbl_title_currentVer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbl_value_progress
             // 
@@ -395,47 +455,6 @@ namespace TYYongAutoPatcher.src.UI
             this.timer_delay.Interval = 300;
             this.timer_delay.Tick += new System.EventHandler(this.timer_delay_Tick);
             // 
-            // lbl_pipe
-            // 
-            this.lbl_pipe.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lbl_pipe.Location = new System.Drawing.Point(481, -3);
-            this.lbl_pipe.Name = "lbl_pipe";
-            this.lbl_pipe.Size = new System.Drawing.Size(13, 33);
-            this.lbl_pipe.TabIndex = 20;
-            this.lbl_pipe.Text = "|";
-            this.lbl_pipe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbl_chinese
-            // 
-            this.lbl_chinese.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lbl_chinese.Location = new System.Drawing.Point(488, -3);
-            this.lbl_chinese.Name = "lbl_chinese";
-            this.lbl_chinese.Size = new System.Drawing.Size(38, 33);
-            this.lbl_chinese.TabIndex = 19;
-            this.lbl_chinese.Text = "中文";
-            this.lbl_chinese.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbl_Eng
-            // 
-            this.lbl_Eng.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lbl_Eng.Location = new System.Drawing.Point(457, -3);
-            this.lbl_Eng.Name = "lbl_Eng";
-            this.lbl_Eng.Size = new System.Drawing.Size(28, 33);
-            this.lbl_Eng.TabIndex = 19;
-            this.lbl_Eng.Text = "ENG";
-            this.lbl_Eng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pnl_top
-            // 
-            this.pnl_top.Controls.Add(this.lbl_chinese);
-            this.pnl_top.Controls.Add(this.lbl_pipe);
-            this.pnl_top.Controls.Add(this.lbl_Eng);
-            this.pnl_top.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnl_top.Location = new System.Drawing.Point(0, 0);
-            this.pnl_top.Name = "pnl_top";
-            this.pnl_top.Size = new System.Drawing.Size(740, 33);
-            this.pnl_top.TabIndex = 21;
-            // 
             // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -455,8 +474,6 @@ namespace TYYongAutoPatcher.src.UI
             this.Text = "泰月勇Online 登錄器";
             this.Load += new System.EventHandler(this.MainUI_Load);
             this.pnl_dragger.ResumeLayout(false);
-            this.pnl_dragger.PerformLayout();
-            this.pnl_top.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -488,10 +505,11 @@ namespace TYYongAutoPatcher.src.UI
         private System.Windows.Forms.Label lbl_title_latestVer;
         private System.Windows.Forms.Label lbl_value_currentVer;
         private System.Windows.Forms.Label lbl_title_currentVer;
-        private System.Windows.Forms.Panel pnl_top;
-        private System.Windows.Forms.Label lbl_chinese;
+        private System.Windows.Forms.Label lbl_tw;
         private System.Windows.Forms.Label lbl_pipe;
-        private System.Windows.Forms.Label lbl_Eng;
+        private System.Windows.Forms.Label lbl_en;
+        private System.Windows.Forms.Label lbl_cn;
+        private System.Windows.Forms.Label label2;
     }
 }
 

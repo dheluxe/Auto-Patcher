@@ -1,0 +1,25 @@
+{
+  "Server": {
+    "Url": {
+      "OfficialWeb": "http://34.92.235.192/",
+      "LeftWeb": "http://www.yong-online.com.tw/WebImages/launch/launcher.html",
+      "RightWeb": "http://www.yong-online.com.tw/boards.aspx",
+      "Shop": "http://34.92.235.192/shop",
+      "Event": "http://34.92.235.192/event",
+      "Register": "http://34.92.235.192/register",
+      "PatchDataDir": "http://34.92.235.192/patch/data/"
+    },
+    "IsDownloadAllowed": true
+  },
+  "Game": {
+    "Exe": "GameClient.exe",
+    "Arguments": "/app_run"
+  },
+  "PatchList": [
+    {
+      "Version": 2.0,
+      "FileName": "Ran Destiny.rar",
+      "DownloadLinks": []
+    }
+  ]
+}

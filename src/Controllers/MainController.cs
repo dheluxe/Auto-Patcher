@@ -36,7 +36,7 @@ namespace TYYongAutoPatcher.src.Controllers
         Retrying,
         Success,
         UpdatingCompleted,
-        DeinedToDownload,
+        DeniedToDownload,
     }
 
     class MainController
@@ -117,8 +117,8 @@ namespace TYYongAutoPatcher.src.Controllers
                     }
                     else
                     {
-                        UpdateState(StateCode.DeinedToDownload, "需要手動下載並安裝更新包");
-                        ui.AddMsg("需要手動下載並安裝更新包", StateCode.DeinedToDownload);
+                        UpdateState(StateCode.DeniedToDownload, "需要手動下載並安裝更新包");
+                        ui.AddMsg("需要手動下載並安裝更新包", StateCode.DeniedToDownload);
                     }
 
                 }
@@ -132,7 +132,7 @@ namespace TYYongAutoPatcher.src.Controllers
                     case StateCode.ErrorWritingFail:
                     case StateCode.GameReady:
                     case StateCode.UpdatingCompleted:
-                    case StateCode.DeinedToDownload:
+                    case StateCode.DeniedToDownload:
                         return;
                     default:
                         UpdateState(StateCode.GameReady);

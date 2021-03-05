@@ -73,9 +73,9 @@ namespace TYYongAutoPatcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap btn_dc_1 {
+        internal static System.Drawing.Bitmap btn_basc_1 {
             get {
-                object obj = ResourceManager.GetObject("btn_dc_1", resourceCulture);
+                object obj = ResourceManager.GetObject("btn_basc_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace TYYongAutoPatcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap btn_dc_2 {
+        internal static System.Drawing.Bitmap btn_basc_1_s {
             get {
-                object obj = ResourceManager.GetObject("btn_dc_2", resourceCulture);
+                object obj = ResourceManager.GetObject("btn_basc_1_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace TYYongAutoPatcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap btn_dc_3 {
+        internal static System.Drawing.Bitmap btn_basc_2 {
             get {
-                object obj = ResourceManager.GetObject("btn_dc_3", resourceCulture);
+                object obj = ResourceManager.GetObject("btn_basc_2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,49 @@ namespace TYYongAutoPatcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap btn_dc_4 {
+        internal static System.Drawing.Bitmap btn_basc_2_s {
             get {
-                object obj = ResourceManager.GetObject("btn_dc_4", resourceCulture);
+                object obj = ResourceManager.GetObject("btn_basc_2_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_basc_3 {
+            get {
+                object obj = ResourceManager.GetObject("btn_basc_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_basc_3_s {
+            get {
+                object obj = ResourceManager.GetObject("btn_basc_3_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_basc_4 {
+            get {
+                object obj = ResourceManager.GetObject("btn_basc_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_basc_4_s {
+            get {
+                object obj = ResourceManager.GetObject("btn_basc_4_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,119 +183,9 @@ namespace TYYongAutoPatcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap btn_launch_1 {
+        internal static System.Drawing.Bitmap logo {
             get {
-                object obj = ResourceManager.GetObject("btn_launch_1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_launch_2 {
-            get {
-                object obj = ResourceManager.GetObject("btn_launch_2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_launch_3 {
-            get {
-                object obj = ResourceManager.GetObject("btn_launch_3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_launch_4 {
-            get {
-                object obj = ResourceManager.GetObject("btn_launch_4", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_reg_1 {
-            get {
-                object obj = ResourceManager.GetObject("btn_reg_1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_reg_2 {
-            get {
-                object obj = ResourceManager.GetObject("btn_reg_2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_reg_3 {
-            get {
-                object obj = ResourceManager.GetObject("btn_reg_3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_reg_4 {
-            get {
-                object obj = ResourceManager.GetObject("btn_reg_4", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_shop_1 {
-            get {
-                object obj = ResourceManager.GetObject("btn_shop_1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_shop_2 {
-            get {
-                object obj = ResourceManager.GetObject("btn_shop_2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_shop_3 {
-            get {
-                object obj = ResourceManager.GetObject("btn_shop_3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap btn_shop_4 {
-            get {
-                object obj = ResourceManager.GetObject("btn_shop_4", resourceCulture);
+                object obj = ResourceManager.GetObject("logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

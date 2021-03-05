@@ -25,12 +25,13 @@ namespace TYYongAutoPatcher.src.Controllers
         public async Task DownloadFilesAysnc(Uri url, string savePath, PatchModel patch)
         {
             app.UpdateState(StateCode.Downloading);
+            var text = app.Language.Text.UIComponent;
             try
             {
                 client = new WebClient();
                 client.DownloadProgressChanged += app.ui.DownloadPatchProgressChangedHandler(patch);
                 client.DownloadFileCompleted += app.ui.AsyncCompletedEventHandler(patch);
-                app.ui.AddMsg($"正在下載 {patch.FileName}...", StateCode.Downloading);
+                app.ui.AddMsg($"{text.Downloading} {patch.FileName}...", StateCode.Downloading);
                 Stopwatch timer = app.ui.GetDownloadTimer();
                 timer.Restart();
                 timer.Start();
@@ -41,7 +42,7 @@ namespace TYYongAutoPatcher.src.Controllers
             {
                 Console.WriteLine($"*************FileDownloadController.DownloadFilesAysnc(Uri url, string savePath, PatchModel patch): {ex.Message}");
                 app.UpdateState(StateCode.ErrorConnectingFail);
-                app.ui.AddMsg($"無法取得更新包 {patch.FileName}", StateCode.ErrorConnectingFail);
+                app.ui.AddMsg($"{text.DownloadFailed} {patch.FileName}", StateCode.ErrorConnectingFail);
             }
         }
 

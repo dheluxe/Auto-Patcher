@@ -49,20 +49,24 @@ namespace TYYongAutoPatcher.src.UI
             this.btn_event = new System.Windows.Forms.Button();
             this.lbl_state = new System.Windows.Forms.Label();
             this.pnl_dragger = new System.Windows.Forms.Panel();
-            this.lbl_value_latestVer = new System.Windows.Forms.Label();
-            this.lbl_title_latestVer = new System.Windows.Forms.Label();
+            this.flp_top = new System.Windows.Forms.FlowLayoutPanel();
             this.lbl_value_currentVer = new System.Windows.Forms.Label();
+            this.lbl_title_latestVer = new System.Windows.Forms.Label();
+            this.lbl_value_latestVer = new System.Windows.Forms.Label();
             this.lbl_title_currentVer = new System.Windows.Forms.Label();
+            this.lbl_cn = new System.Windows.Forms.Label();
+            this.lbl_pipe = new System.Windows.Forms.Label();
+            this.lbl_tw = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbl_en = new System.Windows.Forms.Label();
             this.lbl_value_progress = new System.Windows.Forms.Label();
             this.lbl_value_totalProgress = new System.Windows.Forms.Label();
             this.lbl_report = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer_delay = new System.Windows.Forms.Timer(this.components);
-            this.lbl_pipe = new System.Windows.Forms.Label();
-            this.lbl_chinese = new System.Windows.Forms.Label();
-            this.lbl_Eng = new System.Windows.Forms.Label();
-            this.pnl_top = new System.Windows.Forms.Panel();
             this.pnl_dragger.SuspendLayout();
-            this.pnl_top.SuspendLayout();
+            this.flp_top.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // web_left
@@ -106,12 +110,14 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // btn_launch
             // 
-            this.btn_launch.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_launch_4;
+            this.btn_launch.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_basc_4;
             this.btn_launch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_launch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_launch.Enabled = false;
             this.btn_launch.FlatAppearance.BorderSize = 0;
             this.btn_launch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_launch.Font = new System.Drawing.Font("Microsoft YaHei", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_launch.ForeColor = System.Drawing.SystemColors.Control;
             this.btn_launch.Location = new System.Drawing.Point(575, 449);
             this.btn_launch.Name = "btn_launch";
             this.btn_launch.Size = new System.Drawing.Size(150, 60);
@@ -126,7 +132,7 @@ namespace TYYongAutoPatcher.src.UI
             // btn_exit
             // 
             this.btn_exit.BackColor = System.Drawing.Color.Transparent;
-            this.btn_exit.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_exit_1;
+            this.btn_exit.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_exit_3;
             this.btn_exit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btn_exit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_exit.FlatAppearance.BorderSize = 0;
@@ -149,6 +155,9 @@ namespace TYYongAutoPatcher.src.UI
             this.pgb_progress.Name = "pgb_progress";
             this.pgb_progress.Size = new System.Drawing.Size(440, 16);
             this.pgb_progress.TabIndex = 9;
+            this.pgb_progress.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.pgb_progress.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.pgb_progress.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // lbl_title_totalProgress
             // 
@@ -158,8 +167,10 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_title_totalProgress.Name = "lbl_title_totalProgress";
             this.lbl_title_totalProgress.Size = new System.Drawing.Size(53, 16);
             this.lbl_title_totalProgress.TabIndex = 8;
-            this.lbl_title_totalProgress.Text = "整體進度";
             this.lbl_title_totalProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_title_totalProgress.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_title_totalProgress.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_title_totalProgress.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // lbl_copyright
             // 
@@ -171,6 +182,9 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_copyright.TabIndex = 13;
             this.lbl_copyright.Text = "copy";
             this.lbl_copyright.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lbl_copyright.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_copyright.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_copyright.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // pgb_total
             // 
@@ -178,6 +192,9 @@ namespace TYYongAutoPatcher.src.UI
             this.pgb_total.Name = "pgb_total";
             this.pgb_total.Size = new System.Drawing.Size(440, 16);
             this.pgb_total.TabIndex = 10;
+            this.pgb_total.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.pgb_total.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.pgb_total.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // lbl_title_progress
             // 
@@ -187,20 +204,22 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_title_progress.Name = "lbl_title_progress";
             this.lbl_title_progress.Size = new System.Drawing.Size(53, 16);
             this.lbl_title_progress.TabIndex = 7;
-            this.lbl_title_progress.Text = "進度";
             this.lbl_title_progress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_title_progress.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_title_progress.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_title_progress.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // lbl_officialWeb
             // 
+            this.lbl_officialWeb.AutoSize = true;
             this.lbl_officialWeb.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_officialWeb.Enabled = false;
             this.lbl_officialWeb.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lbl_officialWeb.ForeColor = System.Drawing.Color.Chocolate;
-            this.lbl_officialWeb.Location = new System.Drawing.Point(81, 0);
+            this.lbl_officialWeb.Location = new System.Drawing.Point(78, 10);
             this.lbl_officialWeb.Name = "lbl_officialWeb";
-            this.lbl_officialWeb.Size = new System.Drawing.Size(53, 33);
+            this.lbl_officialWeb.Size = new System.Drawing.Size(0, 12);
             this.lbl_officialWeb.TabIndex = 14;
-            this.lbl_officialWeb.Text = "前往官網";
             this.lbl_officialWeb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbl_officialWeb.Click += new System.EventHandler(this.lbl_goToWeb_Click);
             this.lbl_officialWeb.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbl_goToWeb_MouseDown);
@@ -208,15 +227,17 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // btn_reg
             // 
-            this.btn_reg.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_reg_4;
+            this.btn_reg.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_basc_4_s;
             this.btn_reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_reg.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_reg.Enabled = false;
             this.btn_reg.FlatAppearance.BorderSize = 0;
             this.btn_reg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_reg.Font = new System.Drawing.Font("PMingLiU", 8.25F);
+            this.btn_reg.ForeColor = System.Drawing.SystemColors.Control;
             this.btn_reg.Location = new System.Drawing.Point(575, 415);
             this.btn_reg.Name = "btn_reg";
-            this.btn_reg.Size = new System.Drawing.Size(150, 17);
+            this.btn_reg.Size = new System.Drawing.Size(150, 21);
             this.btn_reg.TabIndex = 12;
             this.btn_reg.UseVisualStyleBackColor = true;
             this.btn_reg.Click += new System.EventHandler(this.btn_register_Click);
@@ -227,12 +248,14 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // btn_shop
             // 
-            this.btn_shop.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_shop_4;
+            this.btn_shop.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_basc_4;
             this.btn_shop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_shop.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_shop.Enabled = false;
             this.btn_shop.FlatAppearance.BorderSize = 0;
             this.btn_shop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_shop.Font = new System.Drawing.Font("Microsoft JhengHei", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_shop.ForeColor = System.Drawing.SystemColors.Control;
             this.btn_shop.Location = new System.Drawing.Point(407, 303);
             this.btn_shop.Name = "btn_shop";
             this.btn_shop.Size = new System.Drawing.Size(150, 60);
@@ -250,24 +273,25 @@ namespace TYYongAutoPatcher.src.UI
             this.cbx_startWhenReady.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cbx_startWhenReady.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.cbx_startWhenReady.ForeColor = System.Drawing.Color.Silver;
-            this.cbx_startWhenReady.Location = new System.Drawing.Point(575, 388);
+            this.cbx_startWhenReady.Location = new System.Drawing.Point(575, 385);
             this.cbx_startWhenReady.Name = "cbx_startWhenReady";
-            this.cbx_startWhenReady.Size = new System.Drawing.Size(155, 17);
+            this.cbx_startWhenReady.Size = new System.Drawing.Size(155, 20);
             this.cbx_startWhenReady.TabIndex = 11;
-            this.cbx_startWhenReady.Text = "準備好遊戲就馬上開始";
-            this.cbx_startWhenReady.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbx_startWhenReady.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.cbx_startWhenReady.UseVisualStyleBackColor = false;
             this.cbx_startWhenReady.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cbx_startWhenReady_MouseDown);
             this.cbx_startWhenReady.MouseUp += new System.Windows.Forms.MouseEventHandler(this.cbx_startWhenReady_MouseUp);
             // 
             // btn_event
             // 
-            this.btn_event.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_dc_4;
+            this.btn_event.BackgroundImage = global::TYYongAutoPatcher.Properties.Resources.btn_basc_4;
             this.btn_event.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_event.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_event.Enabled = false;
             this.btn_event.FlatAppearance.BorderSize = 0;
             this.btn_event.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_event.Font = new System.Drawing.Font("Algerian", 22F);
+            this.btn_event.ForeColor = System.Drawing.SystemColors.Control;
             this.btn_event.Location = new System.Drawing.Point(575, 303);
             this.btn_event.Name = "btn_event";
             this.btn_event.Size = new System.Drawing.Size(150, 60);
@@ -286,14 +310,14 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_state.Name = "lbl_state";
             this.lbl_state.Size = new System.Drawing.Size(506, 25);
             this.lbl_state.TabIndex = 16;
+            this.lbl_state.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_state.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_state.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // pnl_dragger
             // 
             this.pnl_dragger.BackColor = System.Drawing.Color.Transparent;
-            this.pnl_dragger.Controls.Add(this.lbl_value_latestVer);
-            this.pnl_dragger.Controls.Add(this.lbl_title_latestVer);
-            this.pnl_dragger.Controls.Add(this.lbl_value_currentVer);
-            this.pnl_dragger.Controls.Add(this.lbl_title_currentVer);
+            this.pnl_dragger.Controls.Add(this.flp_top);
             this.pnl_dragger.Controls.Add(this.lbl_value_progress);
             this.pnl_dragger.Controls.Add(this.pgb_progress);
             this.pnl_dragger.Controls.Add(this.pgb_total);
@@ -311,7 +335,7 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.Controls.Add(this.btn_launch);
             this.pnl_dragger.Controls.Add(this.lbx_messages);
             this.pnl_dragger.Controls.Add(this.lbl_report);
-            this.pnl_dragger.Controls.Add(this.pnl_top);
+            this.pnl_dragger.Controls.Add(this.pictureBox1);
             this.pnl_dragger.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_dragger.Location = new System.Drawing.Point(0, 0);
             this.pnl_dragger.Name = "pnl_dragger";
@@ -321,45 +345,142 @@ namespace TYYongAutoPatcher.src.UI
             this.pnl_dragger.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
             this.pnl_dragger.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
-            // lbl_value_latestVer
+            // flp_top
             // 
-            this.lbl_value_latestVer.AutoSize = true;
-            this.lbl_value_latestVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_latestVer.Location = new System.Drawing.Point(667, 7);
-            this.lbl_value_latestVer.Name = "lbl_value_latestVer";
-            this.lbl_value_latestVer.Size = new System.Drawing.Size(9, 12);
-            this.lbl_value_latestVer.TabIndex = 18;
-            this.lbl_value_latestVer.Text = "-";
-            // 
-            // lbl_title_latestVer
-            // 
-            this.lbl_title_latestVer.AutoSize = true;
-            this.lbl_title_latestVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_latestVer.Location = new System.Drawing.Point(613, 7);
-            this.lbl_title_latestVer.Name = "lbl_title_latestVer";
-            this.lbl_title_latestVer.Size = new System.Drawing.Size(53, 12);
-            this.lbl_title_latestVer.TabIndex = 18;
-            this.lbl_title_latestVer.Text = "最新版本";
+            this.flp_top.AutoSize = true;
+            this.flp_top.Controls.Add(this.lbl_value_currentVer);
+            this.flp_top.Controls.Add(this.lbl_title_latestVer);
+            this.flp_top.Controls.Add(this.lbl_value_latestVer);
+            this.flp_top.Controls.Add(this.lbl_title_currentVer);
+            this.flp_top.Controls.Add(this.lbl_cn);
+            this.flp_top.Controls.Add(this.lbl_pipe);
+            this.flp_top.Controls.Add(this.lbl_tw);
+            this.flp_top.Controls.Add(this.label2);
+            this.flp_top.Controls.Add(this.lbl_en);
+            this.flp_top.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flp_top.Location = new System.Drawing.Point(348, 9);
+            this.flp_top.Name = "flp_top";
+            this.flp_top.Size = new System.Drawing.Size(348, 13);
+            this.flp_top.TabIndex = 22;
+            this.flp_top.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.flp_top.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.flp_top.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // lbl_value_currentVer
             // 
             this.lbl_value_currentVer.AutoSize = true;
             this.lbl_value_currentVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_currentVer.Location = new System.Drawing.Point(585, 7);
+            this.lbl_value_currentVer.Location = new System.Drawing.Point(345, 0);
             this.lbl_value_currentVer.Name = "lbl_value_currentVer";
-            this.lbl_value_currentVer.Size = new System.Drawing.Size(9, 12);
+            this.lbl_value_currentVer.Size = new System.Drawing.Size(0, 12);
             this.lbl_value_currentVer.TabIndex = 18;
-            this.lbl_value_currentVer.Text = "-";
+            this.lbl_value_currentVer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_value_currentVer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_value_currentVer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_value_currentVer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
+            // 
+            // lbl_title_latestVer
+            // 
+            this.lbl_title_latestVer.AutoSize = true;
+            this.lbl_title_latestVer.ForeColor = System.Drawing.Color.White;
+            this.lbl_title_latestVer.Location = new System.Drawing.Point(339, 0);
+            this.lbl_title_latestVer.Name = "lbl_title_latestVer";
+            this.lbl_title_latestVer.Size = new System.Drawing.Size(0, 12);
+            this.lbl_title_latestVer.TabIndex = 18;
+            this.lbl_title_latestVer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_title_latestVer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_title_latestVer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_title_latestVer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
+            // 
+            // lbl_value_latestVer
+            // 
+            this.lbl_value_latestVer.AutoSize = true;
+            this.lbl_value_latestVer.ForeColor = System.Drawing.Color.White;
+            this.lbl_value_latestVer.Location = new System.Drawing.Point(333, 0);
+            this.lbl_value_latestVer.Name = "lbl_value_latestVer";
+            this.lbl_value_latestVer.Size = new System.Drawing.Size(0, 12);
+            this.lbl_value_latestVer.TabIndex = 18;
+            this.lbl_value_latestVer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_value_latestVer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_value_latestVer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_value_latestVer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // lbl_title_currentVer
             // 
             this.lbl_title_currentVer.AutoSize = true;
             this.lbl_title_currentVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_currentVer.Location = new System.Drawing.Point(532, 7);
+            this.lbl_title_currentVer.Location = new System.Drawing.Point(327, 0);
             this.lbl_title_currentVer.Name = "lbl_title_currentVer";
-            this.lbl_title_currentVer.Size = new System.Drawing.Size(53, 12);
+            this.lbl_title_currentVer.Size = new System.Drawing.Size(0, 12);
             this.lbl_title_currentVer.TabIndex = 18;
-            this.lbl_title_currentVer.Text = "目前版本";
+            this.lbl_title_currentVer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_title_currentVer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_title_currentVer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_title_currentVer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
+            // 
+            // lbl_cn
+            // 
+            this.lbl_cn.AutoSize = true;
+            this.lbl_cn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_cn.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_cn.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbl_cn.Location = new System.Drawing.Point(304, 0);
+            this.lbl_cn.Name = "lbl_cn";
+            this.lbl_cn.Size = new System.Drawing.Size(17, 12);
+            this.lbl_cn.TabIndex = 21;
+            this.lbl_cn.Text = "简";
+            this.lbl_cn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_cn.Click += new System.EventHandler(this.lbl_cn_Click);
+            // 
+            // lbl_pipe
+            // 
+            this.lbl_pipe.AutoSize = true;
+            this.lbl_pipe.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.lbl_pipe.Location = new System.Drawing.Point(291, 0);
+            this.lbl_pipe.Name = "lbl_pipe";
+            this.lbl_pipe.Size = new System.Drawing.Size(7, 12);
+            this.lbl_pipe.TabIndex = 20;
+            this.lbl_pipe.Text = "|";
+            this.lbl_pipe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_tw
+            // 
+            this.lbl_tw.AutoSize = true;
+            this.lbl_tw.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_tw.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_tw.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbl_tw.Location = new System.Drawing.Point(268, 0);
+            this.lbl_tw.Name = "lbl_tw";
+            this.lbl_tw.Size = new System.Drawing.Size(17, 12);
+            this.lbl_tw.TabIndex = 19;
+            this.lbl_tw.Text = "繁";
+            this.lbl_tw.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_tw.Click += new System.EventHandler(this.lbl_tw_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label2.Location = new System.Drawing.Point(255, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(7, 12);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "|";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_en
+            // 
+            this.lbl_en.AutoSize = true;
+            this.lbl_en.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbl_en.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_en.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbl_en.Location = new System.Drawing.Point(229, 0);
+            this.lbl_en.Name = "lbl_en";
+            this.lbl_en.Size = new System.Drawing.Size(20, 12);
+            this.lbl_en.TabIndex = 19;
+            this.lbl_en.Text = "EN";
+            this.lbl_en.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_en.Click += new System.EventHandler(this.lbl_en_Click);
             // 
             // lbl_value_progress
             // 
@@ -370,6 +491,9 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_value_progress.TabIndex = 17;
             this.lbl_value_progress.Text = "0.0%";
             this.lbl_value_progress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbl_value_progress.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_value_progress.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_value_progress.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // lbl_value_totalProgress
             // 
@@ -380,6 +504,9 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_value_totalProgress.TabIndex = 17;
             this.lbl_value_totalProgress.Text = "0.0%";
             this.lbl_value_totalProgress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbl_value_totalProgress.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_value_totalProgress.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_value_totalProgress.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // lbl_report
             // 
@@ -389,52 +516,26 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_report.Size = new System.Drawing.Size(737, 16);
             this.lbl_report.TabIndex = 16;
             this.lbl_report.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_report.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.lbl_report.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.lbl_report.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::TYYongAutoPatcher.Properties.Resources.logo;
+            this.pictureBox1.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(63, 31);
+            this.pictureBox1.TabIndex = 23;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DragUpHandler);
             // 
             // timer_delay
             // 
             this.timer_delay.Interval = 300;
             this.timer_delay.Tick += new System.EventHandler(this.timer_delay_Tick);
-            // 
-            // lbl_pipe
-            // 
-            this.lbl_pipe.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lbl_pipe.Location = new System.Drawing.Point(481, -3);
-            this.lbl_pipe.Name = "lbl_pipe";
-            this.lbl_pipe.Size = new System.Drawing.Size(13, 33);
-            this.lbl_pipe.TabIndex = 20;
-            this.lbl_pipe.Text = "|";
-            this.lbl_pipe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbl_chinese
-            // 
-            this.lbl_chinese.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lbl_chinese.Location = new System.Drawing.Point(488, -3);
-            this.lbl_chinese.Name = "lbl_chinese";
-            this.lbl_chinese.Size = new System.Drawing.Size(38, 33);
-            this.lbl_chinese.TabIndex = 19;
-            this.lbl_chinese.Text = "中文";
-            this.lbl_chinese.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbl_Eng
-            // 
-            this.lbl_Eng.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lbl_Eng.Location = new System.Drawing.Point(457, -3);
-            this.lbl_Eng.Name = "lbl_Eng";
-            this.lbl_Eng.Size = new System.Drawing.Size(28, 33);
-            this.lbl_Eng.TabIndex = 19;
-            this.lbl_Eng.Text = "ENG";
-            this.lbl_Eng.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pnl_top
-            // 
-            this.pnl_top.Controls.Add(this.lbl_chinese);
-            this.pnl_top.Controls.Add(this.lbl_pipe);
-            this.pnl_top.Controls.Add(this.lbl_Eng);
-            this.pnl_top.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnl_top.Location = new System.Drawing.Point(0, 0);
-            this.pnl_top.Name = "pnl_top";
-            this.pnl_top.Size = new System.Drawing.Size(740, 33);
-            this.pnl_top.TabIndex = 21;
             // 
             // MainUI
             // 
@@ -456,7 +557,9 @@ namespace TYYongAutoPatcher.src.UI
             this.Load += new System.EventHandler(this.MainUI_Load);
             this.pnl_dragger.ResumeLayout(false);
             this.pnl_dragger.PerformLayout();
-            this.pnl_top.ResumeLayout(false);
+            this.flp_top.ResumeLayout(false);
+            this.flp_top.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -488,10 +591,13 @@ namespace TYYongAutoPatcher.src.UI
         private System.Windows.Forms.Label lbl_title_latestVer;
         private System.Windows.Forms.Label lbl_value_currentVer;
         private System.Windows.Forms.Label lbl_title_currentVer;
-        private System.Windows.Forms.Panel pnl_top;
-        private System.Windows.Forms.Label lbl_chinese;
+        private System.Windows.Forms.Label lbl_tw;
+        private System.Windows.Forms.Label lbl_en;
+        private System.Windows.Forms.Label lbl_cn;
+        private System.Windows.Forms.FlowLayoutPanel flp_top;
+        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lbl_pipe;
-        private System.Windows.Forms.Label lbl_Eng;
+        private System.Windows.Forms.Label label2;
     }
 }
 

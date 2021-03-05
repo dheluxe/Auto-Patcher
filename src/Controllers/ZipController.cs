@@ -22,6 +22,7 @@ namespace TYYongAutoPatcher.src.Controllers
 
         public async Task Unzip(string fileName, string targetDir, PatchModel patch)
         {
+            var text = app.Language.Text.UIComponent;
             try
             {
                 using (var zip = ZipFile.Read(fileName))
@@ -31,7 +32,6 @@ namespace TYYongAutoPatcher.src.Controllers
                     patch.NoOfZippedFiles = zip.Count;
                     foreach (var entry in zip)
                     {
-                        //app.ui.Add($"正在安裝: {entry.FileName}");
                         if (app.cts.IsCancellationRequested) app.cts.Token.ThrowIfCancellationRequested();
                         try
                         {
@@ -46,10 +46,10 @@ namespace TYYongAutoPatcher.src.Controllers
                             //ui.AddMsg($"無法刪除 {tempDir}", StateCode.Error);
                             Console.WriteLine($"*************1 ZipController.Unzip(string fileName, string targetDir, PatchModel patch) {ex.Message}");
                             app.UpdateState(StateCode.ErrorExtractingFail);
-                            app.ui.AddMsg($"安裝失敗: {entry.FileName}", StateCode.ErrorExtractingFail);
+                            app.ui.AddMsg($"{text.InstallFailed} {entry.FileName}", StateCode.ErrorExtractingFail);
                         }
                     }
-                    app.ui.AddMsg($"已安裝更新包 {patch.FileName} - 共 {app.SizeToString(patch.Size)}", StateCode.Extracted);
+                    app.ui.AddMsg($"{text.InstallFailed} {patch.FileName} - {text.Lbl_report_unit2} {app.SizeToString(patch.Size)}", StateCode.Extracted);
                     patch.IsUnzipSucceed = true;
                     await app.DeleteTempFile(patch.FileName);
                     if(++noOfUnzipped == app.Setting.PatchList.Count) app.ui.CompeteUpdating();

@@ -51,6 +51,7 @@ namespace TYYongAutoPatcher.src.UI
             timer_wait.Stop();
             timer_wait.Enabled = false;
             watch = Stopwatch.StartNew();
+            app.init();
             try
             {
                 await app.Run();
@@ -58,14 +59,12 @@ namespace TYYongAutoPatcher.src.UI
             catch (OperationCanceledException ex)
             {
                 Console.WriteLine($"*************MainUI.timer_wait_Tick(object sender, EventArgs e): {ex.Message}");
-                AddMsg("已消取更新", StateCode.Error);
+                AddMsg(app.Language.Text.State.Cancelled, StateCode.Error);
                 TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Error);
-                //lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
-                //lbl_state.Text = "✘更新失敗";
             }
             catch (InvalidTokenException ex)
             {
-                ShowErrorMsg("檢查到文件遭到修改，請嘗試重新安裝遊戲！", "");
+                ShowErrorMsg(app.Language.Text.UIComponent.Edited, app.Language.Text.UIComponent.AppName);
                 this.Close();
             }
             finally
@@ -83,11 +82,12 @@ namespace TYYongAutoPatcher.src.UI
                 var report = app.GetReport();
                 var installedPercentage = isFinished ? "100.00%" : report.TotalPercentageOfExtractedToString;
                 var downloadedPercentage = isFinished ? "100.00%" : report.TotalPercentageOfDownloadedToString;
+                var text = app.Language.Text.UIComponent;
                 lbl_report.ForeColor = lbl_state.ForeColor;
-                lbl_report.Text = $"更新耗時: {app.MSToString(watch.ElapsedMilliseconds)}  |  " +
-                                  $"下載速度: {report.DownloadSpeedPerSecondToString}  |  " +
-                                  $"已下載: {report.NoOfDownloadedPatches}個 - 共 {report.SizeOfDownloadedPatchesToString} ({downloadedPercentage})  |  " +
-                                  $"已安裝: {report.NoOfUnzipped}個 - 共 {report.SizeOfExtractedUnzippedFilesToString} ({installedPercentage})";
+                lbl_report.Text = $" {text.Lbl_report1}{app.MSToString(watch.ElapsedMilliseconds)}  |  " +
+                                  $" {text.Lbl_report2}{report.DownloadSpeedPerSecondToString}  |  " +
+                                  $" {text.Lbl_report3}{report.NoOfDownloadedPatches}{text.Lbl_report_unit1} - {text.Lbl_report_unit2} {report.SizeOfDownloadedPatchesToString} ({downloadedPercentage})  |  " +
+                                  $" {text.Lbl_report4}{report.NoOfUnzipped}{text.Lbl_report_unit1} - {text.Lbl_report_unit2} {report.SizeOfExtractedUnzippedFilesToString} ({installedPercentage})";
             }
         }
 
@@ -95,7 +95,8 @@ namespace TYYongAutoPatcher.src.UI
         {
             if (app.IsBusy())
             {
-                DialogResult dResult = MessageBox.Show("正在更新中，是否取消?", "泰月勇Online 登錄器", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                var text = app.Language.Text.UIComponent;
+                DialogResult dResult = MessageBox.Show(text.ConfirmCancel, text.AppName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 if (dResult.Equals(DialogResult.OK))
                 {
                     app.Cancel();
@@ -112,11 +113,13 @@ namespace TYYongAutoPatcher.src.UI
         {
             await app.DeleteTempFolderAndFiles();
             btn_launch.Enabled = true;
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_2;
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_2;
             UpdateProgres(100, 100);
-            AddMsg("已成功連線並傳送遊戲資料.", StateCode.Success);
-            AddMsg("已完成進入遊戲的各種設定.", StateCode.Success);
+            var text = app.Language.Text.UIComponent;
+            AddMsg(text.ReadyMsg1, StateCode.Success);
+            AddMsg(text.ReadyMsg2, StateCode.Success);
             if (cbx_startWhenReady.Checked) app.Launch();
+            if(app.Setting.PatchList.Count == 0) TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
         }
 
         #region click handler
@@ -180,73 +183,73 @@ namespace TYYongAutoPatcher.src.UI
         private void btn_launch_MouseDown(object sender, MouseEventArgs e)
         {
 
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_1;
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_1;
         }
         //
         private void btn_launch_MouseLeave(object sender, EventArgs e)
         {
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_2;
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_2;
         }
         private void btn_launch_MouseUp(object sender, MouseEventArgs e)
         {
 
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_3;
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_3;
         }
         private void btn_launch_MouseEnter(object sender, EventArgs e)
         {
 
-            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_launch_3;
+            btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_3;
         }
         //
         private void btn_register_MouseDown(object sender, MouseEventArgs e)
         {
-            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_1;
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_1_s;
         }
         private void btn_register_MouseLeave(object sender, EventArgs e)
         {
-            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_2;
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_2_s;
         }
         private void btn_register_MouseUp(object sender, MouseEventArgs e)
         {
-            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_3;
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_3_s;
         }
         private void btn_register_MouseEnter(object sender, EventArgs e)
         {
-            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_3;
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_3_s;
         }
         //
         private void btn_shop_MouseDown(object sender, MouseEventArgs e)
         {
-            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_1;
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_1;
         }
         private void btn_shop_MouseLeave(object sender, EventArgs e)
         {
-            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_2;
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_2;
         }
         private void btn_shop_MouseUp(object sender, MouseEventArgs e)
         {
-            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_3;
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_3;
         }
         private void btn_shop_MouseEnter(object sender, EventArgs e)
         {
-            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_3;
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_3;
         }
         //
         private void btn_event_MouseDown(object sender, MouseEventArgs e)
         {
-            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_1;
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_1;
         }
         private void btn_event_MouseLeave(object sender, EventArgs e)
         {
-            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_2;
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_2;
         }
         private void btn_event_MouseUp(object sender, MouseEventArgs e)
         {
-            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_3;
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_3;
         }
         private void btn_event_MouseEnter(object sender, EventArgs e)
         {
-            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_3;
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_3;
         }
 
         #endregion
@@ -284,9 +287,9 @@ namespace TYYongAutoPatcher.src.UI
             btn_reg.Enabled = true;
             lbl_officialWeb.Enabled = true;
             lbl_officialWeb.ForeColor = Color.Chocolate;
-            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_dc_2;
-            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_shop_2;
-            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_reg_2;
+            btn_event.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_2;
+            btn_shop.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_2;
+            btn_reg.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_2_s;
         }
 
         public void UpdateVersion()
@@ -446,7 +449,7 @@ namespace TYYongAutoPatcher.src.UI
                 case StateCode.ErrorConnectingFail:
                 case StateCode.ErrorWritingFail:
                 case StateCode.ErrorExtractingFail:
-                case StateCode.DeinedToDownload:
+                case StateCode.DeniedToDownload:
                     myBrush = new SolidBrush(Color.FromArgb(248, 63, 94));
                     break;
                 case StateCode.Success:
@@ -515,53 +518,53 @@ namespace TYYongAutoPatcher.src.UI
         }
 
         // update state label.
-        public void UpdateLblState(string msg)
+        public void UpdateLblState(string msg, bool autoReady = true)
         {
-
+            State text = app.Language.Text.State;
             switch (app.State)
             {
-                case StateCode.DeinedToDownload:
+                case StateCode.DeniedToDownload:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                     break;
                 case StateCode.Error:
                 case StateCode.ErrorExtractingFail:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
-                    app.Cancel("✘發生未知的錯誤");
+                    app.Cancel(text.Error);
                     break;
                 case StateCode.ErrorConnectingFail:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
-                    app.Cancel("✘無法連接到伺服器");
+                    app.Cancel(text.ErrorConnectingFail);
                     break;
                 case StateCode.ErrorWritingFail:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
-                    app.Cancel("✘無法寫入本地檔案");
+                    app.Cancel(text.ErrorWritingFail);
                     break;
                 case StateCode.GameReady:
                 case StateCode.UpdatingCompleted:
                     lbl_state.ForeColor = Color.FromArgb(177, 241, 167);
                     btn_launch.Enabled = true;
-                    lbl_state.Text = "✔準備就緒";
-                    ReadyToStartGame();
+                    lbl_state.Text = text.GameReady;
+                    if (autoReady) ReadyToStartGame();
                     break;
                 case StateCode.Downloading:
                     lbl_state.ForeColor = Color.FromArgb(130, 192, 231);
-                    lbl_state.Text = "下載中...";
+                    lbl_state.Text = text.Downloading;
                     break;
                 case StateCode.Extracting:
                     lbl_state.ForeColor = Color.FromArgb(255, 138, 0);
-                    lbl_state.Text = "安裝中...";
+                    lbl_state.Text = text.Extracting;
                     break;
                 case StateCode.Initializing:
                     lbl_state.ForeColor = Color.FromArgb(44, 214, 168);
-                    lbl_state.Text = "連接中...";
+                    lbl_state.Text = text.Initializing;
                     break;
                 case StateCode.Retrying:
                     lbl_state.ForeColor = Color.FromArgb(239, 39, 105);
-                    lbl_state.Text = "⭮重新連接中...";
+                    lbl_state.Text = text.Retrying;
                     break;
                 case StateCode.Cancelled:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
-                    lbl_state.Text = msg;
+                    if (msg.Length > 0) lbl_state.Text = msg;
                     break;
                 default:
                     lbl_state.ForeColor = Color.FromArgb(255, 255, 255);
@@ -569,7 +572,7 @@ namespace TYYongAutoPatcher.src.UI
 
             }
             if (app.State == StateCode.UpdatingCompleted)
-                lbl_state.Text = "✔更新完畢";
+                lbl_state.Text = text.UpdatingCompleted;
 
             if (msg.Length > 0) lbl_state.Text = msg;
         }
@@ -594,6 +597,55 @@ namespace TYYongAutoPatcher.src.UI
         }
 
         public Stopwatch GetDownloadTimer() { return downloadTimer; }
+
+        public void UpdateUILanguage()
+        {
+            UIComponent text = app.Language.Text.UIComponent;
+
+            var font = new Font("Microsoft YaHei", btn_event.Font.Size);
+            var sFont = new Font("Microsoft YaHei", btn_reg.Font.Size);
+            var mFont = new Font("Microsoft YaHei", cbx_startWhenReady.Font.Size);
+            if (app.Setting.LocalConfig.Language.IndexOf("zh") == -1)
+            {
+                font = new Font("Algerian", btn_event.Font.Size);
+                sFont = new Font("Algerian", btn_reg.Font.Size);
+                mFont = new Font("Algerian", cbx_startWhenReady.Font.Size);
+            }
+
+            btn_shop.Font = font;
+            btn_launch.Font = font;
+            btn_event.Font = font;
+            btn_reg.Font = sFont;
+            cbx_startWhenReady.Font = mFont;
+
+            btn_shop.Text = text.Btn_shop;
+            btn_launch.Text = text.Btn_launch;
+            btn_event.Text = text.Btn_event;
+            btn_reg.Text = text.Btn_reg;
+            lbl_title_currentVer.Text = text.Lbl_title_currentVer;
+            lbl_title_latestVer.Text = text.Lbl_title_latestVer;
+            lbl_title_progress.Text = text.Lbl_title_progress;
+            lbl_title_totalProgress.Text = text.Lbl_title_totalProgress;
+            lbl_officialWeb.Text = text.Lbl_officialWeb;
+            cbx_startWhenReady.Text = text.Cbx_startWhenReady;
+            UpdateLblState("", false);
+            ShowReport();
+        }
+
+        private void lbl_en_Click(object sender, EventArgs e)
+        {
+            app.Language.SetLanguage("en-US");
+        }
+
+        private void lbl_tw_Click(object sender, EventArgs e)
+        {
+            app.Language.SetLanguage("zh-HK");
+        }
+
+        private void lbl_cn_Click(object sender, EventArgs e)
+        {
+            app.Language.SetLanguage("zh-CN");
+        }
     }
 
 }

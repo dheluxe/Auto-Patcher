@@ -1,0 +1,29 @@
+{
+  "Server": {
+    "Url": {
+      "OfficialWeb": "http://127.0.0.1:5500/",
+      "LeftWeb": "http://www.yong-online.com.tw/WebImages/launch/launcher.html",
+      "RightWeb": "http://www.yong-online.com.tw/boards.aspx",
+      "Shop": "http://127.0.0.1:5500/shop",
+      "Event": "http://127.0.0.1:5500/event",
+      "Register": "http://127.0.0.1:5500/register",
+      "PatchDataDir": "http://127.0.0.1:5500/patch/data/"
+    },
+    "IsDownloadAllowed": true
+  },
+  "Game": {
+    "Exe": "GameClient.exe",
+    "Arguments": {
+      "zh-HK": "/app_run_tw",
+      "zh-CN": "/app_run_cn",
+      "en-US": "/app_run_en"
+    }
+  },
+  "PatchList": [
+    {
+      "Version": 1.0,
+      "FileName": "test.zip",
+      "DownloadLinks": [ "http://drive.google.com/test.zip" ]
+    }
+  ]
+}

@@ -158,11 +158,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Controllers\LanguageController.cs" />
     <Compile Include="src\Controllers\CryptionController.cs" />
     <Compile Include="src\Controllers\FileDownloadController.cs" />
     <Compile Include="src\Controllers\MainController.cs" />
     <Compile Include="src\Controllers\ZipController.cs" />
     <Compile Include="src\Exceptions\InvalidTokenException.cs" />
+    <Compile Include="src\Models\LanguageModel.cs" />
     <Compile Include="src\Models\PatchReportModel.cs" />
     <Compile Include="src\Models\URLModel.cs" />
     <Compile Include="src\UI\MainUI.cs">
@@ -203,59 +205,35 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="res\languages.json" />
     <None Include="TYYongAutoPatcher_TemporaryKey.pfx" />
+    <None Include="web\patch\config.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="basic_app.ico" />
+    <Content Include="web\patch\index.html" />
+    <None Include="res\logo.png" />
+    <None Include="res\btn_basc_3_s.png" />
+    <None Include="res\btn_basc_3.png" />
+    <None Include="Resources\btn_exit_3.png" />
+    <None Include="Resources\btn_exit_2.png" />
+    <None Include="Resources\btn_exit_1.png" />
+    <None Include="Resources\btn_basc_4_s.png" />
+    <None Include="Resources\btn_basc_4.png" />
+    <None Include="Resources\btn_basc_3_s.png" />
+    <None Include="Resources\btn_basc_3.png" />
+    <None Include="Resources\btn_basc_2_s.png" />
+    <None Include="Resources\btn_basc_2.png" />
+    <None Include="Resources\btn_basc_1_s.png" />
+    <None Include="Resources\btn_basc_1.png" />
     <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.dll" />
     <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll" />
     <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.Sensors.dll" />
     <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.Shell.dll" />
     <EmbeddedResource Include="lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
-    <None Include="res\btn_dc_3.png" />
-    <None Include="res\btn_shop_3.png" />
-    <None Include="res\btn_reg_3.png" />
-    <None Include="res\btn_launch_3.png" />
-    <None Include="Resources\btn_shop_4.png" />
-    <None Include="Resources\btn_shop_3.png" />
-    <None Include="Resources\btn_shop_2.png" />
-    <None Include="Resources\btn_shop_1.png" />
-    <None Include="Resources\btn_reg_4.png" />
-    <None Include="Resources\btn_reg_3.png" />
-    <None Include="Resources\btn_reg_2.png" />
-    <None Include="Resources\btn_reg_1.png" />
-    <None Include="Resources\btn_launch_4.png" />
-    <None Include="Resources\btn_launch_3.png" />
-    <None Include="Resources\btn_launch_2.png" />
-    <None Include="Resources\btn_launch_1.png" />
-    <None Include="Resources\btn_exit_3.png" />
-    <None Include="Resources\btn_exit_2.png" />
-    <None Include="Resources\btn_exit_1.png" />
-    <None Include="Resources\btn_dc_4.png" />
-    <None Include="Resources\btn_dc_3.png" />
-    <None Include="Resources\btn_dc_2.png" />
-    <None Include="Resources\btn_dc_1.png" />
     <EmbeddedResource Include="lib\DotNetZip.dll" />
     <EmbeddedResource Include="lib\Newtonsoft.Json.dll" />
-    <None Include="res\reg3.png" />
-    <None Include="res\start4.png" />
-    <None Include="res\exit2.png" />
-    <None Include="res\exit1.png" />
-    <None Include="res\exit3.png" />
-    <None Include="res\start3.png" />
-    <None Include="res\start2.png" />
-    <None Include="res\start1.png" />
-    <None Include="res\reg2.png" />
-    <None Include="res\reg1.png" />
-    <None Include="res\itemshop3.png" />
-    <None Include="res\itemshop2.png" />
-    <None Include="res\itemshop1.png" />
-    <None Include="res\front.png" />
-    <None Include="res\event3.png" />
-    <None Include="res\event2.png" />
-    <None Include="res\event1.png" />
     <None Include="res\bg.png" />
-    <None Include="res\back.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -264,6 +242,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="web\patch\data\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

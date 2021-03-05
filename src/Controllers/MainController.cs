@@ -36,7 +36,7 @@ namespace TYYongAutoPatcher.src.Controllers
         Retrying,
         Success,
         UpdatingCompleted,
-        DeinedToDownload,
+        DeniedToDownload,
     }
 
     class MainController
@@ -46,6 +46,7 @@ namespace TYYongAutoPatcher.src.Controllers
         public MainUI ui;
         public CancellationTokenSource cts;
         public CryptionController cryption;
+        public LanguageController Language;
 
         private FileDownloadController downloader;
         private ZipController zip;
@@ -59,14 +60,14 @@ namespace TYYongAutoPatcher.src.Controllers
             this.ui = ui;
             Setting = new SettingModel();
             downloader = new FileDownloadController(this);
+            Language = new LanguageController(this);
             zip = new ZipController(this);
             cts = new CancellationTokenSource();
             pwd = Directory.GetCurrentDirectory();
-            settingDir = $"{pwd}\\data\\";
-            settingFile = "setting.json";
+            settingDir = $"{pwd}\\data\\gui\\";
+            settingFile = "launcher.json";
             tempDir = $"{pwd}\\data\\temp\\";
             cryption = new CryptionController();
-
         }
 
         public void UpdateState(StateCode s, string msg = "")
@@ -75,11 +76,19 @@ namespace TYYongAutoPatcher.src.Controllers
             ui.UpdateLblState(msg);
         }
 
-        public async Task Run()
+        public void init()
         {
             ReadLocalSetting();
-            CheckVersionIsVaild();
+            Language.ReadLanguage();
+            Language.SetLanguage(Setting.LocalConfig.Language);
             UpdateState(StateCode.Initializing);
+
+        }
+
+        public async Task Run()
+        {
+
+            CheckVersionIsVaild();
             await DeleteTempFolderAndFiles();
             await DownloadAndConfigSetting();
             if (State == StateCode.ErrorConnectingFail)
@@ -117,8 +126,8 @@ namespace TYYongAutoPatcher.src.Controllers
                     }
                     else
                     {
-                        UpdateState(StateCode.DeinedToDownload, "需要手動下載並安裝更新包");
-                        ui.AddMsg("需要手動下載並安裝更新包", StateCode.DeinedToDownload);
+                        UpdateState(StateCode.DeniedToDownload, Language.Text.State.DeniedToDownload);
+                        ui.AddMsg(Language.Text.State.DeniedToDownload, StateCode.DeniedToDownload);
                     }
 
                 }
@@ -132,7 +141,7 @@ namespace TYYongAutoPatcher.src.Controllers
                     case StateCode.ErrorWritingFail:
                     case StateCode.GameReady:
                     case StateCode.UpdatingCompleted:
-                    case StateCode.DeinedToDownload:
+                    case StateCode.DeniedToDownload:
                         return;
                     default:
                         UpdateState(StateCode.GameReady);
@@ -212,13 +221,13 @@ namespace TYYongAutoPatcher.src.Controllers
             while (++noOfRetry <= maxNoOfRetry && State == StateCode.ErrorConnectingFail)
             {
                 UpdateState(StateCode.Retrying);
-                ui.AddMsg($"嘗試連接到伺服器中... {noOfRetry} / {maxNoOfRetry} ", StateCode.Retrying);
+                ui.AddMsg($"{Language.Text.UIComponent.Retrying}... {noOfRetry} / {maxNoOfRetry} ", StateCode.Retrying);
                 await DownloadAndConfigSetting();
             }
             if (State == StateCode.ErrorConnectingFail)
             {
                 UpdateState(StateCode.ErrorConnectingFail);
-                ui.AddMsg("與伺服器失去連線.", StateCode.ErrorConnectingFail);
+                ui.AddMsg(Language.Text.UIComponent.ErrorConnectingFail, StateCode.ErrorConnectingFail);
             }
         }
 
@@ -290,14 +299,26 @@ namespace TYYongAutoPatcher.src.Controllers
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 //startInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 startInfo.FileName = Setting.Game.Exe;
-                //startInfo.Arguments = Setting.Game.Arguments;
-                startInfo.Arguments = "tyyong" + "_game_" + "start-A4908E588";
+                switch (Setting.LocalConfig.Language)
+                {
+                    case "zh-HK":
+                    case "zh-TW":
+                        startInfo.Arguments = Setting.Game.Arguments.ZhHK;
+                        break;
+                    case "zh-CN":
+                        startInfo.Arguments = Setting.Game.Arguments.ZhCN;
+                        break;
+                    case "en-US":
+                    default:
+                        startInfo.Arguments = Setting.Game.Arguments.EnUS;
+                        break;
+                }
                 process.StartInfo = startInfo;
                 process.Start();
             }
             else
             {
-                ui.ShowErrorMsg($"缺失遊戲文件，請嘗試重新安裝泰月勇Online!", $"找不到檔案 {Setting.Game.Exe}");
+                ui.ShowErrorMsg(Language.Text.UIComponent.Edited, Setting.Game.Exe);
             }
             ui.Close();
         }
@@ -342,8 +363,9 @@ namespace TYYongAutoPatcher.src.Controllers
             }
         }
 
-        public async void Cancel(string msg = "✘更新失敗")
+        public async void Cancel(string msg = null)
         {
+            if (msg == null) msg = Language.Text.State.Error;
             cts.Cancel();
             await DeleteTempFolderAndFiles();
             UpdateState(StateCode.Cancelled, msg);
@@ -362,6 +384,23 @@ namespace TYYongAutoPatcher.src.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine($"*************MainController.UpdateLocalPatchVersion(): {ex.Message}");
+                // If the file can't be wrotten , stop the program.
+                UpdateState(State = StateCode.ErrorWritingFail);
+                ui.AddMsg(ex.Message);
+            }
+        }
+
+        public void UpdateLocalLanguage(string lan)
+        {
+            try
+            {
+                Setting.LocalConfig.Language = lan;
+                var file = $"{settingDir}{settingFile}";
+                File.WriteAllText(file, JsonConvert.SerializeObject(Setting.LocalConfig));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"*************MainController.UpdateLocalLanguage(): {ex.Message}");
                 // If the file can't be wrotten , stop the program.
                 UpdateState(State = StateCode.ErrorWritingFail);
                 ui.AddMsg(ex.Message);
@@ -428,7 +467,7 @@ namespace TYYongAutoPatcher.src.Controllers
 
             if (t.Hours == 0 && t.Minutes == 0 && t.Seconds == 0)
             {
-                result = $"{(ms / 1000).ToString("N2")}秒 ";
+                result = $"{(ms / 1000).ToString("N2")}{Language.Text.UIComponent.UnitSecond} ";
             }
             else
             {

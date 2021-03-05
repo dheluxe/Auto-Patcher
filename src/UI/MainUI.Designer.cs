@@ -381,7 +381,6 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // lbl_title_latestVer
             // 
-            this.lbl_title_latestVer.AutoSize = true;
             this.lbl_title_latestVer.ForeColor = System.Drawing.Color.White;
             this.lbl_title_latestVer.Location = new System.Drawing.Point(339, 0);
             this.lbl_title_latestVer.Name = "lbl_title_latestVer";
@@ -407,7 +406,6 @@ namespace TYYongAutoPatcher.src.UI
             // 
             // lbl_title_currentVer
             // 
-            this.lbl_title_currentVer.AutoSize = true;
             this.lbl_title_currentVer.ForeColor = System.Drawing.Color.White;
             this.lbl_title_currentVer.Location = new System.Drawing.Point(327, 0);
             this.lbl_title_currentVer.Name = "lbl_title_currentVer";

@@ -16,7 +16,7 @@ namespace TYYongAutoPatcher.src.Controllers
     {
         private MainController app;
         private LanguageModel Languages;
-
+        public string Locale;
         public Language Text;
 
         public LanguageController(MainController app)
@@ -38,23 +38,55 @@ namespace TYYongAutoPatcher.src.Controllers
 
         public void SetLanguage(string lan)
         {
+            Locale = lan;
+            Text = Get(lan);
+            app.Setting.LocalConfig.Language = lan;
+            app.ui.UpdateUILanguage();
+            app.UpdateLocalLanguage(lan);
+        }
+
+        public Language Get(string lan)
+        {
             switch (lan)
             {
                 case "zh-HK":
                 case "zh-TW":
-                    Text = Languages.ZhHK;
-                    break;
+                    return Languages.ZhHK;
                 case "zh-CN":
-                    Text = Languages.ZhCN;
-                    break;
+                    return Languages.ZhCN;
                 case "en-US":
                 default:
-                    Text = Languages.EnUS;
-                    break;
+                    return Languages.EnUS;
             }
-            app.Setting.LocalConfig.Language = lan;
-            app.ui.UpdateUILanguage();
-            app.UpdateLocalLanguage(lan);
+        }
+
+        public Language Get(int lan)
+        {
+            switch (lan)
+            {
+                case 0:
+                    return Languages.ZhHK;
+                case 1:
+                    return Languages.ZhCN;
+                case 2:
+                default:
+                    return Languages.EnUS;
+            }
+        }
+
+        public int GetLocaleCode(string lan)
+        {
+            switch (lan)
+            {
+                case "zh-HK":
+                case "zh-TW":
+                    return 0;
+                case "zh-CN":
+                    return 1;
+                case "en-US":
+                default:
+                    return 2;
+            }
         }
     }
 }

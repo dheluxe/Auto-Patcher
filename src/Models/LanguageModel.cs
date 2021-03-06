@@ -43,8 +43,10 @@ namespace TYYongAutoPatcher.src.Models
         public string UnitSecond { get; set; }
         public string Downloading { get; set; }
         public string DownloadFailed { get; set; }
+        public string Downloaded { get; set; }
         public string InstallFailed { get; set; }
         public string IntalledPatch { get; set; }
+        public string Installing { get; set; }
     }
 
     public class State

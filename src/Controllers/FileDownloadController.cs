@@ -31,7 +31,11 @@ namespace TYYongAutoPatcher.src.Controllers
                 client = new WebClient();
                 client.DownloadProgressChanged += app.ui.DownloadPatchProgressChangedHandler(patch);
                 client.DownloadFileCompleted += app.ui.AsyncCompletedEventHandler(patch);
-                app.ui.AddMsg($"{text.Downloading} {patch.FileName}...", StateCode.Downloading);
+                // Add Multiple languages.
+                for (var i = 0; i < app.ui.Messages.Count; i++)
+                    app.ui.Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.Downloading} {patch.FileName}...", StateCode.Downloading));
+                app.ui.UpdateMsg();
+
                 Stopwatch timer = app.ui.GetDownloadTimer();
                 timer.Restart();
                 timer.Start();
@@ -42,7 +46,10 @@ namespace TYYongAutoPatcher.src.Controllers
             {
                 Console.WriteLine($"*************FileDownloadController.DownloadFilesAysnc(Uri url, string savePath, PatchModel patch): {ex.Message}");
                 app.UpdateState(StateCode.ErrorConnectingFail);
-                app.ui.AddMsg($"{text.DownloadFailed} {patch.FileName}", StateCode.ErrorConnectingFail);
+                // Add Multiple languages.
+                for (var i = 0; i < app.ui.Messages.Count; i++)
+                    app.ui.Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.DownloadFailed} {patch.FileName}", StateCode.ErrorConnectingFail));
+                app.ui.UpdateMsg();
             }
         }
 

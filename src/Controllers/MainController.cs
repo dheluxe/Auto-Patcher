@@ -127,7 +127,9 @@ namespace TYYongAutoPatcher.src.Controllers
                     else
                     {
                         UpdateState(StateCode.DeniedToDownload, Language.Text.State.DeniedToDownload);
-                        ui.AddMsg(Language.Text.State.DeniedToDownload, StateCode.DeniedToDownload);
+                        for (var i = 0; i < ui.Messages.Count; i++)
+                            ui.Messages[i].Add(new MessagesModel(Language.Get(i).State.DeniedToDownload, StateCode.DeniedToDownload));
+                        ui.UpdateMsg();
                     }
 
                 }
@@ -168,7 +170,6 @@ namespace TYYongAutoPatcher.src.Controllers
             try
             {
                 if (Directory.Exists(tempDir)) await Task.Run(() => Directory.Delete(tempDir, true));
-                // ui.AddMsg("準備文件中...");
                 await Task.Run(() => Directory.CreateDirectory(tempDir));
                 State = StateCode.ReadyToDownload;
             }
@@ -221,13 +222,17 @@ namespace TYYongAutoPatcher.src.Controllers
             while (++noOfRetry <= maxNoOfRetry && State == StateCode.ErrorConnectingFail)
             {
                 UpdateState(StateCode.Retrying);
-                ui.AddMsg($"{Language.Text.UIComponent.Retrying}... {noOfRetry} / {maxNoOfRetry} ", StateCode.Retrying);
+                for (var i = 0; i < ui.Messages.Count; i++)
+                    ui.Messages[i].Add(new MessagesModel($"{Language.Get(i).UIComponent.Retrying}... {noOfRetry} / {maxNoOfRetry} ", StateCode.Retrying));
+                ui.UpdateMsg();
                 await DownloadAndConfigSetting();
             }
             if (State == StateCode.ErrorConnectingFail)
             {
                 UpdateState(StateCode.ErrorConnectingFail);
-                ui.AddMsg(Language.Text.UIComponent.ErrorConnectingFail, StateCode.ErrorConnectingFail);
+                for (var i = 0; i < ui.Messages.Count; i++)
+                    ui.Messages[i].Add(new MessagesModel($"{Language.Get(i).UIComponent.ErrorConnectingFail}", StateCode.ErrorConnectingFail));
+                ui.UpdateMsg();
             }
         }
 
@@ -345,7 +350,6 @@ namespace TYYongAutoPatcher.src.Controllers
             catch (IOException ex)
             {
                 Console.WriteLine($"*************MainController.DeleteTempFile(string fileName): {ex.Message}");
-                //ui.AddMsg($"無法刪除 {fileName}", StateCode.Error);
             }
         }
 
@@ -359,7 +363,6 @@ namespace TYYongAutoPatcher.src.Controllers
             catch (IOException ex)
             {
                 Console.WriteLine($"*************MainController.DeleteTempFolderAndFiles(): {ex.Message}");
-                //ui.AddMsg($"無法刪除 {tempDir}", StateCode.Error);
             }
         }
 
@@ -476,6 +479,11 @@ namespace TYYongAutoPatcher.src.Controllers
                 result += $"{WillAddZero(t.Seconds)}";
             }
             return result;
+        }
+
+        public object GetPropValue(object src, string propName)
+        {
+            return src.GetType().GetProperty(propName).GetValue(src, null);
         }
 
     }

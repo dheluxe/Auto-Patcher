@@ -28,6 +28,7 @@ namespace TYYongAutoPatcher.src.UI
         private Stopwatch downloadTimer;
         private FileVersionInfo fileVersionInfo;
 
+        public List<List<MessagesModel>> Messages;
 
         public MainUI()
         {
@@ -36,6 +37,11 @@ namespace TYYongAutoPatcher.src.UI
             lbl_copyright.Text = fileVersionInfo.LegalCopyright;
             app = new MainController(this);
             downloadTimer = Stopwatch.StartNew();
+
+            Messages = new List<List<MessagesModel>>();
+            Messages.Add(new List<MessagesModel>()); // zh-HK
+            Messages.Add(new List<MessagesModel>()); // zh-CN
+            Messages.Add(new List<MessagesModel>()); // en-US
         }
 
 
@@ -59,7 +65,9 @@ namespace TYYongAutoPatcher.src.UI
             catch (OperationCanceledException ex)
             {
                 Console.WriteLine($"*************MainUI.timer_wait_Tick(object sender, EventArgs e): {ex.Message}");
-                AddMsg(app.Language.Text.State.Cancelled, StateCode.Error);
+                for (var i = 0; i < app.ui.Messages.Count; i++)
+                    Messages[i].Add(new MessagesModel($"{app.Language.Get(i).State.Cancelled}", StateCode.Error));
+                UpdateMsg();
                 TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Error);
             }
             catch (InvalidTokenException ex)
@@ -116,10 +124,14 @@ namespace TYYongAutoPatcher.src.UI
             btn_launch.BackgroundImage = TYYongAutoPatcher.Properties.Resources.btn_basc_2;
             UpdateProgres(100, 100);
             var text = app.Language.Text.UIComponent;
-            AddMsg(text.ReadyMsg1, StateCode.Success);
-            AddMsg(text.ReadyMsg2, StateCode.Success);
+            for (var i = 0; i < app.ui.Messages.Count; i++)
+                Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.ReadyMsg1}", StateCode.Success));
+            UpdateMsg();
+            for (var i = 0; i < app.ui.Messages.Count; i++)
+                Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.ReadyMsg2}", StateCode.Success));
+            UpdateMsg();
             if (cbx_startWhenReady.Checked) app.Launch();
-            if(app.Setting.PatchList.Count == 0) TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
+            if (app.Setting.PatchList.Count == 0) TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
         }
 
         #region click handler
@@ -361,8 +373,9 @@ namespace TYYongAutoPatcher.src.UI
                 {
                     Invoke(new MethodInvoker(delegate ()
                     {
+                        var text = app.Language.Text.UIComponent;
                         var name = e.CurrentEntry.FileName;
-                        lbl_state.Text = $"↷正在安裝 {name} - {app.SizeToString(e.BytesTransferred)} / {app.SizeToString(e.TotalBytesToTransfer)}";
+                        lbl_state.Text = $"{text.InstallFailed} {name} - {app.SizeToString(e.BytesTransferred)} / {app.SizeToString(e.TotalBytesToTransfer)}";
                         var percentage = 100.0 * e.BytesTransferred / e.TotalBytesToTransfer;
                         UpdateProgres(percentage, app.GetTotalPercentage());
                         ShowReport();
@@ -414,8 +427,13 @@ namespace TYYongAutoPatcher.src.UI
                         }
                         else
                         {
-                            AddMsg($"已下載更新包 {patch.FileName} - 共 {app.SizeToString(patch.Size)}", StateCode.Downloaded);
-                            AddMsg($"正在安裝更新包 {patch.FileName}...", StateCode.Extracting);
+                            var text = app.Language.Text.UIComponent;
+                            for (var i = 0; i < app.ui.Messages.Count; i++)
+                                Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.Downloaded} {patch.FileName} - {app.Language.Get(i).UIComponent.Lbl_report_unit2} {app.SizeToString(patch.Size)}", StateCode.Downloaded));
+                            UpdateMsg();
+                            for (var i = 0; i < app.ui.Messages.Count; i++)
+                                Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.Installing} {patch.FileName}...", StateCode.Extracting));
+                            UpdateMsg();
                             UpdateProgres(100, app.GetTotalPercentage());
                             ShowReport();
                         }
@@ -630,6 +648,7 @@ namespace TYYongAutoPatcher.src.UI
             cbx_startWhenReady.Text = text.Cbx_startWhenReady;
             UpdateLblState("", false);
             ShowReport();
+            UpdateMsg(true);
         }
 
         private void lbl_en_Click(object sender, EventArgs e)
@@ -645,6 +664,26 @@ namespace TYYongAutoPatcher.src.UI
         private void lbl_cn_Click(object sender, EventArgs e)
         {
             app.Language.SetLanguage("zh-CN");
+        }
+
+        public void UpdateMsg(bool willReRender = false)
+        {
+            var locale = app.Language.GetLocaleCode(app.Language.Locale);
+            if (willReRender)
+            {
+                lbx_messages.Items.Clear();
+                for (var i = 0; i < Messages[locale].Count; i++)
+                {
+                    AddMsg(Messages[locale][i].Text, Messages[locale][i].Color);
+                }
+            }
+            else
+            {
+                var lastIdx = Messages[locale].Count - 1;
+                var lastMsg = Messages[locale][lastIdx];
+                AddMsg(lastMsg.Text, lastMsg.Color);
+            }
+
         }
     }
 

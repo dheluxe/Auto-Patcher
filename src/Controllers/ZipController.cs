@@ -43,16 +43,19 @@ namespace TYYongAutoPatcher.src.Controllers
                         }
                         catch (Exception ex)
                         {
-                            //ui.AddMsg($"無法刪除 {tempDir}", StateCode.Error);
                             Console.WriteLine($"*************1 ZipController.Unzip(string fileName, string targetDir, PatchModel patch) {ex.Message}");
                             app.UpdateState(StateCode.ErrorExtractingFail);
-                            app.ui.AddMsg($"{text.InstallFailed} {entry.FileName}", StateCode.ErrorExtractingFail);
+                            for (var i = 0; i < app.ui.Messages.Count; i++)
+                                app.ui.Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.InstallFailed} {entry.FileName}", StateCode.ErrorExtractingFail));
+                            app.ui.UpdateMsg();
                         }
                     }
-                    app.ui.AddMsg($"{text.InstallFailed} {patch.FileName} - {text.Lbl_report_unit2} {app.SizeToString(patch.Size)}", StateCode.Extracted);
+                    for (var i = 0; i < app.ui.Messages.Count; i++)
+                        app.ui.Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.InstallFailed} {patch.FileName} - {app.Language.Get(i).UIComponent.Lbl_report_unit2} {app.SizeToString(patch.Size)}", StateCode.Extracted)); ;
+                    app.ui.UpdateMsg();
                     patch.IsUnzipSucceed = true;
                     await app.DeleteTempFile(patch.FileName);
-                    if(++noOfUnzipped == app.Setting.PatchList.Count) app.ui.CompeteUpdating();
+                    if (++noOfUnzipped == app.Setting.PatchList.Count) app.ui.CompeteUpdating();
                     app.UpdateLocalPatchVersion(patch);
 
                 }
@@ -61,7 +64,6 @@ namespace TYYongAutoPatcher.src.Controllers
             {
                 Console.WriteLine($"*************2 ZipController.Unzip(string fileName, string targetDir, PatchModel patch) {ex.Message}");
                 app.UpdateState(StateCode.ErrorExtractingFail);
-                //app.ui.AddMsg(ex.Message, StateCode.ErrorExtractingFail);
             }
         }
     }

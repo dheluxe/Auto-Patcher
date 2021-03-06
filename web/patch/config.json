@@ -24,7 +24,7 @@
       "Version": 6.0,
       "FileName": "test.zip",
       "DownloadLinks": [
-        "http://127.0.0.1:5501/patch/data/testtest.zip",
+        "http://127.0.0.1:5502/patch/data/testtest.zip",
         "http://127.0.0.1:5500/data/testtest.zip"
       ]
     },

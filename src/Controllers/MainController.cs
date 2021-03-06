@@ -120,11 +120,10 @@ namespace TYYongAutoPatcher.src.Controllers
                                         urlStr = patch.DownloadLinks[i];
                                         var url = new Uri(urlStr);
                                         var fileName = $"{tempDir}{patch.FileName}";
-                                        Console.WriteLine(url);
                                         try
                                         {
                                             await downloader.DownloadFilesAysnc(url, fileName, patch);
-                                            if (State != StateCode.ErrorConnectingFail  && State != StateCode.FailedToDownload )
+                                            if (State != StateCode.ErrorConnectingFail && State != StateCode.FailedToDownload)
                                             {
                                                 await zip.Unzip(fileName, targetDir, patch);
                                                 break;

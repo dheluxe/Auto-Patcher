@@ -554,7 +554,6 @@ namespace TYYongAutoPatcher.src.UI
                     break;
                 case StateCode.FailedToDownload:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
-                    app.Cancel(text.ErrorConnectingFail, false);
                     msg = text.FailedToDownload;
                     break;
                 case StateCode.ErrorExtractingFail:

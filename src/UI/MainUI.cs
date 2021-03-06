@@ -65,9 +65,13 @@ namespace TYYongAutoPatcher.src.UI
             catch (OperationCanceledException ex)
             {
                 Console.WriteLine($"*************MainUI.timer_wait_Tick(object sender, EventArgs e): {ex.Message}");
-                for (var i = 0; i < app.ui.Messages.Count; i++)
-                    Messages[i].Add(new MessagesModel($"{app.Language.Get(i).State.Cancelled}", StateCode.Error));
-                UpdateMsg();
+                if (app.State == StateCode.Cancelled)
+                {
+                    for (var i = 0; i < app.ui.Messages.Count; i++)
+                        Messages[i].Add(new MessagesModel($"{app.Language.Get(i).State.Cancelled}", StateCode.Error));
+                    UpdateMsg();
+                }
+
                 TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Error);
             }
             catch (InvalidTokenException ex)
@@ -510,16 +514,16 @@ namespace TYYongAutoPatcher.src.UI
                     case StateCode.Success:
                     case StateCode.Extracted:
                     case StateCode.Downloaded:
-                        m = $"✔{msg}";
+                        m = $"✔ {msg}";
                         break;
                     case StateCode.Downloading:
-                        m = $"⭳{msg}";
+                        m = $"⭳ {msg}";
                         break;
                     case StateCode.Extracting:
-                        m = $"↷{msg}";
+                        m = $"↷ {msg}";
                         break;
                     case StateCode.Retrying:
-                        m = $"⭮{msg}";
+                        m = $"⭮ {msg}";
                         break;
                     case StateCode.Error:
                     case StateCode.ErrorConnectingFail:
@@ -545,13 +549,23 @@ namespace TYYongAutoPatcher.src.UI
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                     break;
                 case StateCode.Error:
-                case StateCode.ErrorExtractingFail:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
                     app.Cancel(text.Error);
                     break;
+                case StateCode.FailedToDownload:
+                    lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
+                    app.Cancel(text.ErrorConnectingFail, false);
+                    msg = text.FailedToDownload;
+                    break;
+                case StateCode.ErrorExtractingFail:
+                    lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
+                    app.Cancel(text.ErrorExtractingFail, false);
+                    msg = text.ErrorExtractingFail;
+                    break;
                 case StateCode.ErrorConnectingFail:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
-                    app.Cancel(text.ErrorConnectingFail);
+                    app.Cancel(text.ErrorConnectingFail, false);
+                    msg = text.ErrorConnectingFail;
                     break;
                 case StateCode.ErrorWritingFail:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
@@ -561,7 +575,7 @@ namespace TYYongAutoPatcher.src.UI
                 case StateCode.UpdatingCompleted:
                     lbl_state.ForeColor = Color.FromArgb(177, 241, 167);
                     btn_launch.Enabled = true;
-                    lbl_state.Text = text.GameReady;
+                    lbl_state.Text = $"✔ {text.GameReady}";
                     if (autoReady) ReadyToStartGame();
                     break;
                 case StateCode.Downloading:
@@ -578,7 +592,7 @@ namespace TYYongAutoPatcher.src.UI
                     break;
                 case StateCode.Retrying:
                     lbl_state.ForeColor = Color.FromArgb(239, 39, 105);
-                    lbl_state.Text = text.Retrying;
+                    lbl_state.Text = $"⭮ {text.Retrying} ";
                     break;
                 case StateCode.Cancelled:
                     lbl_state.ForeColor = Color.FromArgb(248, 63, 94);
@@ -590,7 +604,7 @@ namespace TYYongAutoPatcher.src.UI
 
             }
             if (app.State == StateCode.UpdatingCompleted)
-                lbl_state.Text = text.UpdatingCompleted;
+                lbl_state.Text = $"✔ {text.UpdatingCompleted}";
 
             if (msg.Length > 0) lbl_state.Text = msg;
         }

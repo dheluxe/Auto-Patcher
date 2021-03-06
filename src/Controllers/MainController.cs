@@ -37,6 +37,7 @@ namespace TYYongAutoPatcher.src.Controllers
         Success,
         UpdatingCompleted,
         DeniedToDownload,
+        FailedToDownload,
     }
 
     class MainController
@@ -109,17 +110,54 @@ namespace TYYongAutoPatcher.src.Controllers
                             foreach (var patch in Setting.PatchList)
                             {
                                 var urlStr = $"{Setting.Server.URL.PatchDataDir}{patch.FileName}";
+                                if (State == StateCode.ErrorConnectingFail) break;
+
                                 if (patch.DownloadLinks != null && patch.DownloadLinks.Length > 0)
                                 {
-                                    //TODO: Allow try to download different downloads link.
-                                    urlStr = patch.DownloadLinks[0];
+                                    //TODO: Allow trying to download different downloads link.
+                                    for (var i = 0; i < patch.DownloadLinks.Length; i++)
+                                    {
+                                        urlStr = patch.DownloadLinks[i];
+                                        var url = new Uri(urlStr);
+                                        var fileName = $"{tempDir}{patch.FileName}";
+                                        Console.WriteLine(url);
+                                        try
+                                        {
+                                            await downloader.DownloadFilesAysnc(url, fileName, patch);
+                                            if (State != StateCode.ErrorConnectingFail  && State != StateCode.FailedToDownload )
+                                            {
+                                                await zip.Unzip(fileName, targetDir, patch);
+                                                break;
+                                            }
+                                        }
+                                        catch (FileDownloadException e)
+                                        {
+                                            if (i == patch.DownloadLinks.Length - 1)
+                                            {
+                                                UpdateState(StateCode.ErrorConnectingFail);
+                                                break;
+                                            }
+                                        }
+
+                                    }
                                 }
-                                var url = new Uri(urlStr);
-                                var fileName = $"{tempDir}{patch.FileName}";
-                                await downloader.DownloadFilesAysnc(url, fileName, patch);
-                                if (State != StateCode.ErrorConnectingFail)
+                                else
                                 {
-                                    await zip.Unzip(fileName, targetDir, patch);
+                                    var url = new Uri(urlStr);
+                                    var fileName = $"{tempDir}{patch.FileName}";
+                                    try
+                                    {
+                                        await downloader.DownloadFilesAysnc(url, fileName, patch);
+                                        if (State != StateCode.ErrorConnectingFail && State != StateCode.FailedToDownload)
+                                        {
+                                            await zip.Unzip(fileName, targetDir, patch);
+                                        }
+                                    }
+                                    catch (FileDownloadException e)
+                                    {
+                                        UpdateState(StateCode.ErrorConnectingFail);
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -366,12 +404,12 @@ namespace TYYongAutoPatcher.src.Controllers
             }
         }
 
-        public async void Cancel(string msg = null)
+        public async void Cancel(string msg = null, bool isCancelled = true)
         {
             if (msg == null) msg = Language.Text.State.Error;
             cts.Cancel();
             await DeleteTempFolderAndFiles();
-            UpdateState(StateCode.Cancelled, msg);
+            if (isCancelled) UpdateState(StateCode.Cancelled, msg);
         }
 
         public void UpdateLocalPatchVersion(PatchModel patch)

@@ -26,26 +26,28 @@
       "ReadyMsg2": "已完成進入遊戲的各種設定.",
       "UnitSecond": "秒",
       "Downloading": "正在下載",
-      "DonwloadFailed": "無法取得更新包",
+      "DownloadFailed": "無法取得更新包",
       "Downloaded": "已下載更新包",
       "InstallFailed": "安裝失敗:",
       "IntalledPatch": "已安裝更新包",
-      "Installing": "↷正在安裝"
+      "Installing": "正在安裝"
 
     },
     "State": {
       "DeniedToDownload": "需要手動下載並安裝更新包",
-      "Error": "✘發生未知的錯誤",
-      "ErrorConnectingFail": "✘無法連接到伺服器",
-      "ErrorWritingFail": "✘無法寫入本地檔案",
-      "GameReady": "✔準備就緒",
+      "Error": "發生未知的錯誤",
+      "ErrorConnectingFail": "無法連接到伺服器",
+      "ErrorWritingFail": "無法寫入本地檔案",
+      "GameReady": "準備就緒",
       "Downloading": "下載中...",
       "Extracting": "下載中...",
       "Initializing": "連接中...",
-      "Retrying": "⭮重新連接中...",
-      "UpdatingCompleted": "✔更新完畢",
+      "Retrying": "重新連接中...",
+      "UpdatingCompleted": "更新完畢",
       "Cancelled": "已消取更新",
-      "Failed": " ✘更新失敗"
+      "Failed": "更新失敗",
+      "ErrorExtractingFail": "安裝失敗",
+      "FailedToDownload": "下載失敗"
     }
   },
   "zh-CN": {
@@ -75,26 +77,28 @@
       "ReadyMsg2": "已完成进入游戏的各种设定.",
       "UnitSecond": "秒",
       "Downloading": "正在下载",
-      "DonwloadFailed": "无法取得更新包",
+      "DownloadFailed": "无法取得更新包",
       "Downloaded": "已下载更新包",
       "InstallFailed": "安装失败:",
       "IntalledPatch": "已安装更新包",
-      "Installing": "↷正在安装"
+      "Installing": "正在安装"
 
     },
     "State": {
       "DeniedToDownload": "需要手动下载并安装更新包",
-      "Error": "✘发生未知的错误",
-      "ErrorConnectingFail": "✘无法连接到服务器",
-      "ErrorWritingFail": "✘无法写入本地档案",
-      "GameReady": "✔准备就绪",
+      "Error": "发生未知的错误",
+      "ErrorConnectingFail": "无法连接到服务器",
+      "ErrorWritingFail": "无法写入本地档案",
+      "GameReady": "准备就绪",
       "Downloading": "下载中...",
       "Extracting": "下载中...",
       "Initializing": "连接中...",
-      "Retrying": "⭮重新连接中...",
-      "UpdatingCompleted": "✔更新完毕",
+      "Retrying": "重新连接中...",
+      "UpdatingCompleted": "更新完毕",
       "Cancelled": "已消取更新",
-      "Failed": " ✘更新失败"
+      "Failed": "更新失败",
+      "ErrorExtractingFail": "安裝失败",
+      "FailedToDownload": "下载失败"
     }
   },
   "en-US": {
@@ -124,26 +128,28 @@
       "ReadyMsg2": "Game is ready to play.",
       "UnitSecond": "Second",
       "Downloading": "Downloading",
-      "DonwloadFailed": "Failed to download patches",
+      "DownloadFailed": "Failed to download patches",
       "Downloaded": "Downloaded",
       "InstallFailed": "Falied to install:",
       "IntalledPatch": "Installed patches",
-      "Installing": "↷Installing"
+      "Installing": "Installing"
 
     },
     "State": {
       "DeniedToDownload": "Need to download and install patches manually.",
-      "Error": "✘Occur unexpected error.",
+      "Error": "Occur unexpected error.",
       "ErrorConnectingFail": "✘Failed to connect to the server.",
       "ErrorWritingFail": "✘Failed to write files.",
-      "GameReady": "✔Ready.",
+      "GameReady": "Ready.",
       "Downloading": "Downloading...",
       "Extracting": "Installing...",
       "Initializing": "Connecting...",
-      "Retrying": "⭮Retry connecting...",
-      "UpdatingCompleted": "✔Update finish.",
-      "Cancelled": "Failed to renew client version.",
-      "Failed": "✘Failed to renew client version."
+      "Retrying": "Retry connecting...",
+      "UpdatingCompleted": "Update finish.",
+      "Cancelled": "Cancelled to renew client version.",
+      "Failed": "Failed to renew client version.",
+      "ErrorExtractingFail": "Failed to intall patches.",
+      "FailedToDownload": "Failed to download patches."
     }
   }
 }

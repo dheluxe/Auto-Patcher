@@ -51,7 +51,7 @@ namespace TYYongAutoPatcher.src.Controllers
                         }
                     }
                     for (var i = 0; i < app.ui.Messages.Count; i++)
-                        app.ui.Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.InstallFailed} {patch.FileName} - {app.Language.Get(i).UIComponent.Lbl_report_unit2} {app.SizeToString(patch.Size)}", StateCode.Extracted)); ;
+                        app.ui.Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.IntalledPatch} {patch.FileName} - {app.Language.Get(i).UIComponent.Lbl_report_unit2} {app.SizeToString(patch.Size)}", StateCode.Extracted)); ;
                     app.ui.UpdateMsg();
                     patch.IsUnzipSucceed = true;
                     await app.DeleteTempFile(patch.FileName);

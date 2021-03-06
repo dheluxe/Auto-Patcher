@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TYYongAutoPatcher.src.Exceptions;
 using TYYongAutoPatcher.src.Models;
 using TYYongAutoPatcher.src.UI;
 
@@ -25,7 +26,6 @@ namespace TYYongAutoPatcher.src.Controllers
         public async Task DownloadFilesAysnc(Uri url, string savePath, PatchModel patch)
         {
             app.UpdateState(StateCode.Downloading);
-            var text = app.Language.Text.UIComponent;
             try
             {
                 client = new WebClient();
@@ -45,11 +45,12 @@ namespace TYYongAutoPatcher.src.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine($"*************FileDownloadController.DownloadFilesAysnc(Uri url, string savePath, PatchModel patch): {ex.Message}");
-                app.UpdateState(StateCode.ErrorConnectingFail);
                 // Add Multiple languages.
                 for (var i = 0; i < app.ui.Messages.Count; i++)
                     app.ui.Messages[i].Add(new MessagesModel($"{app.Language.Get(i).UIComponent.DownloadFailed} {patch.FileName}", StateCode.ErrorConnectingFail));
                 app.ui.UpdateMsg();
+                app.UpdateState(StateCode.FailedToDownload);
+                throw new FileDownloadException();
             }
         }
 
@@ -65,9 +66,6 @@ namespace TYYongAutoPatcher.src.Controllers
             var client = new WebClient();
             client.DownloadStringCompleted += app.ui.DownloadStrinCompletedgAysncHandler;
             await client.DownloadStringTaskAsync(url);
-
         }
-
-
     }
 }

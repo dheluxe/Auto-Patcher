@@ -348,9 +348,9 @@ namespace TYYongAutoPatcher.src.UI
             // flp_top
             // 
             this.flp_top.AutoSize = true;
-            this.flp_top.Controls.Add(this.lbl_value_currentVer);
-            this.flp_top.Controls.Add(this.lbl_title_latestVer);
             this.flp_top.Controls.Add(this.lbl_value_latestVer);
+            this.flp_top.Controls.Add(this.lbl_title_latestVer);
+            this.flp_top.Controls.Add(this.lbl_value_currentVer);
             this.flp_top.Controls.Add(this.lbl_title_currentVer);
             this.flp_top.Controls.Add(this.lbl_cn);
             this.flp_top.Controls.Add(this.lbl_pipe);
@@ -370,10 +370,11 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.lbl_value_currentVer.AutoSize = true;
             this.lbl_value_currentVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_currentVer.Location = new System.Drawing.Point(345, 0);
+            this.lbl_value_currentVer.Location = new System.Drawing.Point(315, 0);
             this.lbl_value_currentVer.Name = "lbl_value_currentVer";
-            this.lbl_value_currentVer.Size = new System.Drawing.Size(0, 12);
+            this.lbl_value_currentVer.Size = new System.Drawing.Size(9, 12);
             this.lbl_value_currentVer.TabIndex = 18;
+            this.lbl_value_currentVer.Text = "-";
             this.lbl_value_currentVer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lbl_value_currentVer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
             this.lbl_value_currentVer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
@@ -383,7 +384,7 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.lbl_title_latestVer.AutoSize = true;
             this.lbl_title_latestVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_latestVer.Location = new System.Drawing.Point(339, 0);
+            this.lbl_title_latestVer.Location = new System.Drawing.Point(330, 0);
             this.lbl_title_latestVer.Name = "lbl_title_latestVer";
             this.lbl_title_latestVer.Size = new System.Drawing.Size(0, 12);
             this.lbl_title_latestVer.TabIndex = 18;
@@ -396,10 +397,11 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.lbl_value_latestVer.AutoSize = true;
             this.lbl_value_latestVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_value_latestVer.Location = new System.Drawing.Point(333, 0);
+            this.lbl_value_latestVer.Location = new System.Drawing.Point(336, 0);
             this.lbl_value_latestVer.Name = "lbl_value_latestVer";
-            this.lbl_value_latestVer.Size = new System.Drawing.Size(0, 12);
+            this.lbl_value_latestVer.Size = new System.Drawing.Size(9, 12);
             this.lbl_value_latestVer.TabIndex = 18;
+            this.lbl_value_latestVer.Text = "-";
             this.lbl_value_latestVer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lbl_value_latestVer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DragDownHandler);
             this.lbl_value_latestVer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragMoveHandler);
@@ -409,7 +411,7 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.lbl_title_currentVer.AutoSize = true;
             this.lbl_title_currentVer.ForeColor = System.Drawing.Color.White;
-            this.lbl_title_currentVer.Location = new System.Drawing.Point(327, 0);
+            this.lbl_title_currentVer.Location = new System.Drawing.Point(309, 0);
             this.lbl_title_currentVer.Name = "lbl_title_currentVer";
             this.lbl_title_currentVer.Size = new System.Drawing.Size(0, 12);
             this.lbl_title_currentVer.TabIndex = 18;
@@ -424,7 +426,7 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_cn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_cn.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lbl_cn.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.lbl_cn.Location = new System.Drawing.Point(304, 0);
+            this.lbl_cn.Location = new System.Drawing.Point(286, 0);
             this.lbl_cn.Name = "lbl_cn";
             this.lbl_cn.Size = new System.Drawing.Size(17, 12);
             this.lbl_cn.TabIndex = 21;
@@ -436,7 +438,7 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.lbl_pipe.AutoSize = true;
             this.lbl_pipe.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.lbl_pipe.Location = new System.Drawing.Point(291, 0);
+            this.lbl_pipe.Location = new System.Drawing.Point(273, 0);
             this.lbl_pipe.Name = "lbl_pipe";
             this.lbl_pipe.Size = new System.Drawing.Size(7, 12);
             this.lbl_pipe.TabIndex = 20;
@@ -449,7 +451,7 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_tw.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_tw.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lbl_tw.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.lbl_tw.Location = new System.Drawing.Point(268, 0);
+            this.lbl_tw.Location = new System.Drawing.Point(250, 0);
             this.lbl_tw.Name = "lbl_tw";
             this.lbl_tw.Size = new System.Drawing.Size(17, 12);
             this.lbl_tw.TabIndex = 19;
@@ -461,7 +463,7 @@ namespace TYYongAutoPatcher.src.UI
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label2.Location = new System.Drawing.Point(255, 0);
+            this.label2.Location = new System.Drawing.Point(237, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(7, 12);
             this.label2.TabIndex = 20;
@@ -474,7 +476,7 @@ namespace TYYongAutoPatcher.src.UI
             this.lbl_en.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_en.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lbl_en.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.lbl_en.Location = new System.Drawing.Point(229, 0);
+            this.lbl_en.Location = new System.Drawing.Point(211, 0);
             this.lbl_en.Name = "lbl_en";
             this.lbl_en.Size = new System.Drawing.Size(20, 12);
             this.lbl_en.TabIndex = 19;

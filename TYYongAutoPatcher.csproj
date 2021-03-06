@@ -163,6 +163,7 @@
     <Compile Include="src\Controllers\FileDownloadController.cs" />
     <Compile Include="src\Controllers\MainController.cs" />
     <Compile Include="src\Controllers\ZipController.cs" />
+    <Compile Include="src\Exceptions\FileDownloadException.cs" />
     <Compile Include="src\Exceptions\InvalidTokenException.cs" />
     <Compile Include="src\Models\LanguageModel.cs" />
     <Compile Include="src\Models\PatchReportModel.cs" />

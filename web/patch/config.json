@@ -7,7 +7,7 @@
       "Shop": "http://127.0.0.1:5500/shop",
       "Event": "http://127.0.0.1:5500/event",
       "Register": "http://127.0.0.1:5500/register",
-      "PatchDataDir": "http://127.0.0.1:5500/patch/data/"
+      "PatchDataDir": "http://127.0.0.1:5500/data/"
     },
     "IsDownloadAllowed": true
   },
@@ -21,9 +21,17 @@
   },
   "PatchList": [
     {
-      "Version": 1.0,
+      "Version": 6.0,
       "FileName": "test.zip",
-      "DownloadLinks": [ "http://drive.google.com/test.zip" ]
+      "DownloadLinks": [
+        "http://127.0.0.1:5501/patch/data/testtest.zip",
+        "http://127.0.0.1:5500/data/testtest.zip"
+      ]
+    },
+    {
+      "Version": 5.2,
+      "FileName": "testtest.zip",
+      "DownloadLinks": []
     }
   ]
 }

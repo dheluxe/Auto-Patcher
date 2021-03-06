@@ -63,6 +63,8 @@ namespace TYYongAutoPatcher.src.Models
         public string UpdatingCompleted { get; set; }
         public string Cancelled { get; set; }
         public string Failed { get; set; }
+        public string ErrorExtractingFail { get; set; }
+        public string FailedToDownload { get; set; }
     }
 
     public class Language
